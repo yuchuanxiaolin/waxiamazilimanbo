@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>补充教材 · 加工方式×工件×组织×钢种 全打通</title>
+<style>
+:root{
+  --primary:#1a5276;--primary-light:#2980b9;--accent:#e67e22;--accent-light:#f39c12;
+  --bg:#f4f6f7;--card:#fff;--text:#2c3e50;--text-light:#7f8c8d;--border:#d5dbdb;
+  --success:#27ae60;--danger:#e74c3c;--warning:#f39c12;--info:#3498db;
+  --shadow:0 2px 8px rgba(0,0,0,.08);--shadow-lg:0 4px 20px rgba(0,0,0,.12);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Microsoft YaHei","Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.9;font-size:15.5px;scroll-behavior:smooth}
+.topbar{position:fixed;top:0;left:0;right:0;height:52px;background:var(--primary);color:#fff;display:flex;align-items:center;padding:0 20px;z-index:1000;box-shadow:var(--shadow-lg)}
+.topbar h1{font-size:16px;font-weight:600;white-space:nowrap}
+.topbar .crumb{font-size:12px;opacity:.75;margin-left:8px}
+.topbar nav{margin-left:auto;display:flex;gap:4px;overflow-x:auto;scrollbar-width:thin}
+.topbar nav a{color:#cfd8dc;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:4px;white-space:nowrap;transition:.2s}
+.topbar nav a:hover{background:rgba(255,255,255,.15);color:#fff}
+.sidebar{position:fixed;top:52px;left:0;bottom:0;width:250px;background:#fff;border-right:1px solid var(--border);overflow-y:auto;padding:14px 0;z-index:900;transition:transform .3s}
+.sidebar a{display:block;padding:8px 20px;color:var(--text-light);text-decoration:none;font-size:13px;border-left:3px solid transparent;transition:.2s}
+.sidebar a:hover{background:var(--bg);color:var(--primary);border-left-color:var(--primary-light)}
+.sidebar a.active{background:#eaf2f8;color:var(--primary);border-left-color:var(--primary);font-weight:600}
+.sidebar a.sub{padding-left:34px;font-size:12px}
+.sidebar .group-label{padding:12px 20px 4px;font-size:11px;color:var(--accent);font-weight:700;letter-spacing:1px}
+.sidebar .progress-wrap{padding:14px 20px 6px;border-top:1px solid var(--border);margin-top:10px}
+.sidebar .progress-wrap label{font-size:11px;color:var(--text-light)}
+.sidebar .progress-bar{height:6px;background:#ecf0f1;border-radius:3px;margin-top:4px;overflow:hidden}
+.sidebar .progress-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--primary-light),var(--accent));transition:width .3s}
+.main{margin-left:250px;margin-top:52px;padding:28px 36px;max-width:1050px}
+.section{background:var(--card);border-radius:10px;padding:26px 30px;margin-bottom:22px;box-shadow:var(--shadow)}
+.section h2{color:var(--primary);font-size:22px;border-bottom:2px solid var(--primary-light);padding-bottom:10px;margin-bottom:16px}
+.section h3{color:var(--primary);font-size:17px;margin:22px 0 10px;padding-left:10px;border-left:4px solid var(--accent)}
+.section h4{color:var(--text);font-size:15.5px;margin:16px 0 6px}
+.section p{margin:9px 0}
+.section ul,.section ol{margin:9px 0 9px 26px}
+.section li{margin:5px 0}
+.section strong{color:var(--primary)}
+.tip{background:#eafaf1;border-left:4px solid var(--success);padding:12px 16px;border-radius:6px;margin:14px 0}
+.tip::before{content:"💡 记住";display:block;font-weight:700;color:var(--success);font-size:13px;margin-bottom:4px}
+.warn{background:#fef9e7;border-left:4px solid var(--warning);padding:12px 16px;border-radius:6px;margin:14px 0}
+.warn::before{content:"⚠️ 注意";display:block;font-weight:700;color:var(--warning);font-size:13px;margin-bottom:4px}
+.key{background:#eaf2f8;border-left:4px solid var(--primary-light);padding:12px 16px;border-radius:6px;margin:14px 0}
+.key::before{content:"🔑 核心";display:block;font-weight:700;color:var(--primary);font-size:13px;margin-bottom:4px}
+.sale{background:#fdf2e9;border-left:4px solid var(--accent);padding:12px 16px;border-radius:6px;margin:14px 0}
+.sale::before{content:"💬 客户对话";display:block;font-weight:700;color:var(--accent);font-size:13px;margin-bottom:4px}
+.ndt{background:#eef5fb;border-left:4px solid var(--info);padding:12px 16px;border-radius:6px;margin:14px 0}
+.ndt::before{content:"🔬 对检测的意义";display:block;font-weight:700;color:var(--info);font-size:13px;margin-bottom:4px}
+.good{background:#eafaf1;border-left:4px solid var(--success);padding:12px 16px;border-radius:6px;margin:14px 0}
+.good::before{content:"✅ 好检（你们主场）";display:block;font-weight:700;color:var(--success);font-size:13px;margin-bottom:4px}
+.bad{background:#fdedec;border-left:4px solid var(--danger);padding:12px 16px;border-radius:6px;margin:14px 0}
+.bad::before{content:"❌ 难检（小心）";display:block;font-weight:700;color:var(--danger);font-size:13px;margin-bottom:4px}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13.5px}
+th,td{border:1px solid var(--border);padding:8px 10px;text-align:left}
+th{background:var(--primary);color:#fff;font-weight:600}
+tr:nth-child(even){background:#f8f9fa}
+tr:hover{background:#eaf2f8}
+.quick-card{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:14px 0}
+.quick-item{background:#fff;border:2px solid var(--border);border-radius:8px;padding:14px;text-align:center;transition:.2s}
+.quick-item:hover{border-color:var(--primary-light);box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+.quick-item .icon{font-size:30px;margin-bottom:6px}
+.quick-item .title{font-weight:700;color:var(--primary);font-size:14px}
+.quick-item .desc{font-size:12px;color:var(--text-light);margin-top:4px}
+/* 工件卡片：带"长这样"描述 */
+.work-card{background:linear-gradient(135deg,#fff 0%,#f8f9fa 100%);border:1px solid var(--border);border-radius:8px;padding:16px;margin:14px 0}
+.work-card .w-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.work-card .w-icon{font-size:28px}
+.work-card .w-name{font-weight:700;color:var(--primary);font-size:16px}
+.work-card .w-tag{display:inline-block;background:var(--accent);color:#fff;font-size:11px;padding:2px 8px;border-radius:3px;margin-left:6px}
+.work-card .w-desc{font-size:13.5px;color:var(--text)}
+.work-card .w-look{background:#fef9e7;border-radius:4px;padding:6px 10px;margin-top:6px;font-size:13px;color:#7d6608}
+.work-card .w-look::before{content:"👀 长这样："}
+/* 类比框 */
+.analogy{background:linear-gradient(135deg,#fdf2e9,#fef9e7);border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;margin:14px 0}
+.analogy::before{content:"🎯 打个比方";display:block;font-weight:700;color:var(--accent);font-size:13px;margin-bottom:6px}
+/* 流程图 */
+.flow{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;margin:16px 0}
+.flow-step{background:var(--primary);color:#fff;padding:10px 16px;border-radius:6px;font-size:13px;font-weight:600;text-align:center;min-width:80px}
+.flow-arrow{color:var(--accent);font-size:20px;font-weight:700}
+/* 大对比表 */
+.big-table{font-size:13px}
+.big-table th{font-size:13px}
+.big-table .good-row{background:#eafaf1}
+.big-table .bad-row{background:#fdedec}
+/* 难度等级图示 */
+.diff-bar{display:inline-block;width:50px;height:10px;background:#ecf0f1;border-radius:5px;vertical-align:middle;margin-left:4px;overflow:hidden}
+.diff-bar i{display:inline-block;height:100%;width:20%;background:var(--success);float:left}
+.diff-bar.d2 i{background:var(--info)}
+.diff-bar.d3 i{background:var(--warning)}
+.diff-bar.d4 i{background:var(--danger)}
+/* 测验 */
+.quiz-intro{background:#eaf2f8;border-radius:8px;padding:14px 18px;margin:16px 0;color:var(--primary)}
+.quiz-question{background:#fff;border:1px solid var(--border);border-radius:8px;padding:16px;margin:14px 0}
+.quiz-question .q-text{font-weight:600;margin-bottom:10px;color:var(--text)}
+.quiz-question .q-num{display:inline-block;background:var(--primary);color:#fff;width:26px;height:26px;border-radius:50%;text-align:center;line-height:26px;font-size:13px;margin-right:8px}
+.quiz-option{display:block;padding:10px 14px;margin:6px 0;border:2px solid var(--border);border-radius:6px;cursor:pointer;transition:.2s}
+.quiz-option:hover{border-color:var(--primary-light);background:#eaf2f8}
+.quiz-option.selected{border-color:var(--primary);background:#d4e6f1}
+.quiz-option.correct{border-color:var(--success);background:#eafaf1}
+.quiz-option.wrong{border-color:var(--danger);background:#fdedec}
+.quiz-option .mark{float:right;font-weight:700}
+.quiz-explain{margin-top:10px;padding:10px;background:#f8f9fa;border-radius:4px;font-size:13px;display:none}
+.quiz-explain.show{display:block}
+#quiz-result{display:none;text-align:center;padding:32px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin:16px 0}
+#quiz-result .score{font-size:48px;font-weight:700;margin:10px 0}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:10px 28px;border-radius:6px;border:none;cursor:pointer;font-size:15px;font-weight:600;transition:.2s}
+.btn:hover{background:var(--accent-light);transform:translateY(-1px);box-shadow:var(--shadow-lg)}
+.btn.ghost{background:transparent;color:var(--primary);border:2px solid var(--primary)}
+.btn.ghost:hover{background:var(--primary);color:#fff}
+.hero{text-align:center;padding:44px 32px;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-light) 100%);color:#fff;border-radius:10px;margin-bottom:22px}
+.hero .course-tag{display:inline-block;background:rgba(255,255,255,.2);padding:4px 14px;border-radius:14px;font-size:12px;margin-bottom:10px}
+.hero h1{font-size:28px;margin-bottom:10px}
+.hero p{font-size:15px;opacity:.92;margin:6px 0}
+.hero .meta{margin-top:16px;font-size:13px;opacity:.8}
+.hero .meta span{margin:0 10px}
+.nav-foot{display:flex;justify-content:space-between;align-items:center;margin:24px 0;padding:18px 24px;background:#fff;border-radius:10px;box-shadow:var(--shadow)}
+.nav-foot .label{font-size:13px;color:var(--text-light)}
+.nav-foot .title{font-weight:600;color:var(--primary);font-size:15px}
+@media(max-width:900px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0;padding:16px}.topbar nav{display:none}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>🔬 NDT 扫盲课</h1>
+  <span class="crumb">补充教材 · 加工×工件×组织×钢种</span>
+  <nav>
+    <a href="#hero">封面</a>
+    <a href="#ch1">加 工</a>
+    <a href="#ch2">工 件</a>
+    <a href="#ch3">组 织</a>
+    <a href="#ch4">钢 种</a>
+    <a href="#ch5">奥氏体</a>
+    <a href="#ch6">硬度</a>
+    <a href="#ch7">C扫描</a>
+    <a href="#exam">测验</a>
+  </nav>
+</div>
+
+<div class="sidebar" id="sidebar">
+  <a href="#hero">封面</a>
+  <div class="group-label">第一部分：材料怎么来</div>
+  <a href="#ch1">一、加工方式有哪些</a>
+  <a href="#ch1-1" class="sub">1.1 五大加工一句话</a>
+  <a href="#ch1-2" class="sub">1.2 各种加工详解</a>
+  <a href="#ch2">二、工件长什么样</a>
+  <a href="#ch2-1" class="sub">2.1 钢铁类工件</a>
+  <a href="#ch2-2" class="sub">2.2 铝合金工件 ⭐</a>
+  <a href="#ch2-3" class="sub">2.3 复合材料 ⭐</a>
+  <a href="#ch2-4" class="sub">2.4 水冷板 ⭐⭐⭐</a>
+  <a href="#ch2-5" class="sub">2.5 钛/铜</a>
+  <div class="group-label">第二部分：材料是什么</div>
+  <a href="#ch3">三、"什么体"是什么</a>
+  <a href="#ch3-1" class="sub">3.1 一个类比搞懂</a>
+  <a href="#ch3-2" class="sub">3.2 五大组织速记</a>
+  <a href="#ch4">四、什么材料什么体</a>
+  <a href="#ch4-1" class="sub">4.1 钢铁类</a>
+  <a href="#ch4-2" class="sub">4.2 铝/钛/铜</a>
+  <a href="#ch4-3" class="sub">4.3 好检/难检总表</a>
+  <div class="group-label">第三部分：检测怎么选</div>
+  <a href="#ch5">五、奥氏体能测吗</a>
+  <a href="#ch6">六、HV 是什么</a>
+  <a href="#ch7">七、C扫描优势（重点）</a>
+  <a href="#ch7-1" class="sub">7.1 A/B/C扫区别</a>
+  <a href="#ch7-2" class="sub">7.2 C扫描强在哪</a>
+  <a href="#ch7-3" class="sub">7.3 C扫描适合谁</a>
+  <a href="#ch7-4" class="sub">7.4 PAUT/TOFD对比</a>
+  <a href="#summary">总结</a>
+  <a href="#exam">📝 测验</a>
+  <div class="progress-wrap">
+    <label>阅读进度</label>
+    <div class="progress-bar"><i id="progress"></i></div>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ========== 封面 ========== -->
+<div class="section" id="hero" style="padding:0;overflow:hidden">
+  <div class="hero">
+    <span class="course-tag">补充教材 · 扫盲版</span>
+    <h1>加工方式 × 工件 × 组织 × 钢种 × 检测方法<br>一次全打通</h1>
+    <p>你问的问题：工件是什么？是什么体？奥氏体能测吗？C扫描好在哪？——这份教材从零讲明白。</p>
+    <div class="meta">
+      <span>⏱ 约 60 分钟</span>
+      <span>🎯 零基础友好</span>
+      <span>📚 重点：你们的水浸 C 扫</span>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 开篇：为什么看这份教材 ========== -->
+<div class="section">
+  <h2>📍 这份教材解决你的什么困惑</h2>
+  <p>你之前说："我既不知道工件是什么，也不知道用于什么行业，更不知道 C 扫描最适合扫什么，也不知道这些东西是什么体。"</p>
+  <p>这份教材就解决这一条链：</p>
+  <div class="flow">
+    <div class="flow-step">材料怎么<br>造出来</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step">造出什么<br>工件</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step">是什么<br>组织</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step">好不好<br>检测</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step">用什么<br>方法</div>
+  </div>
+  <div class="tip"><strong>先给你一个最简结论</strong>：你们做 A 扫 + 水浸 C 扫，<strong>经常检铝和复合材料——这两个正是水浸 C 扫的最强项</strong>。这份教材最后会详细讲为什么，以及怎么跟客户说。</div>
+</div>
+
+<!-- ========== 第一章 加工方式 ========== -->
+<div class="section" id="ch1">
+  <h2>一、材料是怎么造出来的：五大加工方式</h2>
+  <p>客户拿来一个工件，它一定是用下面某一种（或几种）方式造出来的。知道"怎么造的"，就能预判"可能有什么缺陷"。</p>
+
+  <h3 id="ch1-1">1.1 先用一句话记住五大加工</h3>
+  <div class="key">
+    <table>
+      <tr><th>加工方式</th><th>一句话理解</th><th>通俗比喻</th></tr>
+      <tr><td><strong>铸造</strong></td><td>把金属化成水，倒进模具凝固</td><td>像做冰棍：倒进模具冻硬</td></tr>
+      <tr><td><strong>轧制</strong></td><td>把金属从两个辊子中间挤过去，压扁/压长</td><td>像擀面杖擀面</td></tr>
+      <tr><td><strong>锻造</strong></td><td>把烧红的金属用锤子砸成想要的形状</td><td>像铁匠打铁</td></tr>
+      <tr><td><strong>机加工</strong></td><td>用刀具从毛坯上切下多余的料</td><td>像木工雕刻</td></tr>
+      <tr><td><strong>焊接</strong></td><td>把两块金属边缘熔化，让它们长在一起</td><td>像用胶水粘，但是用高温"焊"在一起</td></tr>
+    </table>
+  </div>
+
+  <h3 id="ch1-2">1.2 每种加工详解 + 产生什么缺陷</h3>
+
+  <!-- 铸造 -->
+  <div class="work-card">
+    <div class="w-head"><span class="w-icon">🏭</span><span class="w-name">铸造（Casting）</span><span class="w-tag">液态成型</span></div>
+    <div class="w-desc">把金属熔化成液体，倒进砂型或金属模具里，冷却凝固成零件。</div>
+    <div class="w-look">阀门壳体、发动机缸体、下水道井盖、机床床身、磨球、水暖管件。</div>
+    <div class="ndt"><strong>铸造件的缺陷</strong>：缩孔（金属凝固收缩留下的洞）、气孔（气泡没跑掉）、夹杂（杂质卷进去）。<strong>铸件内部组织是粗大的柱状晶，UT 衰减大，比较难检。</strong></div>
+  </div>
+
+  <!-- 轧制 -->
+  <div class="work-card">
+    <div class="w-head"><span class="w-icon">📜</span><span class="w-name">轧制（Rolling）</span><span class="w-tag">固态成型</span></div>
+    <div class="w-desc">把烧红的钢锭从两个旋转的辊子中间挤过去，越挤越薄/越细。钢板、钢管、钢轨都是这么来的。</div>
+    <div class="w-look">钢板（造船、容器、桥梁）、钢管（输油输气）、H 型钢（建筑）、钢轨（铁路）。</div>
+    <div class="ndt"><strong>轧制件的缺陷</strong>：<strong>分层</strong>（钢板最危险的缺陷，就是内部一层层分开，这正是 UT 直探头的拿手好戏）、折叠（表面被压折进去）。</div>
+  </div>
+
+  <!-- 锻造 -->
+  <div class="work-card">
+    <div class="w-head"><span class="w-icon">🔨</span><span class="w-name">锻造（Forging）</span><span class="w-tag">固态成型</span></div>
+    <div class="w-desc">把金属烧红，用锤子（或压力机）反复砸，砸成想要的形状。同时把内部组织砸细、砸密实。所以<strong>锻件性能比铸件好得多</strong>。</div>
+    <div class="w-look">汽车曲轴、连杆、齿轮、风电主轴、航空起落架、高铁车轴、模具。</div>
+    <div class="ndt"><strong>锻件的缺陷</strong>：<strong>白点</strong>（氢造成的内部微裂纹，是锻件最可怕的隐患）、夹杂、折叠。<strong>锻件晶粒被砸细，UT 很好检。</strong></div>
+  </div>
+
+  <!-- 机加工 -->
+  <div class="work-card">
+    <div class="w-head"><span class="w-icon">⚙️</span><span class="w-name">机加工（Machining）</span><span class="w-tag">切削成型</span></div>
+    <div class="w-desc">用车床、铣床、磨床等，从铸造或锻造的"毛坯"上切掉多余的料，加工成精确尺寸的零件。机加工<strong>不改变材料内部组织</strong>，只是切外形。</div>
+    <div class="w-look">任何有精确尺寸要求的零件：轴、齿轮、螺纹、法兰面、模具型腔。</div>
+    <div class="ndt"><strong>机加工相关的缺陷</strong>：本身不产生内部缺陷，但加工前的<strong>热处理</strong>（淬火）可能产生<strong>淬火裂纹</strong>——这是常见 UT 检测对象。</div>
+  </div>
+
+  <!-- 焊接 -->
+  <div class="work-card">
+    <div class="w-head"><span class="w-icon">🔥</span><span class="w-name">焊接（Welding）</span><span class="w-tag">连接成型</span></div>
+    <div class="w-desc">把两块金属的边缘用高温熔化，让它们熔合在一起，冷却后连成一个整体。这是<strong>工业中最常用的连接方式</strong>，也是 UT 检测的<strong>第一大客户场景</strong>。</div>
+    <div class="w-look">压力容器焊缝、管道焊缝、船体、桥梁、钢结构、汽车车身。</div>
+    <div class="ndt"><strong>焊缝的缺陷（UT 主战场）</strong>：裂纹（最危险）、未熔合、未焊透、气孔、夹渣。焊缝内部组织是<strong>粗大柱状晶</strong>，比母材难检，尤其是不锈钢焊缝。</div>
+  </div>
+
+  <div class="tip"><strong>记住这条因果链</strong>：<br>
+    铸造 → 缩孔/气孔<br>
+    轧制 → 分层<br>
+    锻造 → 白点/夹杂<br>
+    焊接 → 裂纹/未熔合/气孔<br>
+    热处理 → 淬火裂纹<br>
+    <strong>客户说"我是铸件/锻件/焊缝"，你脑子里就该蹦出对应的缺陷。</strong>
+  </div>
+</div>
+
+<!-- ========== 第二章 工件长什么样 ========== -->
+<div class="section" id="ch2">
+  <h2>二、客户拿来的工件长什么样（按材料分）</h2>
+  <p>这一节按<strong>材料</strong>分类讲工件，因为你检的时候首先问的就是"什么材料"。</p>
+
+  <h3 id="ch2-1">2.1 钢铁类工件（最常见）</h3>
+  <div class="quick-card">
+    <div class="quick-item"><div class="icon">🏛️</div><div class="title">压力容器</div><div class="desc">化工厂、炼油厂里那些大罐子，存高压气体/液体</div></div>
+    <div class="quick-item"><div class="icon">🛢️</div><div class="title">管道</div><div class="desc">输油输气管、化工厂管道，长长一根</div></div>
+    <div class="quick-item"><div class="icon">🌉</div><div class="title">钢结构</div><div class="desc">桥梁、体育馆骨架、高楼钢梁</div></div>
+    <div class="quick-item"><div class="icon">⚙️</div><div class="title">齿轮/轴</div><div class="desc">汽车、机床、风电里的传动零件</div></div>
+    <div class="quick-item"><div class="icon">🚢</div><div class="title">船体</div><div class="desc">船的钢板外壳、骨架</div></div>
+    <div class="quick-item"><div class="icon">🔩</div><div class="title">螺栓</div><div class="desc">各种紧固件，高压螺栓</div></div>
+  </div>
+
+  <h3 id="ch2-2">2.2 铝合金工件（你们常检）⭐</h3>
+  <p>铝是你们水浸 C 扫描的<strong>重点客户材料</strong>。铝件常见有这几类：</p>
+  <div class="work-card">
+    <div class="w-head"><span class="w-icon">🛩️</span><span class="w-name">航空铝板/铝锻件</span></div>
+    <div class="w-desc">飞机蒙皮（机身外壳）、机翼结构件、航空支架。航空对缺陷零容忍，几乎<strong>100% 要 UT 检测</strong>。</div>
+    <div class="w-look">飞机机身那层银白色的金属皮、机翼内部骨架。</div>
+  </div>
+  <div class="work-card">
+    <div class="w-head"><span class="w-icon">📱</span><span class="w-name">铝型材</span></div>
+    <div class="w-desc">窗户框、门框那种有固定截面形状的铝材。建筑、电子产品外壳大量使用。</div>
+    <div class="w-look">窗户的铝合金边框、笔记本电脑外壳。</div>
+  </div>
+  <div class="work-card">
+    <div class="w-head"><span class="w-icon">🚗</span><span class="w-name">汽车铝合金件</span></div>
+    <div class="w-desc">新能源车为了减重，大量用铝合金——车身板、电池壳、轮毂。</div>
+    <div class="w-look">汽车轮毂（那个亮亮的轮子）、新能源车电池包底板。</div>
+  </div>
+  <div class="good"><strong>铝的 UT 特点</strong>：声速高（6300 m/s，比钢还快）、<strong>晶粒细、衰减小、UT 非常好检</strong>。主要查：氧化膜夹杂、缩孔（铸铝件）、偏析。<strong>铝是你们水浸 C 扫的黄金客户。</strong></div>
+
+  <h3 id="ch2-3">2.3 复合材料工件（你们常检）⭐⭐</h3>
+  <div class="analogy"><strong>什么是复合材料？</strong>就像<strong>钢筋混凝土</strong>——混凝土（基体）负责包裹，钢筋（增强体）负责受力。复合材料也是这个思路：<strong>"软的基体 + 硬的纤维"</strong>，取两者之长。又轻又强，所以飞机、风机上用得越来越多。</div>
+
+  <div class="work-card">
+    <div class="w-head"><span class="w-icon">✈️</span><span class="w-name">碳纤维复合材料（CFRP）</span></div>
+    <div class="w-desc">黑色、有编织纹路、又轻又硬。现代飞机机身（波音 787、空客 A350 一半机身都是碳纤维）、F1 赛车、高端自行车、羽毛球拍。</div>
+    <div class="w-look">黑色带编织花纹的板子、高端自行车架。</div>
+  </div>
+  <div class="work-card">
+    <div class="w-head"><span class="w-icon">🌊</span><span class="w-name">玻璃钢（GFRP）</span></div>
+    <div class="w-desc">玻璃纤维 + 树脂。白色或浅色。游船船身、风力发电机叶片、冷却塔、储罐、化工厂管道。</div>
+    <div class="w-look">游船白色船壳、风车那三片大叶子、化工厂外的玻璃钢储罐。</div>
+  </div>
+  <div class="work-card">
+    <div class="w-head"><span class="w-icon">🐝</span><span class="w-name">蜂窝夹芯结构</span></div>
+    <div class="w-desc">两层薄面板（铝或碳纤维）中间夹一层蜂窝（铝箔或纸）。<strong>极轻但极刚</strong>。飞机地板、机舱内饰、卫星太阳翼板、高铁车厢。</div>
+    <div class="w-look">像夹心饼干，切开看中间是六角形蜂窝孔。</div>
+  </div>
+
+  <div class="good"><strong>★ 复合材料的缺陷 + 水浸 C 扫 = 天作之合</strong><br>
+    复合材料最怕的缺陷是：<strong>分层</strong>（一层层分开）、<strong>脱粘</strong>（面板和芯子没粘牢）、<strong>孔隙</strong>（成型时残留气泡）、<strong>冲击损伤</strong>（被砸了，外表没事里面分层了，叫 BVID）。<br><br>
+    这些缺陷<strong>正是水浸 C 扫描的看家本领</strong>——C 扫能扫出一张"俯视热力图"，分层在哪、面积多大、脱粘在哪个位置，一目了然。<br><br>
+    <strong>结论：复合材料检测 = 你们水浸 C 扫最核心的杀手锏市场。</strong>
+  </div>
+
+  <h3 id="ch2-4">2.4 水冷板/液冷板 ⭐⭐⭐（你们这几年的核心案例）</h3>
+  <div class="sale" style="background:linear-gradient(135deg,#fdf2e9,#fff3e0);border-left:4px solid var(--accent)">
+    <strong>这是你们近两年最主要的检测市场</strong>——新能源车和 AI 数据中心爆发带火的黄金赛道，而且正好命中水浸 C 扫的所有强项。务必吃透。
+  </div>
+
+  <h4>（1）水冷板是什么</h4>
+  <div class="analogy"><strong>一句话：两片金属板焊在一起，中间刻着蜿蜒的流道，通冷却液给发热件散热。</strong><br>
+    本质是"板内藏管"——就像地暖地板，表面是平整的地板，下面埋着热水管路。水冷板也是：表面平整，内部是弯弯曲曲的冷却液通道。
+  </div>
+  <div class="work-card">
+    <div class="w-head"><span class="w-icon">🧊</span><span class="w-name">水冷板（液冷板 / Cold Plate）</span><span class="w-tag">⭐⭐⭐ 核心市场</span></div>
+    <div class="w-desc">发热件（电池/芯片）贴在水冷板表面，冷却液在内部流道循环带走热量。</div>
+    <div class="w-look">一块平整的金属板，表面有进/出水嘴接头，内部有看不见的流道。</div>
+  </div>
+
+  <h4>（2）两大爆发市场（客户就在这两个行业）</h4>
+  <div class="quick-card">
+    <div class="quick-item"><div class="icon">🔋</div><div class="title">新能源车水冷板</div><div class="desc">动力电池包液冷板——每块电池下面那张散热板，防止电池热失控</div></div>
+    <div class="quick-item"><div class="icon">🤖</div><div class="title">AI/数据中心液冷板</div><div class="desc">GPU 服务器液冷板——AI 训练功耗爆表，风冷扛不住，液冷成刚需</div></div>
+    <div class="quick-item"><div class="icon">☀️</div><div class="title">光伏/储能</div><div class="desc">逆变器、储能电池的散热板</div></div>
+    <div class="quick-item"><div class="icon">⚡</div><div class="title">IGBT/功率模块</div><div class="desc">电机控制器、充电桩里的散热基板</div></div>
+  </div>
+
+  <h4>（3）材料和工艺（决定要查什么）</h4>
+  <table>
+    <tr><th>项目</th><th>说明</th><th>对 UT 的影响</th></tr>
+    <tr><td><strong>材料</strong></td><td>主要是<strong>铝合金</strong>：3003（钎焊性好）、6061（强度高）。也有少量铜、不锈钢</td><td>✅ 铝声速高、晶粒细，<strong>水浸 C 扫最好检的材料之一</strong></td></tr>
+    <tr><td><strong>工艺①真空钎焊</strong></td><td>两片铝板中间夹钎料（Al-Si 系如 4004），真空炉高温熔化钎料把两片焊在一起</td><td>查<strong>钎着率</strong>、虚焊、空洞</td></tr>
+    <tr><td><strong>工艺②搅拌摩擦焊 FSW</strong></td><td>用高速旋转的搅拌头把两片板边缘"搅"在一起，<strong>不加钎料、不熔化</strong>（固态焊）</td><td>查未焊透、根部缺陷</td></tr>
+  </table>
+
+  <h4>（4）★ UT 要查的核心（销售必背）</h4>
+  <div class="key">
+    <table>
+      <tr><th>检测对象</th><th>通俗讲</th><th>为什么重要</th></tr>
+      <tr><td><strong>钎着率</strong></td><td>钎焊面"焊实的比例"——比如焊了 85%，剩 15% 是虚焊/空洞</td><td><strong>水冷板最核心的指标</strong>。虚焊区散热差→电池/芯片过热→热失控/宕机</td></tr>
+      <tr><td><strong>虚焊/空洞</strong></td><td>本该焊牢的地方没焊上，留了气隙</td><td>空气导热远不如金属，一处空洞就是一处"散热死角"</td></tr>
+      <tr><td><strong>流道堵塞</strong></td><td>钎焊时钎料流进流道，把冷却液通道堵了</td><td>堵了冷却液不流通→整块板散热失效</td></tr>
+      <tr><td><strong>脱层</strong></td><td>两层板在使用中脱开</td><td>会导致泄漏和散热失效</td></tr>
+    </table>
+  </div>
+  <div class="analogy"><strong>为什么钎着率这么关键？</strong><br>
+    想象一块水冷板钎着率只有 60%——意思是 40% 的面积没焊牢。这 40% 的区域，热量传不过去，相当于这块板"瘸了"。电池在那个区域会局部过热，轻则寿命缩短，重则热失控起火。所以<strong>车厂和数据中心对钎着率有硬指标</strong>（常见要求 ≥85% 或更高，看客户标准）。
+  </div>
+
+  <h4>（5）★ 为什么水冷板是你们水浸 C 扫的"量身定做"市场</h4>
+  <div class="good">
+    <strong>水冷板完美命中水浸 C 扫的所有强项，几乎是量身定做：</strong>
+    <ol>
+      <li><strong>平板形</strong> → 水浸 C 扫最爱扫的形状（放进水槽 X-Y 扫描就行）</li>
+      <li><strong>铝合金</strong> → 声速高、晶粒细，C 扫信号清晰</li>
+      <li><strong>要查"结合面质量分布"</strong> → 正是 C 扫的看家本领（出钎着率分布图）</li>
+      <li><strong>要出报告给车厂/数据中心看</strong> → C 扫图直观，客户秒懂，A 扫波形客户看不懂</li>
+      <li><strong>量产件</strong> → 自动化扫描，一晚上扫几十块</li>
+      <li><strong>能自动算钎着率</strong> → 软件自动识别焊好区/虚焊区，扣除流道面积，直接出百分比</li>
+    </ol>
+  </div>
+
+  <h4>（6）一个关键技术点：C 扫怎么"扣除流道"</h4>
+  <div class="ndt">水冷板表面看起来是平的，但内部<strong>有流道（空的）和筋（实的）</strong>。算钎着率时，<strong>流道那块本来就没有结合面，不能算进"未焊"里</strong>。你们软件的功能就是：先识别出流道区域（从设计图或从扫描数据提取），只在"该焊的筋区"算钎着率。这样出的数字才准。<br><br>
+  <strong>对销售的意义</strong>：这个"自动扣除流道、算钎着率"的功能，是<strong>打动车厂和数据中心客户的核心卖点</strong>——别家可能只会扫图，你们能直接出"钎着率 87.3%"这种数字报告。</div>
+
+  <div class="sale"><strong>客户对话（高频场景）</strong>
+    <div class="scenario">
+      <div class="q">客户（电池厂）："我们做液冷板，怎么证明钎焊质量？"</div>
+      <div class="a" style="margin-top:6px">"水浸 C 扫是目前最主流的方案。我们扫一张整板的钎着率分布图给您——<strong>红色是虚焊区、绿色是焊好的</strong>，还能<strong>自动扣除流道面积，直接算出钎着率百分比</strong>。要不要寄一块样板来，我们扫完出张报告给您看效果？"</div>
+    </div>
+    <div class="scenario">
+      <div class="q">客户（数据中心）："AI 服务器液冷板虚焊一颗 GPU 就烧了，能检出多小的缺陷？"</div>
+      <div class="a" style="margin-top:6px">"我们水浸 C 扫配高频聚焦探头，能识别 <strong>0.1~0.3mm 级别的虚焊和空洞</strong>。整块板扫一遍出图，哪里有隐患一清二楚。建议做 100% 全检，AI 服务器这玩意儿出不起事故。"</div>
+    </div>
+  </div>
+
+  <div class="tip"><strong>记住这条市场定位</strong>：<br>
+    <strong>"新能源 + AI/数据中心 + 电力电子" 的热管理检测 = 你们水浸 C 扫当下的黄金赛道。</strong><br>
+    水冷板是入口，进去后还能延伸到 IGBT 散热器、储能液冷板、溅射靶材——这些技术逻辑全是"查结合面质量"。</div>
+
+  <h3 id="ch2-5">2.5 钛合金 / 铜合金</h3>
+  <div class="work-card">
+    <div class="w-head"><span class="w-icon">✈️</span><span class="w-name">钛合金件</span></div>
+    <div class="w-desc">航空发动机叶片、飞机承力件、医疗植入物（钛骨头）、化工耐蚀设备。<strong>钛合金细晶，UT 极好检</strong>（声速 6100~6200 m/s）。</div>
+  </div>
+  <div class="work-card">
+    <div class="w-head"><span class="w-icon">🪙</span><div class="w-name" style="display:inline">铜合金件</div></div>
+    <div class="w-desc">铜管（空调、热交换器）、黄铜阀门、青铜轴承。<strong>铜的声速低（4400~4660）、晶粒粗，UT 中等难度</strong>。</div>
+  </div>
+</div>
+
+<!-- ========== 第三章 什么体 ========== -->
+<div class="section" id="ch3">
+  <h2>三、"什么体"是什么？（铁素体/奥氏体/马氏体…）</h2>
+  <p>你被这些词绕晕了。别怕，我用一个比喻让你彻底搞懂。</p>
+
+  <h3 id="ch3-1">3.1 一个比喻搞懂"组织"</h3>
+  <div class="analogy"><strong>"组织"就是金属内部原子的"排列队形"。</strong><br><br>
+    想象一个广场上站着一群人（原子）。这群人可以站成不同的队形：<br>
+    • 队形 A（铁素体）——大家站得松，队伍软，容易被推开<br>
+    • 队形 B（奥氏体）——大家挤得紧，队伍灵活有弹性<br>
+    • 队形 C（马氏体）——大家被强行卡在别扭的姿势，整个队形又硬又紧绷<br><br>
+    <strong>同样是一群人（同样都是铁原子+碳原子），站成不同队形，性格完全不同。</strong>这就是"组织"决定"性能"。
+  </div>
+
+  <h3 id="ch3-2">3.2 五大组织速记（只要记住性格）</h3>
+  <div class="key">
+    <table>
+      <tr><th>组织（队形）</th><th>性格（一句话）</th><th>对 UT 的影响</th></tr>
+      <tr><td><strong>铁素体</strong></td><td>软、韧、有磁性</td><td>细晶时好检</td></tr>
+      <tr><td><strong>奥氏体</strong></td><td>韧、<strong>无磁性</strong>、耐腐蚀</td><td><strong>焊缝晶粒粗大 → 难检！</strong></td></tr>
+      <tr><td><strong>珠光体</strong></td><td>硬度适中、综合性能好</td><td>好检（声速最高）</td></tr>
+      <tr><td><strong>马氏体</strong></td><td>极硬、极脆、内应力大</td><td>能检，但内应力干扰声速</td></tr>
+      <tr><td><strong>渗碳体</strong></td><td>极硬极脆（铁碳化合物）</td><td>作为珠光体的一部分存在</td></tr>
+    </table>
+  </div>
+  <div class="tip"><strong>你只需要记住一条</strong>：客户提到"奥氏体"（比如 304、316 不锈钢），你脑子里就响警报——<strong>"粗晶、难检、要小心"</strong>。其他几个组织对销售来说不关键。</div>
+</div>
+
+<!-- ========== 第四章 什么材料什么体 ========== -->
+<div class="section" id="ch4">
+  <h2>四、什么材料，是什么"体"？好不好检？</h2>
+  <p>这一节是最实用的——客户报出材料名，你就能判断"好不好检"。</p>
+
+  <h3 id="ch4-1">4.1 钢铁类</h3>
+  <table class="big-table">
+    <tr><th>客户说的牌号</th><th>是什么</th><th>组织（体）</th><th>UT 难度</th></tr>
+    <tr class="good-row"><td>Q235、Q345</td><td>普通结构钢（建筑/桥梁/容器）</td><td>铁素体+珠光体</td><td>✅ 优（细晶）</td></tr>
+    <tr class="good-row"><td>Q345R、Q245R</td><td>压力容器钢</td><td>铁素体+珠光体（细晶）</td><td>✅ 优</td></tr>
+    <tr class="good-row"><td>20 号钢、45 号钢</td><td>优质碳素钢（轴、齿轮）</td><td>铁素体+珠光体</td><td>✅ 优</td></tr>
+    <tr class="good-row"><td>42CrMo 调质</td><td>合金结构钢（锻件）</td><td>回火索氏体</td><td>✅ 优（细晶）</td></tr>
+    <tr class="good-row"><td>GCr15 轴承钢</td><td>轴承（淬火件）</td><td>马氏体（回火后）</td><td>✅ 良</td></tr>
+    <tr><td>铸钢</td><td>铸件（阀门、缸体）</td><td>铸态粗晶</td><td>⚠️ 中（柱状晶）</td></tr>
+    <tr class="bad-row"><td><strong>304、316 不锈钢</strong></td><td><strong>奥氏体不锈钢</strong></td><td><strong>奥氏体</strong></td><td><strong>⚠️ 母材中等 / 焊缝极难</strong></td></tr>
+    <tr class="bad-row"><td>灰铸铁 HT</td><td>机床床身、井盖</td><td>铁素体+片状石墨</td><td>❌ 差（声速低衰减大）</td></tr>
+    <tr><td>球墨铸铁 QT</td><td>曲轴、齿轮</td><td>铁素体+球状石墨</td><td>⚠️ 中（看球化率）</td></tr>
+  </table>
+
+  <h3 id="ch4-2">4.2 铝 / 钛 / 铜 / 复合材料</h3>
+  <table class="big-table">
+    <tr><th>材料</th><th>常见工件</th><th>组织</th><th>UT 难度</th></tr>
+    <tr class="good-row"><td><strong>纯铝 / 变形铝合金</strong></td><td>航空板、型材、汽车件</td><td>FCC 细晶</td><td><strong>✅ 优（你们主场）</strong></td></tr>
+    <tr><td>铝铸件</td><td>发动机缸体、壳体</td><td>铸态</td><td>⚠️ 中（有缩孔气孔）</td></tr>
+    <tr class="good-row"><td><strong>钛合金 TC4</strong></td><td>航空发动机叶片、医疗</td><td>α+β 细晶</td><td><strong>✅ 优</strong></td></tr>
+    <tr><td>纯铜 / 黄铜</td><td>铜管、阀门、轴承</td><td>FCC（粗晶）</td><td>⚠️ 中（声速低粗晶）</td></tr>
+    <tr class="good-row"><td><strong>碳纤维 CFRP</strong></td><td>飞机机身、赛车、运动器材</td><td>层状各向异性</td><td><strong>✅ 良（C 扫查分层）</strong></td></tr>
+    <tr class="good-row"><td><strong>玻璃钢 GFRP</strong></td><td>船身、风机叶片、储罐</td><td>层状</td><td><strong>✅ 良（C 扫查分层脱粘）</strong></td></tr>
+    <tr class="good-row"><td><strong>蜂窝夹芯</strong></td><td>飞机内饰、卫星板</td><td>面板+芯子</td><td><strong>✅ 良（C 扫查脱粘）</strong></td></tr>
+  </table>
+
+  <h3 id="ch4-3">4.3 ★ 好检/难检 一张总表（贴墙）</h3>
+  <div class="key">
+    <div class="good">
+    <strong>✅ 你们水浸 C 扫 / A 扫 的主场（细晶材料）：</strong>
+    <ul>
+      <li><strong>铝及铝合金</strong>——声速高、晶粒细，UT 极清晰</li>
+      <li><strong>复合材料</strong>（碳纤维/玻璃钢/蜂窝）——分层/脱粘检测是 C 扫拿手好戏</li>
+      <li><strong>普通碳钢、压力容器钢</strong>（Q235/Q345/Q345R）——铁素体+珠光体，好检</li>
+      <li><strong>合金结构钢锻件</strong>（42CrMo 等）——调质后细晶，好检</li>
+      <li><strong>钛合金</strong>——细晶，好检</li>
+    </ul>
+    </div>
+    <div class="bad">
+    <strong>❌ 难检（要小心，可能不是你们最优解）：</strong>
+    <ul>
+      <li><strong>奥氏体不锈钢焊缝</strong>（304/316 焊缝）——粗晶草状回波，是 UT 公认最难点</li>
+      <li><strong>灰铸铁</strong>——片状石墨严重衰减声波</li>
+      <li><strong>紫铜、黄铜焊缝</strong>——粗晶</li>
+      <li><strong>大厚度镍基合金焊缝/堆焊层</strong>——粗晶</li>
+    </ul>
+    </div>
+  </div>
+  <div class="sale"><strong>客户对话</strong>
+    <div class="scenario">
+      <div class="q">客户："我们做碳纤维板的，想检测有没有分层。"</div>
+      <div class="a" style="margin-top:6px"><strong>这正是你们水浸 C 扫的强项！</strong>你可以自信地说："分层检测是水浸 C 扫最核心的应用。我们扫一张 C 扫图给您看——分层在哪个位置、面积多大，一目了然。要不要寄个样件来我们扫一下出张图？"</div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 第五章 奥氏体 ========== -->
+<div class="section" id="ch5">
+  <h2>五、奥氏体能测吗？水浸 C 扫能测吗？</h2>
+
+  <h3>5.1 哪些工件是"奥氏体"？</h3>
+  <div class="key">"奥氏体"在工程语境里，<strong>99% 指 304/316 系列不锈钢</strong>。客户嘴里说"奥氏体不锈钢"，基本就是说 304/316。常见场景：
+    <ul>
+      <li><strong>化工厂</strong>的管道、储罐、反应釜（不锈钢耐腐蚀）</li>
+      <li><strong>食品/制药/医疗</strong>设备（不锈钢易清洁、不生锈）</li>
+      <li><strong>低温储罐</strong>（液氮液氢，奥氏体低温不脆）</li>
+      <li><strong>核电、海洋工程</strong>的不锈钢结构件</li>
+    </ul>
+  </div>
+
+  <h3>5.2 能测吗？分两种情况</h3>
+  <table>
+    <tr><th>情况</th><th>UT 能测吗</th><th>你们水浸 C 扫能测吗</th><th>说明</th></tr>
+    <tr class="good-row"><td><strong>奥氏体母材</strong><br>（不锈钢板/管/锻件本身）</td><td>✅ 能测，中等难度</td><td>✅ 能测</td><td>固溶处理后晶粒较细，常规 UT 可行。测厚度、测夹杂、测腐蚀都没问题。</td></tr>
+    <tr class="bad-row"><td><strong>奥氏体焊缝</strong><br>（不锈钢焊过的接头）</td><td>⚠️ 极难</td><td>⚠️ 不是最优解</td><td>焊缝柱状晶粗大+各向异性，草状回波严重。<strong>这块市场主要靠 PAUT/TOFD。</strong></td></tr>
+  </table>
+
+  <h3>5.3 为什么焊缝这么难？</h3>
+  <div class="analogy">奥氏体母材像<strong>一池平静的水</strong>，声波能顺畅穿透。但焊缝经过高温熔化再凝固，长出粗大的<strong>柱状晶</strong>（像一捆竖立的筷子），声波穿过就像<strong>手电筒光穿过浓雾</strong>——被四面八方散射，屏幕上一片杂乱的"草状回波"，把真正的缺陷信号淹没了。</div>
+
+  <div class="warn"><strong>对你们产品的诚实定位</strong>：<br>
+    客户拿来<strong>奥氏体母材</strong>（不锈钢板/管/锻件，未焊接或焊缝周边）——你们 A 扫 + 水浸 C 扫<strong>完全能做</strong>。<br>
+    客户专门要求<strong>奥氏体焊缝探伤</strong>——坦诚说明这是难点，常规 A 扫/C 扫不是最优，业内主流用 PAUT/TOFD。<br>
+    <strong>这不是你们设备的缺陷，而是所有常规 UT 在这个工况都难。</strong>
+  </div>
+</div>
+
+<!-- ========== 第六章 HV ========== -->
+<div class="section" id="ch6">
+  <h2>六、HV 是什么？硬度指标全家桶</h2>
+  <div class="analogy"><strong>硬度（Hardness）就是"材料抵抗被压出印子的能力"。</strong><br><br>
+    拿一个硬东西（金刚石或钢球）用力压材料表面，压出的印子越小，说明材料越硬。HV、HB、HRC 都是测出来的数值，只是用的压头和算法不同。
+  </div>
+  <table>
+    <tr><th>代号</th><th>全名</th><th>用什么压</th><th>用在哪</th></tr>
+    <tr><td><strong>HV</strong></td><td>维氏硬度 Vickers</td><td>金刚石四棱锥</td><td>实验室、薄层、科研。范围广，最精确</td></tr>
+    <tr><td><strong>HB</strong></td><td>布氏硬度 Brinell</td><td>钢球</td><td>软钢、铸铁、有色金属（粗略）</td></tr>
+    <tr><td><strong>HRC</strong></td><td>洛氏硬度 Rockwell C</td><td>金刚石圆锥</td><td>淬火件、硬质材料（工厂最常用）</td></tr>
+  </table>
+  <div class="key"><strong>对照感觉</strong>（都是近似）：
+    <ul>
+      <li>低碳钢（铁素体）：HV 100~150（HB ~120）</li>
+      <li>珠光体钢：HV 200~280</li>
+      <li>调质钢（42CrMo 回火索氏体）：HV 280~400（HRC 28~42）</li>
+      <li><strong>马氏体（淬火态）</strong>：HV <strong>600~900</strong>（HRC 55~65）——这就是马氏体极硬的原因</li>
+      <li>工具钢/高速钢淬火：HV 800~1000</li>
+    </ul>
+  </div>
+  <div class="tip">看到 HV/HB/HRC，你只要知道<strong>"数字越大越硬"</strong>就够了。马氏体 HV 600~900 = 比普通钢硬 5~8 倍，所以又硬又脆。</div>
+</div>
+
+<!-- ========== 第七章 C扫描（重点） ========== -->
+<div class="section" id="ch7">
+  <h2>七、C 扫描好在哪？（你们主力，重点讲）</h2>
+
+  <h3 id="ch7-1">7.1 先搞懂 A 扫 / B 扫 / C 扫的区别</h3>
+  <div class="analogy">用医学影像类比，一秒搞懂：<br>
+    <strong>A 扫 = 心电图</strong>——一个点的波形上下跳动，只有专业人员看得懂。<br>
+    <strong>B 扫 = B超切片图</strong>——看到工件内部一个纵截面（切开一刀看到的样子）。<br>
+    <strong>C 扫 = 俯拍地图/热力图</strong>——从上往下看，工件某一深度层的全貌，像天气预报那种彩色图。
+  </div>
+  <table>
+    <tr><th>显示方式</th><th>看到什么</th><th>类比</th><th>谁用</th></tr>
+    <tr><td><strong>A 型</strong></td><td>单点波形（横轴时间、纵轴幅度）</td><td>心电图</td><td>所有 UT 仪器都有，最基础</td></tr>
+    <tr><td><strong>B 型</strong></td><td>纵截面图（侧视切片）</td><td>医学 B 超</td><td>PAUT、TOFD 常用</td></tr>
+    <tr><td><strong>C 型</strong></td><td>俯视深度切片图（像热力图）</td><td>俯拍地图</td><td><strong>水浸 C 扫、PAUT</strong></td></tr>
+  </table>
+
+  <h3 id="ch7-2">7.2 ★ 水浸 C 扫描的五大优势</h3>
+  <div class="good">
+    <ol>
+      <li><strong>耦合极稳定</strong>——工件泡在水里，水就是耦合剂。没有手动按压的压力波动，数据重复性极好。<br><span style="color:var(--text-light);font-size:13px">对比：接触式 A 扫靠人手压探头，压力大小影响耦合，数据波动大。</span></li>
+      <li><strong>聚焦分辨率高</strong>——水里可以用聚焦探头，把声束聚成很细的焦点，横向分辨率远超接触式。<br><span style="color:var(--text-light);font-size:13px">能检出更小的缺陷，分层边界更清晰。</span></li>
+      <li><strong>出图像，客户爱看</strong>——C 扫输出一张彩色俯视图（红=缺陷大、蓝=正常），缺陷位置、面积、分布一眼看清。<br><span style="color:var(--text-light);font-size:13px">A 扫只有一个波形，客户看不懂；C 扫图客户秒懂——这就是销售利器。</span></li>
+      <li><strong>适合批量+自动化</strong>——探头按 X-Y 栅格自动扫查，一晚上扫一整片板，无需人工逐点。<br><span style="color:var(--text-light);font-size:13px">客户做量产件（航空板、汽车件）最爱这种自动化。</span></li>
+      <li><strong>可深度切片</strong>——在不同深度设"闸门"，扫出多张 C 扫图，看缺陷在哪个深度层。</li>
+    </ol>
+  </div>
+
+  <h3 id="ch7-3">7.3 ★ C 扫描最适合检哪些工件</h3>
+  <div class="key">
+    <table>
+      <tr><th>C 扫强项</th><th>通俗讲</th><th>典型工件（你们的客户）</th></tr>
+      <tr><td><strong>分层检测</strong></td><td>材料内部一层层分开</td><td>碳纤维板、玻璃钢板、轧制钢板</td></tr>
+      <tr><td><strong>脱粘检测</strong></td><td>两层东西没粘牢</td><td>蜂窝夹芯板、金属复合板、贴片件</td></tr>
+      <tr><td><strong>孔隙检测</strong></td><td>里面有小气泡</td><td>复合材料成型件</td></tr>
+      <tr><td><strong>冲击损伤（BVID）</strong></td><td>外表没事里面坏了</td><td>飞机蒙皮、复合材料壳体</td></tr>
+      <tr><td><strong>厚度测绘</strong></td><td>整片扫厚度分布</td><td>铝板、钢板、管材壁厚</td></tr>
+      <tr><td><strong>焊缝/腐蚀扫查</strong></td><td>大面积成像</td><td>平板焊缝（非奥氏体）、腐蚀区域</td></tr>
+    </table>
+  </div>
+  <div class="tip"><strong>一句话总结你们产品的最强战场</strong>：<br>
+    <strong>"细晶材料 + 平板/中小件 + 要看缺陷分布图 → 水浸 C 扫是王者"</strong><br>
+    铝板、复合材料板、蜂窝板、金属复合板——这些就是你们最该攻的市场。
+  </div>
+
+  <h3 id="ch7-4">7.4 PAUT / TOFD / C 扫 对比（被问到时怎么答）</h3>
+  <table>
+    <tr><th>方法</th><th>原理</th><th>强在哪</th><th>弱在哪</th><th>谁的市场</th></tr>
+    <tr><td><strong>常规 A 扫</strong></td><td>单探头单角度</td><td>简单、便宜、便携</td><td>不出图、依赖人、定性难</td><td><strong>你们（主力）</strong></td></tr>
+    <tr><td><strong>水浸 C 扫</strong></td><td>水槽+栅格扫查</td><td>出图、分辨率高、耦合稳、自动化</td><td>大件泡不下、粗晶材料弱</td><td><strong>你们（主力）</strong></td></tr>
+    <tr><td><strong>PAUT 相控阵</strong></td><td>多晶片电子控制角度</td><td>一次多角度成像、效率高、适合复杂焊缝</td><td>设备贵、粗晶仍受限</td><td>压力容器/管道焊缝（你们没有）</td></tr>
+    <tr><td><strong>TOFD</strong></td><td>用缺陷尖端衍射波</td><td>测高精确、对面状缺陷（裂纹）特灵</td><td>上下表面有盲区、要配 PAUT</td><td>厚壁焊缝裂纹（你们没有）</td></tr>
+  </table>
+  <div class="warn"><strong>PAUT/TOFD 对粗晶（奥氏体焊缝）有多大提升？</strong><br>
+    有提升，但<strong>不是万能</strong>。PAUT 能用<strong>聚焦</strong>把能量集中，提升信噪比约 6~12 dB；TOFD 对裂纹检出有优势。但粗晶散射是物理硬伤，<strong>即使 PAUT 也无法完全解决</strong>，要用专门低频纵波相控阵 + 声束模拟。所以业内常说"奥氏体焊缝是无损检测的皇冠"，能用但很难。
+  </div>
+  <div class="ndt"><strong>关键认知：C 扫对奥氏体焊缝有帮助吗？</strong><br>
+    帮助有限。C 扫的优势是<strong>成像和耦合稳定</strong>，但奥氏体焊缝的根本问题是<strong>粗晶散射</strong>，水浸 C 扫换不解决这个问题。C 扫对<strong>细晶材料</strong>（铝、钢、钛、复材）才能发挥全部优势。
+  </div>
+
+  <div class="sale"><strong>客户对话（被问"你们能不能测焊缝/能不能替代 PAUT"）</strong>
+    <div class="scenario">
+      <div class="q">客户："你们这个水浸 C 扫能测压力容器焊缝吗？"</div>
+      <div class="a" style="margin-top:6px">"压力容器焊缝（碳钢/低合金钢）我们 A 扫完全能做，C 扫也能扫出焊缝缺陷分布图。但如果是<strong>奥氏体不锈钢焊缝</strong>，常规 UT 都比较困难，业内一般推荐 PAUT。我们的强项是<strong>铝板、复合材料、分层脱粘</strong>这块，要不要我针对您的工件出个方案？"</div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 总结 ========== -->
+<div class="section" id="summary">
+  <h2>📋 全文总结（12 条记住就够）</h2>
+  <ol>
+    <li><strong>五大加工</strong>：铸造（倒模）、轧制（擀面）、锻造（打铁）、机加工（切削）、焊接（熔接）。每种产生不同缺陷。</li>
+    <li><strong>加工→缺陷</strong>：铸→缩孔气孔；轧→分层；锻→白点；焊→裂纹未熔合；热处理→淬火裂纹。</li>
+    <li><strong>"什么体"就是组织</strong>（原子排列队形）。你只需记：<strong>奥氏体 = 粗晶难检</strong>，其他不用深究。</li>
+    <li><strong>304/316 不锈钢 = 奥氏体</strong>。母材能测，焊缝极难（粗晶草状回波）。</li>
+    <li><strong>铝 = 你们黄金客户</strong>：声速高、晶粒细、UT 极清晰。航空铝、铝型材、汽车铝都是。</li>
+    <li><strong>复合材料 = 你们杀手锏市场</strong>：碳纤维/玻璃钢/蜂窝板，C 扫查分层脱粘是强项。</li>
+    <li><strong>水冷板 = 你们当下核心市场</strong>：新能源车电池液冷板、AI/数据中心液冷板、IGBT 散热器。铝板+钎焊/FSW，查钎着率是核心。</li>
+    <li><strong>钎着率 = 钎焊面焊实的比例</strong>。虚焊空洞导致散热死角→电池热失控/芯片烧毁。车厂和数据中心有硬指标（常见 ≥85%）。</li>
+    <li><strong>HV = 维氏硬度</strong>，数字越大越硬。马氏体 HV 600~900（极硬极脆）。</li>
+    <li><strong>A 扫=心电图，C 扫=俯拍地图</strong>。C 扫出图、耦合稳、分辨率高、能自动化、能算钎着率。</li>
+    <li><strong>水浸 C 扫最强战场</strong>：细晶材料 + 平板/中小件 + 要看缺陷分布/结合质量。铝、复材、分层、脱粘、钎着率。</li>
+    <li><strong>奥氏体焊缝是盲区</strong>：坦诚说明，建议 PAUT。这不是你们设备差，是所有常规 UT 都难。</li>
+  </ol>
+  <div class="tip"><strong>这份教材读完后，你应该能</strong>：客户报出材料名（铝/钢/304/碳纤维…），你立刻知道好不好检、用什么方法、你们设备行不行。</div>
+</div>
+
+<!-- ========== 测验 ========== -->
+<div class="section" id="exam">
+  <h2>📝 随堂测验（10 题）</h2>
+  <div class="quiz-intro">这 10 题考的是"懂不懂客户拿来的是什么、能不能测"。做完整再看解析。</div>
+
+  <div class="quiz-question" data-correct="B">
+    <div class="q-text"><span class="q-num">1</span>客户拿来一块"碳纤维板"想检测有没有分层，你们水浸 C 扫能做吗？</div>
+    <div class="quiz-option" data-k="A">A. 不能，碳纤维不是金属</div>
+    <div class="quiz-option" data-k="B">B. 能，而且这正是水浸 C 扫的强项</div>
+    <div class="quiz-option" data-k="C">C. 能，但效果很差</div>
+    <div class="quiz-option" data-k="D">D. 只有 PAUT 能做</div>
+    <div class="quiz-explain">✅ 选 B。分层检测是水浸 C 扫的<strong>核心应用</strong>。复合材料（碳纤维、玻璃钢、蜂窝板）的分层、脱粘、孔隙，正是 C 扫的看家本领。这是你们产品的杀手锏市场。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="C">
+    <div class="q-text"><span class="q-num">2</span>客户说工件是"304 不锈钢焊缝"，要 UT 探伤。你应该？</div>
+    <div class="quiz-option" data-k="A">A. 没问题，常规 A 扫就能搞定</div>
+    <div class="quiz-option" data-k="B">B. 不锈钢都不能测</div>
+    <div class="quiz-option" data-k="C">C. 坦诚说明奥氏体焊缝是难点，常规 UT 不是最优，业内主流用 PAUT/TOFD</div>
+    <div class="quiz-option" data-k="D">D. 调高频率就能解决</div>
+    <div class="quiz-explain">✅ 选 C。304 是奥氏体不锈钢，焊缝处粗大柱状晶产生草状回波，是 UT 公认最难点。常规 A 扫/C 扫都不是最优解。A 错（焊缝难）；B 错（母材能测，是焊缝难）；D 完全反了（频率越高衰减越大越糟）。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="A">
+    <div class="q-text"><span class="q-num">3</span>铝件做 UT 检测，难度大概如何？</div>
+    <div class="quiz-option" data-k="A">A. 优（声速高、晶粒细）</div>
+    <div class="quiz-option" data-k="B">B. 差（铝太软声波进不去）</div>
+    <div class="quiz-option" data-k="C">C. 中（粗晶难检）</div>
+    <div class="quiz-option" data-k="D">D. 铝不能用 UT 测</div>
+    <div class="quiz-explain">✅ 选 A。铝声速 6300 m/s（比钢还快），晶粒细、衰减小，UT 非常清晰。航空铝、铝型材、汽车铝都是水浸 C 扫的黄金客户。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="B">
+    <div class="q-text"><span class="q-num">4</span>"马氏体 HV 600~900"——HV 是什么？</div>
+    <div class="quiz-option" data-k="A">A. 一种声速单位</div>
+    <div class="quiz-option" data-k="B">B. 维氏硬度（数字越大越硬）</div>
+    <div class="quiz-option" data-k="C">C. 韧性指标</div>
+    <div class="quiz-option" data-k="D">D. 温度单位</div>
+    <div class="quiz-explain">✅ 选 B。HV 是维氏硬度，用金刚石四棱锥压材料表面测出。马氏体 HV 600~900，比普通钢（HV 100~150）硬 5~8 倍，所以极硬极脆。同类还有 HB（布氏）、HRC（洛氏）。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="C">
+    <div class="q-text"><span class="q-num">5</span>水浸 C 扫相比接触式 A 扫，最大的优势是什么？</div>
+    <div class="quiz-option" data-k="A">A. 设备更便宜</div>
+    <div class="quiz-option" data-k="B">B. 能测更大的工件</div>
+    <div class="quiz-option" data-k="C">C. 耦合稳定 + 出图像 + 分辨率高 + 可自动化</div>
+    <div class="quiz-option" data-k="D">D. 不用水，更方便</div>
+    <div class="quiz-explain">✅ 选 C。水浸 C 扫四大优势：①水耦合稳定（无人工压力波动）②聚焦分辨率高 ③出 C 扫图客户秒懂 ④可自动化批量扫。A 错（C 扫更贵）；B 错（大件泡不下，反受限于水槽）；D 完全反了（水浸就是要泡水里）。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="D">
+    <div class="q-text"><span class="q-num">6</span>下列哪个工件/材料，是你们水浸 C 扫的<strong>最核心战场</strong>？</div>
+    <div class="quiz-option" data-k="A">A. 304 不锈钢焊缝</div>
+    <div class="quiz-option" data-k="B">B. 大型灰铸铁机床床身</div>
+    <div class="quiz-option" data-k="C">C. 长输天然气管道</div>
+    <div class="quiz-option" data-k="D">D. 碳纤维复合材料板的分层检测</div>
+    <div class="quiz-explain">✅ 选 D。复合材料分层检测是水浸 C 扫的杀手锏。A（奥氏体焊缝）是盲区；B（灰铸铁大件）衰减大且泡不下；C（长输管道）用导波或 PAUT，水浸做不了。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="B">
+    <div class="q-text"><span class="q-num">7</span>客户说工件是"锻件"，你脑子里应该跳出什么典型缺陷？</div>
+    <div class="quiz-option" data-k="A">A. 分层</div>
+    <div class="quiz-option" data-k="B">B. 白点（氢致微裂纹）</div>
+    <div class="quiz-option" data-k="C">C. 缩孔</div>
+    <div class="quiz-option" data-k="D">D. 咬边</div>
+    <div class="quiz-explain">✅ 选 B。锻件最可怕的典型缺陷是<strong>白点</strong>（氢造成的内部微裂纹），还有夹杂、折叠。A 分层是钢板的毛病；C 缩孔是铸件的毛病；D 咬边是焊缝的毛病。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="A">
+    <div class="q-text"><span class="q-num">8</span>【销售场景】客户问："C 扫和 PAUT 哪个好？"最佳回答思路？</div>
+    <div class="quiz-option" data-k="A">A. 各有强项：C 扫强在细晶平板件成像（铝/复材/分层），PAUT 强在复杂焊缝多角度成像</div>
+    <div class="quiz-option" data-k="B">B. C 扫绝对比 PAUT 好</div>
+    <div class="quiz-option" data-k="C">C. PAUT 绝对比 C 扫好</div>
+    <div class="quiz-option" data-k="D">D. 它们是一回事</div>
+    <div class="quiz-explain">✅ 选 A。两种方法定位不同，不存在绝对优劣。C 扫适合细晶平板件（铝、复材、分层脱粘）的成像扫查；PAUT 适合复杂焊缝的多角度快速成像。专业的销售要懂扬长，而不是贬低对手。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="C">
+    <div class="q-text"><span class="q-num">9</span>水冷板（液冷板）检测，最核心的检测指标是什么？</div>
+    <div class="quiz-option" data-k="A">A. 表面粗糙度</div>
+    <div class="quiz-option" data-k="B">B. 板的厚度</div>
+    <div class="quiz-option" data-k="C">C. 钎着率（钎焊面焊实的比例）</div>
+    <div class="quiz-option" data-k="D">D. 材料成分</div>
+    <div class="quiz-explain">✅ 选 C。<strong>钎着率是水冷板最核心的指标</strong>。虚焊/空洞区散热差，会导致电池热失控或芯片烧毁。车厂和数据中心有硬指标（常见要求 ≥85%）。水浸 C 扫能自动识别焊好区/虚焊区并扣除流道面积，直接算出钎着率百分比。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="D">
+    <div class="q-text"><span class="q-num">10</span>【销售场景】电池厂客户问："液冷板钎焊质量怎么验证？" 最佳回答？</div>
+    <div class="quiz-option" data-k="A">A. "用射线拍片就行"</div>
+    <div class="quiz-option" data-k="B">B. "肉眼看不出来，没办法检"</div>
+    <div class="quiz-option" data-k="C">C. "只能切开看金相"</div>
+    <div class="quiz-option" data-k="D">D. "水浸 C 扫扫一张钎着率分布图，自动扣除流道面积出百分比报告"</div>
+    <div class="quiz-explain">✅ 选 D。这是水浸 C 扫对水冷板的核心卖点——<strong>无损、出图、自动算钎着率</strong>。A 射线对结合面不敏感（厚度方向重叠）；B 太消极（明明能检）；C 破坏性，量产件不能切。最佳做法是建议客户寄样板，扫一张图出报告看效果。</div>
+  </div>
+
+  <div id="quiz-result">
+    <div>你的得分</div>
+    <div class="score">0</div>
+    <div id="result-text"></div>
+    <br>
+    <button class="btn ghost" onclick="resetQuiz()">重新作答</button>
+  </div>
+
+  <div style="text-align:center;margin-top:18px">
+    <button class="btn" onclick="submitQuiz()">交卷查看成绩</button>
+  </div>
+</div>
+
+<div class="nav-foot">
+  <a href="#hero"><div class="label">↑ 回开头</div></a>
+  <div style="text-align:center"><div class="label">配套</div><div class="title">第01课 · 材料科学基础（上） →</div></div>
+  <a href="#"><div class="label"></div></a>
+</div>
+
+</div>
+
+<div style="text-align:center;margin:24px 0;padding:14px;background:#eaf2f8;border-radius:8px"><a href="index.html" style="display:inline-block;background:#1a5276;color:#fff;padding:10px 28px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px">🏠 返回总目录</a></div>
+<script>
+document.querySelectorAll('.quiz-question').forEach(q=>{
+  const correct=q.dataset.correct;
+  q.querySelectorAll('.quiz-option').forEach(opt=>{
+    opt.addEventListener('click',()=>{
+      if(q.classList.contains('locked'))return;
+      q.querySelectorAll('.quiz-option').forEach(o=>{o.classList.remove('selected','correct','wrong');const m=o.querySelector('.mark');if(m)m.remove();});
+      opt.classList.add('selected');
+      const k=opt.dataset.k;
+      if(k===correct){
+        opt.classList.add('correct');
+        opt.insertAdjacentHTML('beforeend','<span class="mark">✓</span>');
+      }else{
+        opt.classList.add('wrong');
+        opt.insertAdjacentHTML('beforeend','<span class="mark">✗</span>');
+        q.querySelectorAll('.quiz-option').forEach(o=>{if(o.dataset.k===correct){o.classList.add('correct');}});
+      }
+      q.querySelector('.quiz-explain').classList.add('show');
+      q.classList.add('locked');
+    });
+  });
+});
+
+function submitQuiz(){
+  const qs=document.querySelectorAll('.quiz-question');
+  let answered=0,score=0;
+  qs.forEach(q=>{
+    if(q.classList.contains('locked')){
+      answered++;
+      const sel=q.querySelector('.quiz-option.correct.selected');
+      if(sel)score++;
+    }
+  });
+  const res=document.getElementById('quiz-result');
+  const txt=document.getElementById('result-text');
+  res.style.display='block';
+  res.querySelector('.score').textContent=score+' / '+qs.length;
+  let msg='';
+  const pct=score/qs.length;
+  if(pct===1)msg='满分！工件、材料、检测方法都打通了，可以自信面对客户。';
+  else if(pct>=0.75)msg='不错！核心概念掌握了，错题看解析巩固一下。';
+  else if(pct>=0.5)msg='有概念了，建议重看"工件长什么样"和"C扫描优势"两节。';
+  else msg='别急，这份内容偏多。重看一遍"工件"和"好检难检总表"再测一次。';
+  txt.textContent=msg+'（已答 '+answered+'/'+qs.length+' 题）';
+  res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function resetQuiz(){
+  document.querySelectorAll('.quiz-question').forEach(q=>{
+    q.classList.remove('locked');
+    q.querySelectorAll('.quiz-option').forEach(o=>{
+      o.classList.remove('selected','correct','wrong');
+      const m=o.querySelector('.mark');if(m)m.remove();
+    });
+    q.querySelector('.quiz-explain').classList.remove('show');
+  });
+  document.getElementById('quiz-result').style.display='none';
+}
+
+const sections=[...document.querySelectorAll('.section[id]')];
+const sideLinks=[...document.querySelectorAll('.sidebar a[href^="#"]')];
+const progress=document.getElementById('progress');
+window.addEventListener('scroll',()=>{
+  const sc=window.scrollY+120;
+  let cur=sections[0];
+  sections.forEach(s=>{if(s.offsetTop<=sc)cur=s;});
+  sideLinks.forEach(a=>{a.classList.toggle('active',a.getAttribute('href')==='#'+cur.id);});
+  const total=document.body.scrollHeight-window.innerHeight;
+  progress.style.width=Math.min(100,(window.scrollY/total)*100)+'%';
+});
+</script>
+
+</body>
+</html>

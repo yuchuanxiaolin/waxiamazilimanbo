@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D0 · 客户与行业纵深 · 导论（视角转弯）</title>
+<style>
+:root{--primary:#1a5276;--primary-light:#2980b9;--accent:#e67e22;--bg:#f4f6f7;--card:#fff;--text:#2c3e50;--text-light:#7f8c8d;--border:#d5dbdb;--success:#27ae60;--danger:#e74c3c;--warning:#f39c12;--info:#3498db;--shadow:0 2px 8px rgba(0,0,0,.08)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.85;font-size:15.5px;scroll-behavior:smooth}
+.topbar{position:fixed;top:0;left:0;right:0;height:52px;background:var(--primary);color:#fff;display:flex;align-items:center;padding:0 20px;z-index:1000;box-shadow:0 4px 20px rgba(0,0,0,.12)}
+.topbar h1{font-size:16px;font-weight:600}.topbar .crumb{font-size:12px;opacity:.75;margin-left:8px}
+.topbar nav{margin-left:auto;display:flex;gap:4px;overflow-x:auto}
+.topbar nav a{color:#cfd8dc;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:4px;white-space:nowrap}
+.sidebar{position:fixed;top:52px;left:0;bottom:0;width:230px;background:#fff;border-right:1px solid var(--border);overflow-y:auto;padding:14px 0;z-index:900}
+.sidebar a{display:block;padding:8px 18px;color:var(--text-light);text-decoration:none;font-size:12.5px;border-left:3px solid transparent}
+.sidebar a:hover{background:var(--bg);color:var(--primary)}
+.sidebar a.sub{padding-left:30px;font-size:11.5px}
+.main{margin-left:230px;margin-top:52px;padding:26px 32px;max-width:1000px}
+.section{background:var(--card);border-radius:10px;padding:24px 28px;margin-bottom:20px;box-shadow:var(--shadow)}
+.section h2{color:var(--primary);font-size:21px;border-bottom:2px solid var(--primary-light);padding-bottom:8px;margin-bottom:14px}
+.section h3{color:var(--primary);font-size:16.5px;margin:18px 0 8px;padding-left:10px;border-left:4px solid var(--accent)}
+.section h4{color:var(--text);font-size:15px;margin:14px 0 5px}
+.section p{margin:8px 0}.section ul,.section ol{margin:8px 0 8px 24px}.section li{margin:4px 0}.section strong{color:var(--primary)}
+.tip{background:#eafaf1;border-left:4px solid var(--success);padding:11px 15px;border-radius:6px;margin:12px 0}.tip::before{content:"💡 记住";display:block;font-weight:700;color:var(--success);font-size:12.5px;margin-bottom:3px}
+.warn{background:#fef9e7;border-left:4px solid var(--warning);padding:11px 15px;border-radius:6px;margin:12px 0}.warn::before{content:"⚠️ 注意";display:block;font-weight:700;color:var(--warning);font-size:12.5px;margin-bottom:3px}
+.key{background:#eaf2f8;border-left:4px solid var(--primary-light);padding:11px 15px;border-radius:6px;margin:12px 0}.key::before{content:"🔑 核心";display:block;font-weight:700;color:var(--primary);font-size:12.5px;margin-bottom:3px}
+.sale{background:#fdf2e9;border-left:4px solid var(--accent);padding:11px 15px;border-radius:6px;margin:12px 0}.sale::before{content:"💬 客户对话";display:block;font-weight:700;color:var(--accent);font-size:12.5px;margin-bottom:3px}
+.ndt{background:#eef5fb;border-left:4px solid var(--info);padding:11px 15px;border-radius:6px;margin:12px 0}.ndt::before{content:"🔬 检测要点";display:block;font-weight:700;color:var(--info);font-size:12.5px;margin-bottom:3px}
+.analogy{background:linear-gradient(135deg,#fdf2e9,#fef9e7);border:1px dashed var(--accent);border-radius:8px;padding:12px 15px;margin:12px 0}.analogy::before{content:"🎯 打个比方";display:block;font-weight:700;color:var(--accent);font-size:12.5px;margin-bottom:4px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+th,td{border:1px solid var(--border);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--primary);color:#fff}tr:nth-child(even){background:#f8f9fa}
+td strong{color:var(--primary)}
+.bad-row{background:#fdedec !important}
+.flow{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;margin:14px 0}
+.flow-step{background:var(--primary);color:#fff;padding:10px 14px;border-radius:6px;font-size:12.5px;font-weight:600;text-align:center;min-width:70px}
+.flow-arrow{color:var(--accent);font-size:20px;font-weight:700}
+.quiz-intro{background:#eaf2f8;border-radius:8px;padding:12px 16px;margin:14px 0;color:var(--primary)}
+.quiz-question{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;margin:12px 0}
+.quiz-question .q-text{font-weight:600;margin-bottom:8px}
+.quiz-question .q-num{display:inline-block;background:var(--primary);color:#fff;width:24px;height:24px;border-radius:50%;text-align:center;line-height:24px;font-size:12px;margin-right:6px}
+.quiz-option{display:block;padding:9px 12px;margin:5px 0;border:2px solid var(--border);border-radius:6px;cursor:pointer}
+.quiz-option:hover{border-color:var(--primary-light);background:#eaf2f8}
+.quiz-option.correct{border-color:var(--success);background:#eafaf1}
+.quiz-option.wrong{border-color:var(--danger);background:#fdedec}
+.quiz-option .mark{float:right;font-weight:700}
+.quiz-explain{margin-top:8px;padding:9px;background:#f8f9fa;border-radius:4px;font-size:12.5px;display:none}
+.quiz-explain.show{display:block}
+#quiz-result{display:none;text-align:center;padding:28px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin:14px 0}
+#quiz-result .score{font-size:44px;font-weight:700;margin:8px 0}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:9px 24px;border-radius:6px;border:none;cursor:pointer;font-size:14px;font-weight:600}
+.btn:hover{background:var(--accent-light)}
+.btn.ghost{background:transparent;color:var(--primary);border:2px solid var(--primary)}
+.hero{text-align:center;padding:38px 28px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin-bottom:20px}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);padding:3px 12px;border-radius:12px;font-size:11.5px;margin-bottom:8px}
+.hero h1{font-size:26px;margin-bottom:8px}.hero p{font-size:14px;opacity:.92}
+.modcard{display:block;text-decoration:none;color:inherit;background:linear-gradient(135deg,#fff,#f8f9fa);border:1px solid var(--border);border-left:5px solid var(--primary-light);border-radius:8px;padding:16px;margin:12px 0;transition:transform .15s,box-shadow .15s}
+.modcard:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.1);border-left-color:var(--accent)}
+.modcard .mc-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.modcard .mc-num{background:var(--primary);color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
+.modcard .mc-title{font-weight:700;color:var(--primary);font-size:16px}
+.modcard .mc-tag{margin-left:auto;background:var(--accent);color:#fff;font-size:11px;padding:2px 8px;border-radius:3px;white-space:nowrap}
+.modcard .mc-desc{font-size:13px;color:var(--text-light);margin:4px 0 6px}
+.modcard .mc-val{font-size:12.5px;color:var(--success);font-weight:600}
+@media(max-width:900px){.sidebar{transform:translateX(-100%)}.main{margin-left:0;padding:14px}.topbar nav{display:none}}
+</style></head><body>
+<div class="topbar"><h1>📦 NDT · 客户与行业纵深</h1><span class="crumb">D0 · 导论</span><nav><a href="#hero">封面</a><a href="#ch1">视角转弯</a><a href="#ch2">两大链</a><a href="#ch3">五大模块</a><a href="#ch4">学习路径</a><a href="#exam">测验</a></nav></div>
+<div class="sidebar">
+<a href="#hero">封面</a>
+<a href="#ch1">一、为什么需要 D 系列</a>
+<a href="#ch2">二、两条链的差异</a>
+<a href="#ch3">三、五大模块</a>
+<a href="#ch3-1" class="sub">D1 水冷板纵深</a>
+<a href="#ch3-2" class="sub">D2 客户生意逻辑</a>
+<a href="#ch3-3" class="sub">D3 决策链与销售</a>
+<a href="#ch3-4" class="sub">D4 竞品情报</a>
+<a href="#ch3-5" class="sub">D5 法规强制目录</a>
+<a href="#ch4">四、学习路径</a>
+<a href="#ch5">五、下一步行动</a>
+<a href="#exam">📝 测验</a>
+</div>
+<div class="main">
+
+<div class="section" id="hero" style="padding:0;overflow:hidden"><div class="hero">
+<span class="tag">客户与行业纵深 · D 系列 · 导论</span>
+<h1>视角转弯：从技术到生意</h1>
+<p>前 16 课你学的是"懂工件"。D 系列教你"懂客户的生意"。同一个工件，技术员关心"能不能测准"，老板关心"测这一块花多少钱、不测会赔多少"。两条链都得会，对话才在一个频道上。</p>
+</div></div>
+
+<div class="section">
+<h2>📍 这个导论为什么是 D 系列的入口</h2>
+<div class="key">这是<strong>视角转弯课</strong>。不是教你新技术，而是教你<strong>怎么跟客户用同一个脑子想问题</strong>。看完你知道 D 系列学什么、为什么学、怎么安排学习顺序。</div>
+<div class="tip">D 系列已经有两份完整教程：<strong>D6（行业全景图）</strong>已做完，<strong>D0（本导论）</strong>。其他模块按需展开。</div>
+</div>
+
+<div class="section" id="ch1">
+<h2>一、为什么需要 D 系列（你现在缺什么）</h2>
+<div class="analogy"><strong>打个比方</strong>：你现在像是个"会修车的师傅"，懂每一颗螺丝、每个零件怎么来的、会出什么毛病。但客户是个"要买车的人"，他聊的是"这车省不省油、能不能跑长途、老婆同不同意买、月供多少"。你们聊的不是同一个东西——你讲技术他打哈欠，他讲生意你接不上。</div>
+
+<p>你现有的知识链（已建成的 A/B/C 三系列）：</p>
+<div class="flow">
+<div class="flow-step">材料</div><span class="flow-arrow">→</span>
+<div class="flow-step">工艺</div><span class="flow-arrow">→</span>
+<div class="flow-step">工件</div><span class="flow-arrow">→</span>
+<div class="flow-step">缺陷</div><span class="flow-arrow">→</span>
+<div class="flow-step">检测方法</div><span class="flow-arrow">→</span>
+<div class="flow-step">自家设备</div>
+</div>
+<p style="text-align:center;color:var(--success);font-weight:600">✅ 这条技术链你已经打通了</p>
+
+<p>客户脑子里的链（你还没系统学的）：</p>
+<div class="flow">
+<div class="flow-step">我的行业</div><span class="flow-arrow">→</span>
+<div class="flow-step">我的生意</div><span class="flow-arrow">→</span>
+<div class="flow-step">我为什么必须测</div><span class="flow-arrow">→</span>
+<div class="flow-step">谁说了算</div><span class="flow-arrow">→</span>
+<div class="flow-step">我掏多少钱</div>
+</div>
+<p style="text-align:center;color:var(--danger);font-weight:600">❓ 这条生意链你还没有系统补</p>
+
+<div class="key"><strong>结论</strong>：D 系列不教你新技术，教你<strong>怎么跟客户用同一个脑子想问题</strong>。客户买检测设备，从来不是因为"你的 C 扫很先进"，是因为——他客户卡他质量、他出过事故、他报废太多、法规逼着他。不懂这些，你讲技术他打哈欠；懂这些，你一句话戳痛点。</p>
+</div>
+
+<div class="section" id="ch2">
+<h2>二、★ 两条链的差异（一定要记住）</h2>
+<table>
+<tr><th></th><th>技术链（A/B/C 系列）</th><th>生意链（D 系列）</th></tr>
+<tr><td><strong>出发点</strong></td><td>这工件是什么材料、怎么造的</td><td>这客户在什么行业、为什么必须测</td></tr>
+<tr><td><strong>核心问题</strong></td><td>能不能测准、查什么缺陷</td><td>不测会赔多少、测了能省多少</td></tr>
+<tr><td><strong>对话对象</strong></td><td>技术员、质检员</td><td>老板、采购、质检经理</td></tr>
+<tr><td><strong>语言</strong></td><td>声速、频率、探头、缺陷波形</td><td>良率、召回成本、节拍、投资回收期</td></tr>
+<tr><td><strong>你的角色</strong></td><td>"会修车的师傅"——懂螺丝</td><td>"这行的老人"——懂行情和痛点</td></tr>
+</table>
+<div class="warn"><strong>注意</strong>：两条链不是二选一，是<strong>都要会</strong>。技术链是地基（不懂技术根本没法谈），生意链是上层（懂生意才能成单）。A/B/C 是"你能开口"，D 系列是"你能成单"。</div>
+</div>
+
+<div class="section" id="ch3">
+<h2>三、★ D 系列的五大模块</h2>
+<p>客户侧知识拆成 5 大模块。先看全景：</p>
+
+<h3 id="ch3-1">D1 · 水冷板行业纵深（优先级最高）</h3>
+<a class="modcard" href="#">
+<div class="mc-head"><div class="mc-num">D1</div><div class="mc-title">水冷板行业纵深</div><div class="mc-tag">⭐ 最优先</div></div>
+<div class="mc-desc">深挖你核心市场：新能源车+数据中心液冷板的产业链、为什么测钎着率、客户决策链、行业黑话。</div>
+<div class="mc-val">直接服务你最近 1-2 年的主战场。推荐第一个深挖。</div>
+</a>
+<p><strong>包含</strong>：三大应用场景（车/数据中心/IGBT）、制造工艺路线、产业链上下游、关键质量指标（钎着率）、为什么必须检测、行业黑话术语。</p>
+
+<h3 id="ch3-2">D2 · 客户的生意逻辑</h3>
+<a class="modcard" href="#">
+<div class="mc-head"><div class="mc-num">D2</div><div class="mc-title">客户的生意逻辑</div><div class="mc-tag">通用内功</div></div>
+<div class="mc-desc">客户为什么非买检测不可、检测在他生产流程的位置、质检部门 KPI、不合格品处置成本。</div>
+<div class="mc-val">补完你讲方案能戳到客户痛处，不再自嗨讲技术。</div>
+</a>
+<p><strong>包含</strong>：买设备的 5 种驱动（被逼/出事故/降本/法规/资质）、检测在 IQC/IPQC/FQC 哪个位置、质检经理 vs 质检员 vs 采购的 KPI、10 倍成本定律、质检预算从哪来。</p>
+
+<h3 id="ch3-3">D3 · 采购决策链与销售方法</h3>
+<a class="modcard" href="#">
+<div class="mc-head"><div class="mc-num">D3</div><div class="mc-title">采购决策链与销售方法</div><div class="mc-tag">成单率</div></div>
+<div class="mc-desc">客户内部谁说了算、技术员/质检经理/采购/老板各关心什么、怎么分别应对、方案书怎么写。</div>
+<div class="mc-val">直接提升成单率——知道跟谁聊、怎么聊。</div>
+</a>
+<p><strong>包含</strong>：客户内部角色地图、技术交流怎么做、方案书/检测报告怎么写、招投标流程、售后与客户经营。</p>
+
+<h3 id="ch3-4">D4 · 竞品与替代方案情报</h3>
+<a class="modcard" href="#">
+<div class="mc-head"><div class="mc-num">D4</div><div class="mc-title">竞品与替代方案情报</div><div class="mc-tag">心里有底</div></div>
+<div class="mc-desc">客户除了你还能找谁：进口品牌、国产同行、SAM 厂商、替代检测方法、价格区间。</div>
+<div class="mc-val">补完你报价心里有底，不被压价、不被比价。</div>
+</a>
+<p><strong>包含</strong>：奥林巴斯/GE 等进口矩阵、汕头/武汉中科等国产同行、KSI/Sonix 等 SAM 厂商、替代方案（破坏抽检/RT/红外/不测）、价格情报。</p>
+
+<h3 id="ch3-5">D5 · 行业法规与强制检测目录</h3>
+<a class="modcard" href="#">
+<div class="mc-head"><div class="mc-num">D5</div><div class="mc-title">行业法规与强制检测目录</div><div class="mc-tag">资料型</div></div>
+<div class="mc-desc">哪些行业法律逼着做 NDT（压力容器/核电/航空）、哪些是推荐性、哪些是自愿（水冷板要教育市场）。</div>
+<div class="mc-val">判断客户紧迫度，挑对鱼塘——哪些是刚需、哪些要教育。</div>
+</a>
+<p><strong>包含</strong>：强制 NDT 行业（特种设备/核电/航空）、半强制（汽车/轨道/船舶/风电）、自愿（水冷板/3C）、关键法规索引。</p>
+</div>
+
+<div class="section" id="ch4">
+<h2>四、★ 学习路径建议</h2>
+<div class="key"><strong>核心建议：别贪多，先啃最值钱的一两块。</strong></div>
+
+<div class="flow">
+<div class="flow-step">先看 D6 全景图<br><small>（已完成 ✅）</small></div>
+<span class="flow-arrow">→</span>
+<div class="flow-step">深挖 D1 水冷板<br><small>或 D2 生意逻辑</small></div>
+<span class="flow-arrow">→</span>
+<div class="flow-step">D3 决策链<br><small>通用销售内功</small></div>
+<span class="flow-arrow">→</span>
+<div class="flow-step">D4 竞品<br><small>D5 法规</small></div>
+</div>
+
+<table>
+<tr><th>你的情况</th><th>推荐路径</th><th>理由</th></tr>
+<tr><td><strong>最近主攻水冷板客户</strong></td><td>D1 优先 → D2/D3 顺带</td><td>直接服务当前业务，回报最快</td></tr>
+<tr><td><strong>客户行业杂、想打通用功</strong></td><td>D2 + D3 优先 → D4</td><td>各行业通用，立竿见影</td></tr>
+<tr><td><strong>想先验证风格对不对</strong></td><td>看 D6（已完成）→ 决定下一步</td><td>D6 是销售视角的完整示范</td></tr>
+<tr><td><strong>遇到具体客户要做方案</strong></td><td>查 D6 行业定位 → 补 D1 对应行业</td><td>按需补料，不系统学</td></tr>
+</table>
+
+<div class="tip"><strong>D6 是 D 系列的"地图"，本导论 D0 是"地图的说明"</strong>。D6 已经做完，可以先看 D6 建立全局观。其他模块按需展开——遇到什么客户，补什么料。</div>
+</div>
+
+<div class="section" id="ch5">
+<h2>五、下一步行动（等你拍板）</h2>
+<div class="key">D 系列现在的状态：D0（本导论）+ D6（行业全景图）已完成。下一步选其一：</div>
+<table>
+<tr><th>选项</th><th>做什么</th><th>什么时候选</th></tr>
+<tr><td><strong>① 深挖 D1 水冷板</strong></td><td>展开成完整文件/HTML，像 B/C 系列那样的深度</td><td>⭐ <strong>最推荐</strong>，直接服务核心战场</td></tr>
+<tr><td><strong>② 深挖 D2 生意逻辑</strong></td><td>通用销售内功，各行业通用</td><td>客户行业杂、想打通用功</td></tr>
+<tr><td><strong>③ 深挖 D3 决策链</strong></td><td>销售方法，直接提升成单</td><td>想系统提升成单率</td></tr>
+<tr><td><strong>④ 试水一小节</strong></td><td>只做 D1 里某一小块（如钎着率）做 HTML，验证风格</td><td>想先看小样再决定</td></tr>
+<tr><td><strong>⑤ 改这份框架</strong></td><td>哪块觉得不对、想加/删，告诉我</td><td>看完觉得有偏差</td></tr>
+</table>
+<div class="sale"><strong>AI 的推荐</strong>：先做 ① D1 水冷板纵深。因为这是你未来 1-2 年吃饭的市场，回报最直接。D2/D3 可以在 D1 写的过程中顺带讲（拿水冷板当案例），不必单独憋一篇。</div>
+</div>
+
+<div class="section" id="exam">
+<h2>📝 随堂测验（5 题）</h2>
+<div class="quiz-intro">导论测验——测完你应该能：理解为什么要补 D 系列、知道五大模块、记住学习路径。</div>
+
+<div class="quiz-question" data-correct="C">
+<div class="q-text"><span class="q-num">1</span>D 系列（客户与行业纵深）和 A/B/C 系列（技术）的根本区别是？</div>
+<div class="quiz-option" data-k="A">A. D 系列更深，A/B/C 更浅</div>
+<div class="quiz-option" data-k="B">B. D 系列教销售，A/B/C 教技术，两者没关系</div>
+<div class="quiz-option" data-k="C">C. A/B/C 是"技术链"（懂工件），D 是"生意链"（懂客户为什么必须买）</div>
+<div class="quiz-option" data-k="D">D. A/B/C 是入门，D 是进阶</div>
+<div class="quiz-explain">✅ 选 C。<strong>两条链</strong>：技术链（材料→工艺→工件→缺陷→检测）是"懂工件"，生意链（行业→生意→为什么必须测→谁说了算→掏多少钱）是"懂客户"。两条都要会，A/B/C 是地基，D 是上层。</div>
+</div>
+
+<div class="quiz-question" data-correct="B">
+<div class="q-text"><span class="q-num">2</span>下面哪个最能体现"生意链"思维？</div>
+<div class="quiz-option" data-k="A">A. "我们这台设备频率 15MHz，分辨率高"</div>
+<div class="quiz-option" data-k="B">B. "您测算过吗，不测这一批如果有漏焊到主机厂才被发现，召回成本是检测设备投资的几十倍"</div>
+<div class="quiz-option" data-k="C">C. "我们的探头是聚焦式的"</div>
+<div class="quiz-option" data-k="D">D. "钎着率要求 85%"</div>
+<div class="quiz-explain">✅ 选 B。这是<strong>戳痛点</strong>——把"不测的成本"和"测的投资"做对比（10 倍成本定律）。AC 是技术参数（技术链）；D 是标准要求（技术链）。生意链讲的是"不测会赔多少、测了能省多少"。</div>
+</div>
+
+<div class="quiz-question" data-correct="A">
+<div class="q-text"><span class="q-num">3</span>D 系列五大模块里，优先级最高的是？</div>
+<div class="quiz-option" data-k="A">A. D1 水冷板行业纵深</div>
+<div class="quiz-option" data-k="B">B. D4 竞品情报</div>
+<div class="quiz-option" data-k="C">C. D5 法规强制目录</div>
+<div class="quiz-option" data-k="D">D. 五个一样重要</div>
+<div class="quiz-explain">✅ 选 A。<strong>D1 水冷板优先级最高</strong>，因为这是你最近 1-2 年吃饭的核心市场，回报最直接。D4/D5 是资料型（用上再查），不必系统学。</div>
+</div>
+
+<div class="quiz-question" data-correct="D">
+<div class="q-text"><span class="q-num">4</span>客户买检测设备的"5 种驱动"里，最痛（最愿意掏钱）的是？</div>
+<div class="quiz-option" data-k="A">A. 被甲方逼的</div>
+<div class="quiz-option" data-k="B">B. 法规逼的</div>
+<div class="quiz-option" data-k="C">C. 评优/资质要的</div>
+<div class="quiz-option" data-k="D">D. 出过事故怕了（召回/索赔/停产）</div>
+<div class="quiz-explain">✅ 选 D。<strong>出过事故最痛</strong>——召回/索赔/停产的代价是天文数字，这种客户掏钱最痛快、最不还价。被逼和法规是"不得不买"（刚需但不热情），资质是锦上添花。识别客户的驱动类型，决定你怎么报价怎么聊。</div>
+</div>
+
+<div class="quiz-question" data-correct="B">
+<div class="q-text"><span class="q-num">5</span>【综合题】D6（行业全景图）里把 UT 市场分成四档，销售精力应该怎么分？</div>
+<div class="quiz-option" data-k="A">A. 四档平均分</div>
+<div class="quiz-option" data-k="B">B. 80% 主场 + 15% 机会 + 5% 边界 + 0% 盲区</div>
+<div class="quiz-option" data-k="C">C. 全放主场，其他完全不碰</div>
+<div class="quiz-option" data-k="D">D. 主要放边界（市场最大）</div>
+<div class="quiz-explain">✅ 选 B。<strong>精品店战略</strong>：把主场打透，盲区转介绍。A 平均主义啥都做不好；C 太极端（机会行业客户来了还是要接）；D 反了（最大市场≠最赚钱，红海利润薄）。</div>
+</div>
+
+<div id="quiz-result"><div>你的得分</div><div class="score">0</div><div id="result-text"></div><br><button class="btn ghost" onclick="resetQuiz()">重新作答</button></div>
+<div style="text-align:center;margin-top:14px"><button class="btn" onclick="submitQuiz()">交卷</button></div>
+</div>
+
+<div style="display:flex;justify-content:space-between;align-items:center;margin:24px 0;padding:18px 24px;background:#fff;border-radius:10px;box-shadow:var(--shadow)">
+<a href="#hero" style="text-decoration:none"><span style="font-size:13px;color:#7f8c8d">↑ 本课开头</span></a>
+<div style="text-align:center"><div style="font-size:13px;color:#7f8c8d">D 系列 · 推荐下一课</div><div style="font-weight:600;color:#1a5276;font-size:15px">D6 UT 应用行业全景图 →</div></div>
+<span></span>
+</div>
+
+</div>
+<div style="text-align:center;margin:24px 0;padding:14px;background:#eaf2f8;border-radius:8px"><a href="index.html" style="display:inline-block;background:#1a5276;color:#fff;padding:10px 28px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px">🏠 返回总目录</a></div>
+<script>
+document.querySelectorAll('.quiz-question').forEach(function(q){var correct=q.dataset.correct;q.querySelectorAll('.quiz-option').forEach(function(opt){opt.addEventListener('click',function(){if(q.classList.contains('locked'))return;q.querySelectorAll('.quiz-option').forEach(function(o){o.classList.remove('correct','wrong');var m=o.querySelector('.mark');if(m)m.remove();});var k=opt.dataset.k;if(k===correct){opt.classList.add('correct');opt.insertAdjacentHTML('beforeend','<span class="mark">✓</span>');}else{opt.classList.add('wrong');opt.insertAdjacentHTML('beforeend','<span class="mark">✗</span>');q.querySelectorAll('.quiz-option').forEach(function(o){if(o.dataset.k===correct){o.classList.add('correct');}});}q.querySelector('.quiz-explain').classList.add('show');q.classList.add('locked');});});});
+function submitQuiz(){var qs=document.querySelectorAll('.quiz-question');var a=0,s=0;qs.forEach(function(q){if(q.classList.contains('locked')){a++;if(q.querySelector('.quiz-option.correct'))s++;}});var r=document.getElementById('quiz-result');r.style.display='block';r.querySelector('.score').textContent=s+' / '+qs.length;var p=s/qs.length,m='';if(p===1)m='满分！你理解了 D 系列的意义和路径。';else if(p>=.75)m='不错！错题看解析。';else if(p>=.5)m='及格。重点重看"两条链"和"五大模块"。';else m='重看导论，核心是"技术链 vs 生意链"。';document.getElementById('result-text').textContent=m+'（已答'+a+'/'+qs.length+'）';r.scrollIntoView({behavior:'smooth',block:'center'});}
+function resetQuiz(){document.querySelectorAll('.quiz-question').forEach(function(q){q.classList.remove('locked');q.querySelectorAll('.quiz-option').forEach(function(o){o.classList.remove('correct','wrong');var m=o.querySelector('.mark');if(m)m.remove();});q.querySelector('.quiz-explain').classList.remove('show');});document.getElementById('quiz-result').style.display='none';}
+</script>
+</body></html>

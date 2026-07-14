@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第13课 · UT 检测方法与评定</title>
+<style>
+:root{--primary:#1a5276;--primary-light:#2980b9;--accent:#e67e22;--bg:#f4f6f7;--card:#fff;--text:#2c3e50;--text-light:#7f8c8d;--border:#d5dbdb;--success:#27ae60;--danger:#e74c3c;--warning:#f39c12;--info:#3498db;--shadow:0 2px 8px rgba(0,0,0,.08)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.85;font-size:15.5px;scroll-behavior:smooth}
+.topbar{position:fixed;top:0;left:0;right:0;height:52px;background:var(--primary);color:#fff;display:flex;align-items:center;padding:0 20px;z-index:1000;box-shadow:0 4px 20px rgba(0,0,0,.12)}
+.topbar h1{font-size:16px;font-weight:600}.topbar .crumb{font-size:12px;opacity:.75;margin-left:8px}
+.topbar nav{margin-left:auto;display:flex;gap:4px;overflow-x:auto}
+.topbar nav a{color:#cfd8dc;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:4px;white-space:nowrap}
+.sidebar{position:fixed;top:52px;left:0;bottom:0;width:230px;background:#fff;border-right:1px solid var(--border);overflow-y:auto;padding:14px 0;z-index:900}
+.sidebar a{display:block;padding:8px 18px;color:var(--text-light);text-decoration:none;font-size:12.5px;border-left:3px solid transparent}
+.sidebar a:hover{background:var(--bg);color:var(--primary)}
+.sidebar a.sub{padding-left:30px;font-size:11.5px}
+.main{margin-left:230px;margin-top:52px;padding:26px 32px;max-width:1000px}
+.section{background:var(--card);border-radius:10px;padding:24px 28px;margin-bottom:20px;box-shadow:var(--shadow)}
+.section h2{color:var(--primary);font-size:21px;border-bottom:2px solid var(--primary-light);padding-bottom:8px;margin-bottom:14px}
+.section h3{color:var(--primary);font-size:16.5px;margin:18px 0 8px;padding-left:10px;border-left:4px solid var(--accent)}
+.section p{margin:8px 0}.section ul,.section ol{margin:8px 0 8px 24px}.section li{margin:4px 0}.section strong{color:var(--primary)}
+.tip{background:#eafaf1;border-left:4px solid var(--success);padding:11px 15px;border-radius:6px;margin:12px 0}.tip::before{content:"💡 记住";display:block;font-weight:700;color:var(--success);font-size:12.5px;margin-bottom:3px}
+.warn{background:#fef9e7;border-left:4px solid var(--warning);padding:11px 15px;border-radius:6px;margin:12px 0}.warn::before{content:"⚠️ 注意";display:block;font-weight:700;color:var(--warning);font-size:12.5px;margin-bottom:3px}
+.key{background:#eaf2f8;border-left:4px solid var(--primary-light);padding:11px 15px;border-radius:6px;margin:12px 0}.key::before{content:"🔑 核心";display:block;font-weight:700;color:var(--primary);font-size:12.5px;margin-bottom:3px}
+.sale{background:#fdf2e9;border-left:4px solid var(--accent);padding:11px 15px;border-radius:6px;margin:12px 0}.sale::before{content:"💬 客户对话";display:block;font-weight:700;color:var(--accent);font-size:12.5px;margin-bottom:3px}
+.ndt{background:#eef5fb;border-left:4px solid var(--info);padding:11px 15px;border-radius:6px;margin:12px 0}.ndt::before{content:"🔬 检测要点";display:block;font-weight:700;color:var(--info);font-size:12.5px;margin-bottom:3px}
+.analogy{background:linear-gradient(135deg,#fdf2e9,#fef9e7);border:1px dashed var(--accent);border-radius:8px;padding:12px 15px;margin:12px 0}.analogy::before{content:"🎯 打个比方";display:block;font-weight:700;color:var(--accent);font-size:12.5px;margin-bottom:4px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+th,td{border:1px solid var(--border);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--primary);color:#fff}tr:nth-child(even){background:#f8f9fa}
+tr.bad-row{background:#fdedec}
+td strong{color:var(--primary)}
+.quiz-intro{background:#eaf2f8;border-radius:8px;padding:12px 16px;margin:14px 0;color:var(--primary)}
+.quiz-question{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;margin:12px 0}
+.quiz-question .q-text{font-weight:600;margin-bottom:8px}
+.quiz-question .q-num{display:inline-block;background:var(--primary);color:#fff;width:24px;height:24px;border-radius:50%;text-align:center;line-height:24px;font-size:12px;margin-right:6px}
+.quiz-option{display:block;padding:9px 12px;margin:5px 0;border:2px solid var(--border);border-radius:6px;cursor:pointer}
+.quiz-option:hover{border-color:var(--primary-light);background:#eaf2f8}
+.quiz-option.correct{border-color:var(--success);background:#eafaf1}
+.quiz-option.wrong{border-color:var(--danger);background:#fdedec}
+.quiz-option .mark{float:right;font-weight:700}
+.quiz-explain{margin-top:8px;padding:9px;background:#f8f9fa;border-radius:4px;font-size:12.5px;display:none}
+.quiz-explain.show{display:block}
+#quiz-result{display:none;text-align:center;padding:28px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin:14px 0}
+#quiz-result .score{font-size:44px;font-weight:700;margin:8px 0}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:9px 24px;border-radius:6px;border:none;cursor:pointer;font-size:14px;font-weight:600}
+.btn:hover{background:var(--accent-light)}
+.btn.ghost{background:transparent;color:var(--primary);border:2px solid var(--primary)}
+.hero{text-align:center;padding:38px 28px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin-bottom:20px}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);padding:3px 12px;border-radius:12px;font-size:11.5px;margin-bottom:8px}
+.hero h1{font-size:26px;margin-bottom:8px}.hero p{font-size:14px;opacity:.92}
+@media(max-width:900px){.sidebar{transform:translateX(-100%)}.main{margin-left:0;padding:14px}.topbar nav{display:none}}
+</style></head><body>
+<div class="topbar"><h1>🔬 NDT 扫盲课</h1><span class="crumb">第 13 课 · UT 检测方法与评定</span><nav><a href="#hero">封面</a><a href="#ch1">方法分类</a><a href="#ch2">显示方式</a><a href="#ch3">DAC/AVG</a><a href="#ch4">缺陷评定</a><a href="#ch5">TOFD/PAUT</a><a href="#exam">测验</a></nav></div>
+<div class="sidebar">
+<a href="#hero">封面</a>
+<a href="#ch1">一、检测方法分类</a>
+<a href="#ch1-1" class="sub">1.1 按原理</a>
+<a href="#ch1-2" class="sub">1.2 按耦合方式</a>
+<a href="#ch2">二、显示方式</a>
+<a href="#ch2-1" class="sub">A/B/C/D 型</a>
+<a href="#ch3">三、DAC / AVG 曲线</a>
+<a href="#ch3-1" class="sub">3.1 DAC 三条线</a>
+<a href="#ch3-2" class="sub">3.2 AVG/DGS</a>
+<a href="#ch4">四、缺陷评定</a>
+<a href="#ch5">五、TOFD/PAUT</a>
+<a href="#exam">📝 测验</a>
+</div>
+<div class="main">
+
+<div class="section" id="hero" style="padding:0;overflow:hidden"><div class="hero">
+<span class="tag">扫盲课 · 第三阶段 · 第 13 课（懂手段②）</span>
+<h1>UT 检测方法与评定</h1>
+<p>怎么扫、扫出什么图、怎么判缺陷大小和级别。再讲清 TOFD 和 PAUT 这两个高端卖点——客户常问，答得专业立刻拉开档次。</p>
+</div></div>
+
+<div class="section" id="ch1">
+<h2>一、UT 检测方法的分类</h2>
+<p>UT 方法从不同角度分类，理解分类才能针对客户工况选对方法。</p>
+
+<h3 id="ch1-1">1.1 按原理分类（核心三种）</h3>
+<table>
+<tr><th>原理</th><th>怎么干</th><th>优点</th><th>缺点/用途</th></tr>
+<tr><td><strong>脉冲反射法（最常用）</strong></td><td>单探头自发自收，靠回波<strong>到达时间</strong>（→位置）和<strong>幅度</strong>（→大小）判缺陷</td><td>灵敏度高、能定位、能定量</td><td>有近场盲区、对面取向缺陷敏感；<strong>90% 的 UT 都是它</strong></td></tr>
+<tr><td><strong>穿透法</strong></td><td>双探头分置工件两侧，一发一收，靠透射声能衰减判缺陷</td><td>无盲区、适合衰减大的材料</td><td>不能定位深度、对探头对中敏感；<strong>复合材料常用</strong></td></tr>
+<tr><td><strong>共振法</strong></td><td>连续波扫频，厚度=n×λ/2 时共振</td><td>—</td><td>主要用于<strong>测厚</strong>（多被脉冲反射法取代）</td></tr>
+</table>
+<div class="key"><strong>★ 一句话</strong>：<strong>脉冲反射法是 UT 绝对主力</strong>（便携 A 扫、焊缝、测厚都是它）；<strong>穿透法专攻复合材料</strong>（衰减大、脉冲反射回不来）；共振法基本只剩测厚。客户问"你们仪器什么原理"，答"脉冲反射法"九成没错。</div>
+
+<h3 id="ch1-2">1.2 按耦合方式分类（决定用便携还是水浸）</h3>
+<table>
+<tr><th>耦合方式</th><th>怎么干</th><th>优点</th><th>缺点/用途</th></tr>
+<tr><td><strong>接触法</strong></td><td>探头+薄层耦合剂直接压工件</td><td>设备简单、灵活、<strong>现场方便</strong></td><td>耦合一致性差、表面要打磨、效率低；便携 A 扫</td></tr>
+<tr><td><strong>液浸法（水浸法）</strong></td><td>工件浸水槽，探头在水中间隔水层</td><td>耦合稳定、可聚焦、可自动化、不磨损探头</td><td>工件必须可浸水、水层声程补偿复杂；<strong>水浸 C 扫</strong></td></tr>
+<tr><td><strong>充水法（水柱法）</strong></td><td>探头和工件间用水柱/水膜耦合，不整体浸入</td><td>避免浸大件，又能稳定耦合</td><td>管材/板材自动检测、轮式探头</td></tr>
+</table>
+<div class="analogy"><strong>耦合方式怎么记</strong>：接触法="<strong>贴脸</strong>"（探头直接压工件，现场便携）；水浸法="<strong>泡澡</strong>"（工件整个浸水里，实验室 C 扫）；充水法="<strong>浇水</strong>"（中间夹水柱，介于两者之间，自动线常用）。</div>
+<div class="sale"><strong>客户对话</strong>：客户："复合材料分层你们能测吗？"<br>
+"复材衰减大，<strong>脉冲反射法回波弱</strong>，常规便携 A 扫不太行。我们用<strong>水浸 C 扫 + 穿透法</strong>：两个探头一上一水下浸，靠透射声能衰减查分层和脱粘，<strong>还能扫出彩色 C 型图存档</strong>。这正是我们 BSN-C 水浸 C 扫的强项。"</div>
+</div>
+
+<div class="section" id="ch2">
+<h2>二、显示方式（A/B/C/D 型——看懂屏幕在画什么）</h2>
+<div class="key" id="ch2-1"><strong>★ 一句话类比（必背）</strong>：<br>
+• <strong>A 型 = 心电图</strong>（横轴时间→深度，纵轴波幅）<br>
+• <strong>B 型 = 切片照片</strong>（横轴探头位置，纵轴深度，亮度=波幅）<br>
+• <strong>C 型 = 俯拍地图</strong>（横纵轴都是 X-Y 平面坐标，亮度=某深度闸门内波幅）<br>
+• <strong>D 型 = 侧拍照片</strong>（类似 B 型但视角不同，TOFD/PAUT 常用）</div>
+<table>
+<tr><th>显示</th><th>横/纵轴</th><th>信息量</th><th>谁用</th></tr>
+<tr><td><strong>A 型</strong></td><td>横=时间(声程/深度)，纵=幅度</td><td>单点信息，最基础</td><td><strong>所有 UT 探伤仪都有</strong>，便携 A 扫标准显示</td></tr>
+<tr><td><strong>B 型</strong></td><td>横=探头位置，纵=声程(深度)，亮度=幅度</td><td>工件纵截面的缺陷分布</td><td>类似医用 B 超，PAUT/水浸</td></tr>
+<tr><td><strong>C 型</strong></td><td>横纵=扫查平面 X-Y，亮度=特定深度闸门内波幅</td><td>某深度层面的"切片图"</td><td><strong>水浸 C 扫、复材分层</strong></td></tr>
+<tr><td><strong>D 型</strong></td><td>类似 B 型，声程投影方向不同</td><td>侧视截面</td><td>TOFD、PAUT</td></tr>
+</table>
+<div class="ndt"><strong>★ 销售</strong>：便携 A 扫只能出 A 型波形（数波高、看深度）；<strong>水浸 C 扫能出彩色 C 型地图 + B 型切片</strong>，这就是为什么复材、精密件客户愿意多花钱上 C 扫——<strong>能成像、能存档、客户/监理能直观看</strong>。</div>
+</div>
+
+<div class="section" id="ch3">
+<h2>三、DAC 曲线和 AVG 曲线（UT 定量的两件法宝）</h2>
+<div class="analogy">远处的小缺陷和近处的大缺陷，回波可能一样高——<strong>怎么判断谁更大？</strong>得用曲线<strong>补偿距离效应</strong>。这就是 DAC 和 AVG 的意义。</div>
+
+<h3 id="ch3-1">3.1 DAC 曲线（距离-波幅曲线，焊缝 UT 核心）</h3>
+<div class="key"><strong>★ DAC 制作原理</strong>：相同尺寸反射体（如 φ2 横孔），声程越远回波越弱。把"<strong>相同反射体、不同声程</strong>"的回波最高点连成线，就是基准 DAC 线。</div>
+<div class="ndt"><strong>三条线（GB/T 11345 焊缝 UT 的核心）</strong>：在基准 DAC 线基础上派生——<br>
+• <strong>判废线 RL</strong> = 基准 DAC 线（φ2 当量）→ 回波≥此线 = <strong>不合格</strong><br>
+• <strong>定量线 SL</strong> = 基准线下移 6 dB → 落在此线以上 = <strong>需记录定量</strong><br>
+• <strong>评定线 EL</strong> = 基准线下移 12~14 dB → 落在此线以上 = <strong>开始评定</strong><br>
+三条线把屏幕分成"评定区/定量区/判废区"。检测灵敏度就设在评定线。</div>
+<div class="tip"><strong>★ CSK-IIA 试块就是做 DAC 用的</strong>（不同深度 φ2 横孔）。做 DAC = 设灵敏度 + 定量评级依据。<strong>焊缝 UT 没有 DAC 曲线，定量就没底气</strong>。横孔对孔径不敏感（直径加倍只 +3dB），便于不同声程保持一致。</div>
+
+<h3 id="ch3-2">3.2 AVG / DGS 曲线（平底孔当量，锻件常用）</h3>
+<div class="ndt"><strong>AVG = 距离-增益-大小</strong>（德语）/ DGS（英语）。基于<strong>平底孔（圆盘反射体）的理论公式</strong>，建立"声程-回波幅度-平底孔当量"三者关系。<strong>理论性强、可公式推导</strong>，不像 DAC 纯实测。现代数字探伤仪内置 AVG，直接显示"缺陷当量平底孔尺寸"。</div>
+<div class="warn"><strong>★ AVG 的适用边界（重要）</strong>：理论公式<strong>仅在远场有效</strong>，理想工作区是 <strong>s ≥ 3N（三倍近场区之外）</strong>。近场区（0~N）声场起伏公式不成立；过渡区（N~3N）偏差大；3N 以外理论值和实测高度一致。<strong>所以 DGS 定量要求声程 ≥ 3N</strong>。</div>
+<table>
+<tr><th>项目</th><th>DAC 曲线</th><th>AVG(DGS) 曲线</th></tr>
+<tr><td>反射体模型</td><td>横孔（实测）</td><td>平底孔（理论计算）</td></tr>
+<tr><td>数据来源</td><td>实测试块</td><td>理论公式 + 探头参数</td></tr>
+<tr><td>适用范围</td><td>任意声程</td><td>远场（s ≥ 3N）</td></tr>
+<tr><td>主要用途</td><td><strong>焊缝（GB/JIS 体系）</strong></td><td><strong>锻件（欧标体系）</strong></td></tr>
+</table>
+<div class="sale"><strong>客户对话</strong>：客户："DAC 和 AVG 有什么区别？"<br>
+"<strong>DAC 是实测横孔做的，针对具体工件，焊缝 UT 用得多</strong>（配 CSK-IIA 试块做曲线）；<strong>AVG 是理论公式算的平底孔当量，锻件 UT 用得多</strong>，仪器内置直接出当量尺寸，但要求声程在 3 倍近场以外才准。您做焊缝走 DAC，做锻件走 AVG，就这么分。"</div>
+</div>
+
+<div class="section" id="ch4">
+<h2>四、缺陷评定（定位、定量、定性、定级）</h2>
+<div class="key"><strong>★ 评缺陷四步</strong>：先<strong>定位</strong>（在哪）→ 再<strong>定量</strong>（多大）→ 然后<strong>定性</strong>（什么性质）→ 最后<strong>定级</strong>（合格不合格）。</div>
+
+<h3>4.1 定位（确定缺陷三维位置）</h3>
+<div class="ndt"><strong>斜探头几何关系（必记）</strong>：<br>
+• <strong>水平距离 l = K × 深度 d</strong><br>
+• <strong>声程 s = d × √(1+K²)</strong><br>
+例：K2 探头，深度 20mm 的缺陷，水平距离 40mm，声程 ≈ 44.7mm。<br>
+定位法分三种：<strong>声程法 / 水平法 / 深度法</strong>，焊缝 UT 最常用<strong>深度法</strong>（屏幕直接显示深度）。</div>
+
+<h3>4.2 定量（确定缺陷大小）</h3>
+<table>
+<tr><th>方法</th><th>适用</th><th>怎么干</th></tr>
+<tr><td><strong>当量法</strong></td><td>点状/小缺陷（&lt;声束截面）</td><td>与已知反射体（平底孔/横孔）回波比较，找"回波相等"的尺寸作为当量。AVG/DAC 都属此类</td></tr>
+<tr><td><strong>测长法（6dB 法/半波高法）</strong></td><td>面积大于声束的缺陷</td><td>找最高回波，移探头使回波<strong>降 6dB（声压减半）</strong>，两个 -6dB 点间距 = 缺陷指示长度</td></tr>
+<tr><td>20dB 法</td><td>声束较窄时</td><td>-20dB 点间距减去声束宽度 = 缺陷长度</td></tr>
+<tr><td>端点反射法</td><td>长条缺陷（裂纹）</td><td>测两端点反射</td></tr>
+</table>
+<div class="tip"><strong>★ 6dB 法口诀</strong>：回波最高点 → 移到回波<strong>掉一半（-6dB）</strong> → 左右两点距离 = 缺陷长度。这是测大面积缺陷长度的标准动作。</div>
+
+<h3>4.3 定性（判断缺陷性质）和定级</h3>
+<div class="warn"><strong>★ 定性是 UT 最难的环节</strong>：传统 A 超不像射线能直接看到缺陷形状，主要靠<strong>经验 + 综合判断</strong>。<br>
+• <strong>尖锐单一回波</strong> → 平面型（裂纹、未熔合、未焊透）<br>
+• <strong>多脉冲丛状回波</strong> → 体积型（气孔群、夹渣）<br>
+• <strong>动态波形平缓变化</strong> → 大面积缺陷；<strong>剧烈瞬间出现消失</strong> → 小点状气孔<br>
+• <strong>结合焊接工艺位置</strong>：根部→未熔合/咬边；中心→气孔/夹渣/裂纹；HAZ→冷裂纹；焊趾→疲劳裂纹。<br>
+<strong>PAUT + TFM 成像</strong>能直接看出缺陷形状，定性比传统 A 超强得多。</div>
+<div class="ndt"><strong>定级</strong>：按 GB/T 11345 等标准，依据缺陷回波幅度（落在评定/定量/判废哪个区）+ 指示长度 + 性质，判 <strong>Ⅰ / Ⅱ / Ⅲ 级</strong>（Ⅰ 级最高，合格；Ⅲ 级以下不合格，具体按客户验收标准）。</div>
+</div>
+
+<div class="section" id="ch5">
+<h2>五、TOFD 和 PAUT（高端卖点——客户常问）</h2>
+<p>这两个是 UT 销售中<strong>客户最爱问、最显专业</strong>的部分。每种都要能说清"原理、能干什么、不能干什么"。</p>
+
+<h3>5.1 TOFD（衍射时差法）</h3>
+<div class="analogy">普通 UT 靠缺陷<strong>反射</strong>回波；TOFD 靠缺陷尖端的<strong>衍射</strong>波（声波扫过缺陷尖端时，尖端像个小喇叭向四面八方发波）。</div>
+<div class="ndt"><strong>原理</strong>：一对纵波斜探头（45°~70°）对称放焊缝两侧，一发一收。探头沿焊缝走，得到"位置-深度"灰度图（D 扫）。图谱上依次出现：<strong>直通波（表面零点）→ 缺陷上尖端衍射波 → 缺陷下尖端衍射波 → 底波</strong>。</div>
+<div class="key"><strong>★ TOFD 的杀手锏</strong>：<strong>上下尖端衍射波的时间差 = 缺陷高度</strong>，定量精度可达 ±1mm，<strong>优于传统 UT 和 PAUT</strong>。且上下尖端波<strong>相位相反（差 180°）</strong>，是识别两者的关键特征。</div>
+<table>
+<tr><th>TOFD 优点</th><th>TOFD 缺点</th></tr>
+<tr><td>缺陷高度定量极精确（±1mm）；检测快（一次扫查覆盖全壁厚）；不依赖缺陷取向；数据可永久存档；能测近垂直裂纹（传统 UT 盲区）</td><td><strong>直通波和底波附近有盲区</strong>（上表面 2~5mm，下表面 1~3mm），需 PAUT/脉冲反射补充；对粗晶衰减敏感；数据解读要求高；设备贵</td></tr>
+</table>
+<div class="ndt"><strong>应用</strong>：核电站、厚壁压力容器焊缝（厚度 ≥12mm）、在役检测。<strong>常和 PAUT 配套用</strong>（PAUT 补盲区，TOFD 补定量精度）。</div>
+
+<h3>5.2 PAUT（相控阵超声——最热的高端技术）</h3>
+<div class="analogy">普通 UT 探头<strong>只有一个晶片、一个固定方向</strong>，像手电筒照一个点；PAUT 探头有<strong>几十上百个独立小晶片</strong>，每个晶片发射时间能精确控制（延迟），像<strong>可以电子转向和聚焦的探照灯</strong>——不用机械动，声束就能扇形扫、任意深度聚焦。</div>
+<div class="key"><strong>★ PAUT 原理核心</strong>：探头由多个独立晶片（16/32/64/128 阵元）排成阵列，每个阵元激励时间<strong>可控延迟</strong>（聚焦法则 Focal Law），实现：<br>
+• <strong>电子偏转声束方向</strong>（不用机械转）<br>
+• <strong>电子聚焦</strong>（任意深度聚焦）<br>
+• <strong>动态聚焦</strong>（沿声束多点聚焦）</div>
+<table>
+<tr><th>扫查模式</th><th>怎么扫</th><th>用途</th></tr>
+<tr><td><strong>扇形扫查（S-scan）</strong></td><td>同一发射点，按不同角度（30°~70°，步进 1°）依次发射</td><td><strong>焊缝 UT 最常用</strong>，一次放置覆盖多角度，像医用彩超</td></tr>
+<tr><td>线性电子扫查（E-scan）</td><td>同角度、不同位置的虚拟探头依次激活</td><td>等效多探头并排快速扫</td></tr>
+<tr><td>聚焦扫查</td><td>改变聚焦深度</td><td>不同深度获最佳灵敏度</td></tr>
+</table>
+<div class="ndt"><strong>★ PAUT 优点</strong>：一次扫查覆盖大角度范围（效率高）；可电子聚焦（灵敏度高）；<strong>可成像（B/C/D 型）便于定性</strong>；数据可存储可重现；探头小型化适合复杂几何（管座、三通）。<br>
+<strong>缺点</strong>：设备/探头/软件贵；对人员要求高（要会设计聚焦法则）；粗晶仍受限；大角度偏转时侧向分辨率下降。</div>
+
+<h3>5.3 PAUT vs 传统 UT vs TOFD（客户必问对比）</h3>
+<table>
+<tr><th>对比项</th><th>传统 UT（A 扫）</th><th>PAUT</th><th>TOFD</th></tr>
+<tr><td>探头</td><td>单晶片，固定方向</td><td>多阵元阵列，电子转向</td><td>一对纵波斜探头</td></tr>
+<tr><td>成像</td><td>只有波形（A 型）</td><td><strong>B/C/D 型彩色成像</strong></td><td>D 扫灰度图</td></tr>
+<tr><td>定量精度</td><td>一般</td><td>较好</td><td><strong>最高（高度 ±1mm）</strong></td></tr>
+<tr><td>效率</td><td>低（人工逐点扫）</td><td>高（一次扇形扫）</td><td>高（一次扫覆盖全壁厚）</td></tr>
+<tr><td>盲区</td><td>近场盲区</td><td>有，但可补偿</td><td><strong>上下表面有盲区</strong></td></tr>
+<tr><td>价格</td><td>便宜</td><td>贵</td><td>贵</td></tr>
+</table>
+<div class="sale"><strong>客户对话（高频问题）</strong>：客户："PAUT 和普通 UT 到底有啥区别？贵那么多值吗？"<br>
+"普通 UT 就<strong>一个晶片、一个固定角度</strong>，像手电筒照一点，得人拿着来回扫，只出波形。<strong>PAUT 是几十个晶片阵列，电子控制声束扇形扫和任意深度聚焦</strong>，不用机械动就能一次覆盖 30°~70° 全角度，还能出彩色 B/C 成像，<strong>缺陷长什么样直接看到</strong>。所以：<strong>检焊缝效率高好几倍、定性准、数据能存档给监理看</strong>。要是您做的是压力容器、长输管道这种大批量、要出正式报告的，PAUT 值；要是偶尔查几道焊缝，便携 A 扫就够。"</div>
+<div class="sale"><strong>客户对话（进阶）</strong>：客户："那 TOFD 又是啥？和 PAUT 啥关系？"<br>
+"TOFD 靠缺陷尖端的<strong>衍射波</strong>测缺陷高度，<strong>精度能做到 ±1mm，是三者里最高的</strong>，核电站、厚壁容器爱用它。但它<strong>上下表面有盲区</strong>。所以高端项目常<strong>PAUT + TOFD 配套</strong>：PAUT 补盲区、看出形状，TOFD 精确量高度——强强联合，这也是我们高端方案的卖点。"</div>
+</div>
+
+<div class="section" id="exam">
+<h2>📝 随堂测验（6 题）</h2>
+<div class="quiz-intro">UT 检测方法与评定。DAC/AVG、缺陷评定、TOFD/PAUT——客户常问的高端话题。</div>
+
+<div class="quiz-question" data-correct="A">
+<div class="q-text"><span class="q-num">1</span>UT 检测中 90% 都用的是哪种原理？</div>
+<div class="quiz-option" data-k="A">A. 脉冲反射法（单探头自发自收，靠回波时间和幅度判缺陷）</div>
+<div class="quiz-option" data-k="B">B. 穿透法（双探头一发一收，靠透射衰减判缺陷）</div>
+<div class="quiz-option" data-k="C">C. 共振法</div>
+<div class="quiz-option" data-k="D">D. 衍射法</div>
+<div class="quiz-explain">✅ 选 A。脉冲反射法灵敏度高、能定位能定量，是 UT 绝对主力（便携 A 扫、焊缝、测厚都是它）。穿透法专攻复合材料（衰减大回不来）；共振法基本只剩测厚；衍射法是 TOFD 的原理。</div>
+</div>
+
+<div class="quiz-question" data-correct="C">
+<div class="q-text"><span class="q-num">2</span>DAC 曲线中，"判废线、定量线、评定线"三条线的关系是？</div>
+<div class="quiz-option" data-k="A">A. 三条线一样高</div>
+<div class="quiz-option" data-k="B">B. 评定线最高，判废线最低</div>
+<div class="quiz-option" data-k="C">C. 判废线=基准DAC线，定量线下移6dB，评定线下移12~14dB（评定线最严、最低）</div>
+<div class="quiz-option" data-k="D">D. 随便画三条平行线</div>
+<div class="quiz-explain">✅ 选 C。判废线 RL=基准 DAC 线（φ2 当量），回波≥此线不合格；定量线 SL 下移 6dB，需记录定量；评定线 EL 下移 12~14dB（最低最严），开始评定。<strong>检测灵敏度设在评定线</strong>。</div>
+</div>
+
+<div class="quiz-question" data-correct="B">
+<div class="q-text"><span class="q-num">3</span>测缺陷指示长度用的"6dB 法（半波高法）"是怎么操作的？</div>
+<div class="quiz-option" data-k="A">A. 把回波调到屏幕 6dB 高度</div>
+<div class="quiz-option" data-k="B">B. 找最高回波点，移探头使回波下降6dB（声压减半），两个-6dB点间距=缺陷指示长度</div>
+<div class="quiz-option" data-k="C">C. 给仪器加 6dB 增益</div>
+<div class="quiz-option" data-k="D">D. 用 6mm 的探头扫</div>
+<div class="quiz-explain">✅ 选 B。6dB 法（半波高法）用于面积大于声束的缺陷：找最高回波 → 移探头使回波降 6dB（声压减半）→ 左右两个 -6dB 点之间距离 = 缺陷指示长度。这是测大面积缺陷长度的标准动作。</div>
+</div>
+
+<div class="quiz-question" data-correct="D">
+<div class="q-text"><span class="q-num">4</span>关于 C 型显示（C-scan），正确的是？</div>
+<div class="quiz-option" data-k="A">A. 横轴是时间，纵轴是波幅（那是 A 型）</div>
+<div class="quiz-option" data-k="B">B. 只能用于接触法便携检测</div>
+<div class="quiz-option" data-k="C">C. 显示的是工件纵截面（那是 B 型）</div>
+<div class="quiz-option" data-k="D">D. 横纵轴是扫查平面X-Y坐标，亮度=特定深度闸门内回波幅度，是某深度的"俯拍地图"</div>
+<div class="quiz-explain">✅ 选 D。C 型显示横纵轴都是 X-Y 平面坐标，亮度表示某深度闸门内的回波幅度，相当于<strong>某深度层面的"俯拍地图"</strong>。广泛用于水浸 C 扫、复材分层检测。便携 A 扫只能出 A 型波形。</div>
+</div>
+
+<div class="quiz-question" data-correct="A">
+<div class="q-text"><span class="q-num">5</span>TOFD（衍射时差法）最突出的优势是？</div>
+<div class="quiz-option" data-k="A">A. 缺陷高度定量精度极高（±1mm），优于传统UT和PAUT</div>
+<div class="quiz-option" data-k="B">B. 设备最便宜</div>
+<div class="quiz-option" data-k="C">C. 没有任何盲区</div>
+<div class="quiz-option" data-k="D">D. 只能测表面缺陷</div>
+<div class="quiz-explain">✅ 选 A。TOFD 靠缺陷尖端衍射波，<strong>上下尖端波时间差=缺陷高度，精度±1mm</strong>，是三者里最高的。缺点是直通波和底波附近有盲区（上表面2~5mm、下表面1~3mm），常和 PAUT 配套互补。设备贵。</div>
+</div>
+
+<div class="quiz-question" data-correct="C">
+<div class="q-text"><span class="q-num">6</span>【销售场景】客户问"PAUT 和普通 UT 有啥区别，值不值贵那么多"，你怎么答？</div>
+<div class="quiz-option" data-k="A">A. "没区别，就是贵点好看"</div>
+<div class="quiz-option" data-k="B">B. "PAUT 只能测薄板"</div>
+<div class="quiz-option" data-k="C">C. "PAUT是阵列多晶片电子转向+聚焦，一次扇形扫覆盖大角度范围还能出彩色成像，效率高、定性准、能存档；大批量要正式报告的值，偶尔查几道焊缝便携A扫就够"</div>
+<div class="quiz-option" data-k="D">D. "PAUT 已经淘汰普通 UT 了"</div>
+<div class="quiz-explain">✅ 选 C。PAUT 多阵元电子控制声束扇形扫+任意深度聚焦，一次覆盖 30°~70° 全角度，出 B/C 彩色成像，效率高、定性准、数据能存档。压力容器/长输管道等大批量要正式报告的场景值得；偶尔查几道焊缝便携 A 扫就够。<strong>按客户工况判断，才是专业顾问</strong>。</div>
+</div>
+
+<div id="quiz-result"><div>你的得分</div><div class="score">0</div><div id="result-text"></div><br><button class="btn ghost" onclick="resetQuiz()">重新作答</button></div>
+<div style="text-align:center;margin-top:14px"><button class="btn" onclick="submitQuiz()">交卷</button></div>
+</div>
+
+</div>
+<div style="text-align:center;margin:24px 0;padding:14px;background:#eaf2f8;border-radius:8px"><a href="index.html" style="display:inline-block;background:#1a5276;color:#fff;padding:10px 28px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px">🏠 返回总目录</a></div>
+<script>
+document.querySelectorAll('.quiz-question').forEach(function(q){var correct=q.dataset.correct;q.querySelectorAll('.quiz-option').forEach(function(opt){opt.addEventListener('click',function(){if(q.classList.contains('locked'))return;q.querySelectorAll('.quiz-option').forEach(function(o){o.classList.remove('correct','wrong');var m=o.querySelector('.mark');if(m)m.remove();});var k=opt.dataset.k;if(k===correct){opt.classList.add('correct');opt.insertAdjacentHTML('beforeend','<span class="mark">✓</span>');}else{opt.classList.add('wrong');opt.insertAdjacentHTML('beforeend','<span class="mark">✗</span>');q.querySelectorAll('.quiz-option').forEach(function(o){if(o.dataset.k===correct){o.classList.add('correct');}});}q.querySelector('.quiz-explain').classList.add('show');q.classList.add('locked');});});});
+function submitQuiz(){var qs=document.querySelectorAll('.quiz-question');var a=0,s=0;qs.forEach(function(q){if(q.classList.contains('locked')){a++;if(q.querySelector('.quiz-option.correct'))s++;}});var r=document.getElementById('quiz-result');r.style.display='block';r.querySelector('.score').textContent=s+' / '+qs.length;var p=s/qs.length,m='';if(p===1)m='满分！检测方法与评定打通了。';else if(p>=.75)m='不错！错题看解析，重点复习 DAC 和 PAUT。';else if(p>=.5)m='及格，重看 DAC/AVG 和缺陷评定。';else m='重看一遍再测，这是销售高端话题。';document.getElementById('result-text').textContent=m+'（已答'+a+'/'+qs.length+'）';r.scrollIntoView({behavior:'smooth',block:'center'});}
+function resetQuiz(){document.querySelectorAll('.quiz-question').forEach(function(q){q.classList.remove('locked');q.querySelectorAll('.quiz-option').forEach(function(o){o.classList.remove('correct','wrong');var m=o.querySelector('.mark');if(m)m.remove();});q.querySelector('.quiz-explain').classList.remove('show');});document.getElementById('quiz-result').style.display='none';}
+</script>
+</body></html>

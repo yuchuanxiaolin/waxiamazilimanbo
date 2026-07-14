@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第14课 · UT 实战方案设计（毕业课）</title>
+<style>
+:root{--primary:#1a5276;--primary-light:#2980b9;--accent:#e67e22;--bg:#f4f6f7;--card:#fff;--text:#2c3e50;--text-light:#7f8c8d;--border:#d5dbdb;--success:#27ae60;--danger:#e74c3c;--warning:#f39c12;--info:#3498db;--shadow:0 2px 8px rgba(0,0,0,.08)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.85;font-size:15.5px;scroll-behavior:smooth}
+.topbar{position:fixed;top:0;left:0;right:0;height:52px;background:var(--primary);color:#fff;display:flex;align-items:center;padding:0 20px;z-index:1000;box-shadow:0 4px 20px rgba(0,0,0,.12)}
+.topbar h1{font-size:16px;font-weight:600}.topbar .crumb{font-size:12px;opacity:.75;margin-left:8px}
+.topbar nav{margin-left:auto;display:flex;gap:4px;overflow-x:auto}
+.topbar nav a{color:#cfd8dc;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:4px;white-space:nowrap}
+.sidebar{position:fixed;top:52px;left:0;bottom:0;width:230px;background:#fff;border-right:1px solid var(--border);overflow-y:auto;padding:14px 0;z-index:900}
+.sidebar a{display:block;padding:8px 18px;color:var(--text-light);text-decoration:none;font-size:12.5px;border-left:3px solid transparent}
+.sidebar a:hover{background:var(--bg);color:var(--primary)}
+.sidebar a.sub{padding-left:30px;font-size:11.5px}
+.main{margin-left:230px;margin-top:52px;padding:26px 32px;max-width:1000px}
+.section{background:var(--card);border-radius:10px;padding:24px 28px;margin-bottom:20px;box-shadow:var(--shadow)}
+.section h2{color:var(--primary);font-size:21px;border-bottom:2px solid var(--primary-light);padding-bottom:8px;margin-bottom:14px}
+.section h3{color:var(--primary);font-size:16.5px;margin:18px 0 8px;padding-left:10px;border-left:4px solid var(--accent)}
+.section h4{color:var(--text);font-size:15px;margin:14px 0 5px}
+.section p{margin:8px 0}.section ul,.section ol{margin:8px 0 8px 24px}.section li{margin:4px 0}.section strong{color:var(--primary)}
+.tip{background:#eafaf1;border-left:4px solid var(--success);padding:11px 15px;border-radius:6px;margin:12px 0}.tip::before{content:"💡 记住";display:block;font-weight:700;color:var(--success);font-size:12.5px;margin-bottom:3px}
+.warn{background:#fef9e7;border-left:4px solid var(--warning);padding:11px 15px;border-radius:6px;margin:12px 0}.warn::before{content:"⚠️ 注意";display:block;font-weight:700;color:var(--warning);font-size:12.5px;margin-bottom:3px}
+.key{background:#eaf2f8;border-left:4px solid var(--primary-light);padding:11px 15px;border-radius:6px;margin:12px 0}.key::before{content:"🔑 核心";display:block;font-weight:700;color:var(--primary);font-size:12.5px;margin-bottom:3px}
+.sale{background:#fdf2e9;border-left:4px solid var(--accent);padding:11px 15px;border-radius:6px;margin:12px 0}.sale::before{content:"💬 客户对话";display:block;font-weight:700;color:var(--accent);font-size:12.5px;margin-bottom:3px}
+.ndt{background:#eef5fb;border-left:4px solid var(--info);padding:11px 15px;border-radius:6px;margin:12px 0}.ndt::before{content:"🔬 检测要点";display:block;font-weight:700;color:var(--info);font-size:12.5px;margin-bottom:3px}
+.analogy{background:linear-gradient(135deg,#fdf2e9,#fef9e7);border:1px dashed var(--accent);border-radius:8px;padding:12px 15px;margin:12px 0}.analogy::before{content:"🎯 打个比方";display:block;font-weight:700;color:var(--accent);font-size:12.5px;margin-bottom:4px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+th,td{border:1px solid var(--border);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--primary);color:#fff}tr:nth-child(even){background:#f8f9fa}
+td strong{color:var(--primary)}
+.bad-row{background:#fdedec !important}
+.case-card{background:linear-gradient(135deg,#fff,#f8f9fa);border:1px solid var(--border);border-left:5px solid var(--accent);border-radius:8px;padding:16px;margin:14px 0}
+.case-card .case-head{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.case-card .case-icon{font-size:24px}
+.case-card .case-title{font-weight:700;color:var(--primary);font-size:15.5px}
+.case-card .case-tag{display:inline-block;background:var(--success);color:#fff;font-size:11px;padding:2px 8px;border-radius:3px;margin-left:6px}
+.flow{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;margin:14px 0}
+.flow-step{background:var(--primary);color:#fff;padding:10px 14px;border-radius:6px;font-size:12.5px;font-weight:600;text-align:center;min-width:70px}
+.flow-arrow{color:var(--accent);font-size:20px;font-weight:700}
+.quiz-intro{background:#eaf2f8;border-radius:8px;padding:12px 16px;margin:14px 0;color:var(--primary)}
+.quiz-question{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;margin:12px 0}
+.quiz-question .q-text{font-weight:600;margin-bottom:8px}
+.quiz-question .q-num{display:inline-block;background:var(--primary);color:#fff;width:24px;height:24px;border-radius:50%;text-align:center;line-height:24px;font-size:12px;margin-right:6px}
+.quiz-option{display:block;padding:9px 12px;margin:5px 0;border:2px solid var(--border);border-radius:6px;cursor:pointer}
+.quiz-option:hover{border-color:var(--primary-light);background:#eaf2f8}
+.quiz-option.correct{border-color:var(--success);background:#eafaf1}
+.quiz-option.wrong{border-color:var(--danger);background:#fdedec}
+.quiz-option .mark{float:right;font-weight:700}
+.quiz-explain{margin-top:8px;padding:9px;background:#f8f9fa;border-radius:4px;font-size:12.5px;display:none}
+.quiz-explain.show{display:block}
+#quiz-result{display:none;text-align:center;padding:28px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin:14px 0}
+#quiz-result .score{font-size:44px;font-weight:700;margin:8px 0}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:9px 24px;border-radius:6px;border:none;cursor:pointer;font-size:14px;font-weight:600}
+.btn:hover{background:var(--accent-light)}
+.btn.ghost{background:transparent;color:var(--primary);border:2px solid var(--primary)}
+.hero{text-align:center;padding:38px 28px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin-bottom:20px}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);padding:3px 12px;border-radius:12px;font-size:11.5px;margin-bottom:8px}
+.hero h1{font-size:26px;margin-bottom:8px}.hero p{font-size:14px;opacity:.92}
+@media(max-width:900px){.sidebar{transform:translateX(-100%)}.main{margin-left:0;padding:14px}.topbar nav{display:none}}
+</style></head><body>
+<div class="topbar"><h1>🔬 NDT 扫盲课</h1><span class="crumb">第 14 课 · UT 实战方案设计</span><nav><a href="#hero">封面</a><a href="#ch1">方案流程</a><a href="#ch2">五个案例</a><a href="#ch3">报价要素</a><a href="#ch4">方案模板</a><a href="#exam">测验</a></nav></div>
+<div class="sidebar">
+<a href="#hero">封面</a>
+<a href="#ch1">一、方案设计六步法</a>
+<a href="#ch2">二、五个实战案例</a>
+<a href="#ch2-1" class="sub">案例1：压力容器焊缝</a>
+<a href="#ch2-2" class="sub">案例2：钢板分层</a>
+<a href="#ch2-3" class="sub">案例3：锻件白点</a>
+<a href="#ch2-4" class="sub">案例4：水冷板钎着率</a>
+<a href="#ch2-5" class="sub">案例5：复材分层</a>
+<a href="#ch3">三、报价要素</a>
+<a href="#ch4">四、方案模板</a>
+<a href="#exam">📝 测验</a>
+</div>
+<div class="main">
+
+<div class="section" id="hero" style="padding:0;overflow:hidden"><div class="hero">
+<span class="tag">扫盲课 · 第三阶段 · 第 14 课（毕业课）</span>
+<h1>UT 实战方案设计</h1>
+<p>这是把前 13 课串起来的"毕业课"——客户给工件，你怎么问、怎么配、怎么报价、怎么出方案。这是销售的核心动作。</p>
+</div></div>
+
+<div class="section">
+<h2>📍 这节课为什么是"毕业课"</h2>
+<div class="key">前 13 课你学了<strong>材料、工艺、缺陷、检测方法、仪器、探头、评定</strong>。这节课把它们<strong>串成一条线</strong>——客户拿工件来，你从"问什么"到"出方案"，走完整流程。</div>
+<div class="tip">这节课没有新理论，全是<strong>实战动作</strong>。五个典型案例覆盖你日常 90% 的客户咨询。</div>
+</div>
+
+<div class="section" id="ch1">
+<h2>一、★ 方案设计六步法（销售标准动作）</h2>
+<div class="flow">
+<div class="flow-step">① 问工件</div>
+<span class="flow-arrow">→</span>
+<div class="flow-step">② 问缺陷</div>
+<span class="flow-arrow">→</span>
+<div class="flow-step">③ 选方法</div>
+<span class="flow-arrow">→</span>
+<div class="flow-step">④ 配探头</div>
+<span class="flow-arrow">→</span>
+<div class="flow-step">⑤ 定等级</div>
+<span class="flow-arrow">→</span>
+<div class="flow-step">⑥ 报价</div>
+</div>
+<table>
+<tr><th>步骤</th><th>问什么/做什么</th><th>为什么</th></tr>
+<tr><td><strong>① 问工件</strong></td><td>材料牌号？板厚/尺寸？焊接方法？什么工件？</td><td>决定声速、频率、能不能测</td></tr>
+<tr><td><strong>② 问缺陷</strong></td><td>查什么缺陷？裂纹？气孔？分层？钎着率？</td><td>决定方法选型（UT/RT/MT/PT）</td></tr>
+<tr><td><strong>③ 选方法</strong></td><td>内部还是表面？面状还是体积型？什么材料？</td><td>按方法选型决策树（第10课）</td></tr>
+<tr><td><strong>④ 配探头</strong></td><td>频率？直/斜探头？K值？晶片尺寸？试块？</td><td>按工件厚度/缺陷配（第12课）</td></tr>
+<tr><td><strong>⑤ 定等级</strong></td><td>按什么标准？合格级别？检测比例？时机？</td><td>按委托单/标准（第16课）</td></tr>
+<tr><td><strong>⑥ 报价</strong></td><td>设备型号/检测服务？工时？试块？差旅？</td><td>出报价单</td></tr>
+</table>
+<div class="sale"><strong>关键</strong>：六步走完，方案就出来了。<strong>不要跳步骤</strong>——跳了就容易漏信息、配错探头、报错价。</div>
+</div>
+
+<div class="section" id="ch2">
+<h2>二、★ 五个实战案例（覆盖 90% 客户场景）</h2>
+
+<h3 id="ch2-1">案例 1：压力容器焊缝（最常见）</h3>
+<div class="case-card">
+<div class="case-head"><span class="case-icon">🏛️</span><span class="case-title">Q345R 压力容器焊缝</span><span class="case-tag">A 扫</span></div>
+<p><strong>客户咨询</strong>："我们做压力容器的，Q345R，板厚 20mm，埋弧焊，按 NB/T 47013 做 UT 100% Ⅱ级。"</p>
+<p><strong>你的六步</strong>：</p>
+<ul>
+<li>① 工件：Q345R（铁素体+珠光体细晶，UT 优），20mm 中板，埋弧焊（厚板焊缝）</li>
+<li>② 缺陷：焊缝内部缺陷（裂纹、未熔合、未焊透、气孔、夹渣）</li>
+<li>③ 方法：<strong>UT 横波斜探头</strong>（焊缝标准做法）+ 建议 RT 配合（体积缺陷）+ MT 查表面</li>
+<li>④ 探头：<strong>5MHz，K2 斜探头</strong>（20mm 用 K2 合适），CSK-IIIA 试块校准</li>
+<li>⑤ 等级：按 <strong>GB/T 11345</strong>（NB/T 47013.3 引用），Ⅱ 级合格，100% 全检</li>
+<li>⑥ 时机：焊后等 24–48 小时（延迟裂纹）</li>
+</ul>
+<p><strong>设备</strong>：便携 A 扫探伤仪 + 5MHz K2 斜探头 + CSK-IIIA 试块。<strong>我们能做。</strong></p>
+</div>
+
+<h3 id="ch2-2">案例 2：钢板分层检测</h3>
+<div class="case-card">
+<div class="case-head"><span class="case-icon">📜</span><span class="case-title">轧制钢板分层</span><span class="case-tag">A 扫/C 扫</span></div>
+<p><strong>客户咨询</strong>："我们进了一批钢板，要做分层检测。"</p>
+<p><strong>你的六步</strong>：</p>
+<ul>
+<li>① 工件：钢板（材料？厚度？），轧制态</li>
+<li>② 缺陷：<strong>分层</strong>（钢板头号缺陷）</li>
+<li>③ 方法：<strong>UT 纵波直探头</strong>（分层是 UT 一等一绝活）</li>
+<li>④ 探头：<strong>5MHz 双晶直探头</strong>（双晶减小近场盲区）或单晶直探头；按 GB/T 2970 扫查</li>
+<li>⑤ 等级：按 <strong>GB/T 2970</strong> 或 EN 10160 评级</li>
+<li>⑥ 方案：中厚板出厂 100% 扫分层。量大/大板可上<strong>水浸 C 扫自动化</strong></li>
+</ul>
+<p><strong>设备</strong>：便携 A 扫（少量）或水浸 C 扫（大批量/大板）。<strong>我们都能做。</strong></p>
+</div>
+
+<h3 id="ch2-3">案例 3：锻件白点检测</h3>
+<div class="case-card">
+<div class="case-head"><span class="case-icon">🔧</span><span class="case-title">42CrMo 锻件白点</span><span class="case-tag">A 扫</span></div>
+<p><strong>客户咨询</strong>："这是 42CrMo 锻件，要查白点。"</p>
+<p><strong>你的六步</strong>：</p>
+<ul>
+<li>① 工件：42CrMo（合金调质钢，锻后细晶，UT 优），锻件</li>
+<li>② 缺陷：<strong>白点</strong>（氢致圆片状内部裂纹）+ 夹杂</li>
+<li>③ 方法：<strong>UT 纵波直探头</strong>（白点是直探头克星）</li>
+<li>④ 探头：<strong>5MHz 直探头</strong>，大面积扫查（锻件 100% 查白点）</li>
+<li>⑤ 等级：按 GB/T 6402（锻件 UT）或客户标准</li>
+<li>⑥ <strong>关键提醒</strong>：检测时机必须在锻件冷却+热处理后（白点是延迟的，热的查不到）</li>
+</ul>
+<p><strong>设备</strong>：便携 A 扫 + 5MHz 直探头。<strong>我们能做。</strong></p>
+</div>
+
+<h3 id="ch2-4">案例 4：★ 水冷板钎着率（核心市场）</h3>
+<div class="case-card">
+<div class="case-head"><span class="case-icon">🧊</span><span class="case-title">新能源/水冷板钎着率</span><span class="case-tag">水浸 C 扫</span></div>
+<p><strong>客户咨询</strong>："我们做电池液冷板，怎么证明钎焊质量？"</p>
+<p><strong>你的六步</strong>：</p>
+<ul>
+<li>① 工件：铝合金水冷板（3003/6061），真空钎焊或 FSW</li>
+<li>② 缺陷：<strong>钎着率</strong>（焊实比例）、虚焊、空洞、流道堵塞</li>
+<li>③ 方法：<strong>水浸 C 扫</strong>（平板+铝+查结合面=C 扫量身定做）</li>
+<li>④ 探头：高频聚焦探头（15–25MHz，查精细钎焊面），水浸耦合</li>
+<li>⑤ 等级：按客户标准（车厂/数据中心，常见钎着率≥85%）</li>
+<li>⑥ <strong>核心卖点</strong>：软件<strong>自动扣除流道面积，直接算钎着率百分比</strong>，出 C 扫分布图</li>
+</ul>
+<p><strong>设备</strong>：水浸 C 扫（BSN-C 系列）。<strong>这是我们的核心市场。</strong></p>
+</div>
+
+<h3 id="ch2-5">案例 5：★ 复合材料分层（杀手锏）</h3>
+<div class="case-card">
+<div class="case-head"><span class="case-icon">✈️</span><span class="case-title">碳纤维/玻璃钢分层</span><span class="case-tag">水浸 C 扫</span></div>
+<p><strong>客户咨询</strong>："碳纤维板怎么查分层？"</p>
+<p><strong>你的六步</strong>：</p>
+<ul>
+<li>① 工件：碳纤维/玻璃钢/蜂窝板（复材）</li>
+<li>② 缺陷：<strong>分层、脱粘、孔隙、冲击损伤 BVID</strong></li>
+<li>③ 方法：<strong>水浸 C 扫</strong>（复材分层=C 扫看家本领）</li>
+<li>④ 探头：聚焦探头（5–15MHz），水浸或喷水耦合</li>
+<li>⑤ 等级：按航空标准（如空客/波音规范）或客户标准</li>
+<li>⑥ 方案：扫一张俯视热力图，分层面积位置一目了然</li>
+</ul>
+<p><strong>设备</strong>：水浸 C 扫或喷水 C 扫（大件用 BSN-CT400 喷水式）。<strong>这是我们的杀手锏市场。</strong></p>
+</div>
+
+<div class="warn"><strong>不能做的案例（要敢说不）</strong>：奥氏体不锈钢焊缝探伤（粗晶，建议 PAUT）、十几米长钢管（建议漏磁/导波）、半导体芯片封装（要 SAM）。<strong>坦诚转介比硬接专业。</strong></div>
+</div>
+
+<div class="section" id="ch3">
+<h2>三、报价要素（卖设备 vs 做检测服务）</h2>
+<p>你两种业务都做，报价逻辑不同：</p>
+<table>
+<tr><th>要素</th><th>卖设备</th><th>做检测服务</th></tr>
+<tr><td>核心</td><td>设备型号 + 探头 + 试块 + 软件 + 培训 + 售后</td><td>工时 + 探头耗材 + 试块 + 差旅 + 报告</td></tr>
+<tr><td>报价单位</td><td>按套</td><td>按米（焊缝）/按件/按平米/按天</td></tr>
+<tr><td>关键变量</td><td>行程大小、通道数、自动化程度、软件功能</td><td>工件量、复杂度、现场条件、标准要求</td></tr>
+<tr><td>试块</td><td>客户另购或赠送</td><td>包含在检测费里</td></tr>
+</table>
+<div class="key"><strong>报价必问清单</strong>：<br>
+① 工件详情（材料/厚度/尺寸/数量）<br>
+② 检测要求（方法/标准/级别/比例）<br>
+③ 现场/实验室（要不要上门）<br>
+④ 工期（什么时候要）<br>
+⑤ 预算（客户接受范围）<br>
+⑥ 验收方式（谁验收、怎么验收）</div>
+</div>
+
+<div class="section" id="ch4">
+<h2>四、★ 方案设计模板（销售照着填）</h2>
+<div class="key"><strong>给客户的检测方案书，标准结构</strong>：</div>
+<ol>
+<li><strong>工件信息</strong>：名称、材料、板厚、尺寸、数量、焊接方法</li>
+<li><strong>检测目的</strong>：查什么缺陷</li>
+<li><strong>检测标准</strong>：引用哪个标准（NB/T 47013、GB/T 11345 等）</li>
+<li><strong>检测方法</strong>：UT（A 扫/C 扫）/RT/MT/PT，比例（100%/抽检）</li>
+<li><strong>设备配置</strong>：仪器型号、探头（频率/K值/晶片）、试块</li>
+<li><strong>验收等级</strong>：合格级别（如 Ⅱ 级）</li>
+<li><strong>检测时机</strong>：焊后/PWHT 后/表面处理后</li>
+<li><strong>报价</strong>：设备费 or 检测服务费（按单位）</li>
+<li><strong>交付物</strong>：检测报告（含 C 扫图/缺陷记录）</li>
+</ol>
+<div class="tip"><strong>把这个模板存成文档</strong>，每次客户咨询照着填，方案几分钟就出来。</div>
+</div>
+
+<div class="section" id="exam">
+<h2>📝 随堂测验（6 题）</h2>
+<div class="quiz-intro">UT 实战方案设计——毕业课测验。</div>
+
+<div class="quiz-question" data-correct="C">
+<div class="q-text"><span class="q-num">1</span>客户咨询压力容器焊缝检测，方案设计第一步应该？</div>
+<div class="quiz-option" data-k="A">A. 直接报价</div>
+<div class="quiz-option" data-k="B">B. 选探头</div>
+<div class="quiz-option" data-k="C">C. 问工件（材料/厚度/焊法/标准）</div>
+<div class="quiz-option" data-k="D">D. 寄设备</div>
+<div class="quiz-explain">✅ 选 C。<strong>方案设计六步法第一步是"问工件"</strong>——材料牌号（决定声速/频率）、板厚（决定 K 值）、焊接方法（预判缺陷）、标准（决定验收）。信息不全不能报价，否则容易配错探头报错价。</div>
+</div>
+
+<div class="quiz-question" data-correct="A">
+<div class="q-text"><span class="q-num">2</span>20mm 厚 Q345R 焊缝，标准探头配置是？</div>
+<div class="quiz-option" data-k="A">A. 5MHz，K2 斜探头 + CSK-IIIA 试块</div>
+<div class="quiz-option" data-k="B">B. 2MHz 直探头</div>
+<div class="quiz-option" data-k="C">C. 10MHz 表面波探头</div>
+<div class="quiz-option" data-k="D">D. 1MHz 低频探头</div>
+<div class="quiz-explain">✅ 选 A。20mm 中板焊缝用 <strong>5MHz K2 斜探头</strong>（K2 适合中壁 10–40mm），CSK-IIIA 试块是焊缝 UT 标准试块。直探头不能测焊缝（有余高）；表面波只查表面；1MHz 太低分辨率不够。</div>
+</div>
+
+<div class="quiz-question" data-correct="B">
+<div class="q-text"><span class="q-num">3</span>水冷板钎着率检测，我们用的核心设备是？</div>
+<div class="quiz-option" data-k="A">A. 便携 A 扫</div>
+<div class="quiz-option" data-k="B">B. 水浸 C 扫（BSN-C 系列）</div>
+<div class="quiz-option" data-k="C">C. 射线 RT</div>
+<div class="quiz-option" data-k="D">D. 磁粉 MT</div>
+<div class="quiz-explain">✅ 选 B。水冷板是<strong>水浸 C 扫量身定做</strong>的市场：平板+铝+查结合面+要出图+量产。便携 A 扫出不了钎着率分布图；RT 对结合面不敏感；MT 只能铁磁（铝不行）。</div>
+</div>
+
+<div class="quiz-question" data-correct="D">
+<div class="q-text"><span class="q-num">4</span>客户拿来一批钢板要查分层，最佳方案？</div>
+<div class="quiz-option" data-k="A">A. 射线 RT</div>
+<div class="quiz-option" data-k="B">B. 磁粉 MT</div>
+<div class="quiz-option" data-k="C">C. 涡流 ET</div>
+<div class="quiz-option" data-k="D">D. UT 纵波直探头（分层绝活），量大上水浸 C 扫自动化</div>
+<div class="quiz-explain">✅ 选 D。<strong>分层是 UT 直探头的一等一绝活</strong>（平行板面大反射面，回波极强）。少量用便携 A 扫，大批量/大板上水浸 C 扫自动化。RT 对分层不敏感（厚度方向重叠）。</div>
+</div>
+
+<div class="quiz-question" data-correct="C">
+<div class="q-text"><span class="q-num">5</span>锻件白点检测，最关键的提醒是？</div>
+<div class="quiz-option" data-k="A">A. 用高频探头</div>
+<div class="quiz-option" data-k="B">B. 表面要抛光</div>
+<div class="quiz-option" data-k="C">C. 检测时机必须在冷却+热处理后（白点延迟形成，热的查不到）</div>
+<div class="quiz-option" data-k="D">D. 只能用 RT</div>
+<div class="quiz-explain">✅ 选 C。<strong>白点是氢致延迟裂纹</strong>，热的锻件白点还没形成，立即检测会漏检。必须冷却到室温 + 等够时间（最好热处理后），让白点充分形成。这是锻件检测最关键的提醒。</div>
+</div>
+
+<div class="quiz-question" data-correct="A">
+<div class="q-text"><span class="q-num">6</span>【毕业题】客户拿来奥氏体不锈钢焊缝要 UT 探伤，你的专业回应？</div>
+<div class="quiz-option" data-k="A">A. 说明母材能做、焊缝是难点（粗晶），业内主流用 PAUT/TOFD；坦诚说明我们的边界</div>
+<div class="quiz-option" data-k="B">B. 没问题，常规 A 扫就能搞定</div>
+<div class="quiz-option" data-k="C">C. 不锈钢不能测</div>
+<div class="quiz-option" data-k="D">D. 用 10MHz 高频就行</div>
+<div class="quiz-explain">✅ 选 A。这是<strong>敢说边界的体现</strong>。奥氏体焊缝是 UT 公认难点（粗晶草状回波），常规 A/C 扫不是最优，业内主流用 PAUT/TOFD。<strong>母材能做，焊缝坦诚说明</strong>——这才是专业销售。B 太轻率；C 太绝对；D 完全反了（高频衰减更大更糟）。</div>
+</div>
+
+<div id="quiz-result"><div>你的得分</div><div class="score">0</div><div id="result-text"></div><br><button class="btn ghost" onclick="resetQuiz()">重新作答</button></div>
+<div style="text-align:center;margin-top:14px"><button class="btn" onclick="submitQuiz()">交卷</button></div>
+</div>
+
+<div style="display:flex;justify-content:space-between;align-items:center;margin:24px 0;padding:18px 24px;background:#fff;border-radius:10px;box-shadow:var(--shadow)">
+<a href="#hero" style="text-decoration:none"><span style="font-size:13px;color:#7f8c8d">↑ 本课开头</span></a>
+<div style="text-align:center"><div style="font-size:13px;color:#7f8c8d">下一课</div><div style="font-weight:600;color:#1a5276;font-size:15px">第15课 · 其他 NDT 方法 →</div></div>
+<span></span>
+</div>
+
+</div>
+<div style="text-align:center;margin:24px 0;padding:14px;background:#eaf2f8;border-radius:8px"><a href="index.html" style="display:inline-block;background:#1a5276;color:#fff;padding:10px 28px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px">🏠 返回总目录</a></div>
+<script>
+document.querySelectorAll('.quiz-question').forEach(function(q){var correct=q.dataset.correct;q.querySelectorAll('.quiz-option').forEach(function(opt){opt.addEventListener('click',function(){if(q.classList.contains('locked'))return;q.querySelectorAll('.quiz-option').forEach(function(o){o.classList.remove('correct','wrong');var m=o.querySelector('.mark');if(m)m.remove();});var k=opt.dataset.k;if(k===correct){opt.classList.add('correct');opt.insertAdjacentHTML('beforeend','<span class="mark">✓</span>');}else{opt.classList.add('wrong');opt.insertAdjacentHTML('beforeend','<span class="mark">✗</span>');q.querySelectorAll('.quiz-option').forEach(function(o){if(o.dataset.k===correct){o.classList.add('correct');}});}q.querySelector('.quiz-explain').classList.add('show');q.classList.add('locked');});});});
+function submitQuiz(){var qs=document.querySelectorAll('.quiz-question');var a=0,s=0;qs.forEach(function(q){if(q.classList.contains('locked')){a++;if(q.querySelector('.quiz-option.correct'))s++;}});var r=document.getElementById('quiz-result');r.style.display='block';r.querySelector('.score').textContent=s+' / '+qs.length;var p=s/qs.length,m='';if(p===1)m='满分！毕业课通关，你能独立出方案了。';else if(p>=.75)m='不错！错题看解析。';else if(p>=.5)m='重看五个案例。';else m='重看方案六步法再测。';document.getElementById('result-text').textContent=m+'（已答'+a+'/'+qs.length+'）';r.scrollIntoView({behavior:'smooth',block:'center'});}
+function resetQuiz(){document.querySelectorAll('.quiz-question').forEach(function(q){q.classList.remove('locked');q.querySelectorAll('.quiz-option').forEach(function(o){o.classList.remove('correct','wrong');var m=o.querySelector('.mark');if(m)m.remove();});q.querySelector('.quiz-explain').classList.remove('show');});document.getElementById('quiz-result').style.display='none';}
+</script>
+</body></html>

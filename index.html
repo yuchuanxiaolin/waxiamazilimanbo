@@ -1,1627 +1,230 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PTI 哲学家人格测试</title>
-  <style>
-    :root {
-      --bg: #faf7f0;
-      --panel: #ffffff;
-      --text: #2c2416;
-      --muted: #8a7d6b;
-      --line: #e8dfcf;
-      --soft: #f5efe3;
-      --accent: #b8943e;
-      --accent-strong: #8a6d24;
-      --shadow: 0 16px 40px rgba(138, 109, 36, 0.08);
-      --radius: 22px;
-    }
-
-    * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-      background:
-        radial-gradient(circle at top left, #fdfaf4 0, #faf7f0 36%, #f5f0e4 100%);
-      color: var(--text);
-      min-height: 100vh;
-    }
-
-    .shell {
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 24px 16px 56px;
-    }
-
-    .card {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .hero {
-      padding: 28px;
-      margin-top: 20px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      right: -60px;
-      top: -60px;
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      background: linear-gradient(180deg, rgba(184, 148, 62, 0.18), rgba(184, 148, 62, 0.02));
-      pointer-events: none;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      color: var(--accent-strong);
-      border: 1px solid var(--line);
-      background: var(--soft);
-      border-radius: 999px;
-      padding: 8px 12px;
-      margin-bottom: 16px;
-    }
-
-    h1, h2, h3, p { margin: 0; }
-    .hero h1 {
-      font-size: clamp(28px, 5vw, 52px);
-      line-height: 1.08;
-      letter-spacing: -0.03em;
-      max-width: 680px;
-    }
-    .hero .sub {
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.75;
-      max-width: 720px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.3fr 0.9fr;
-      gap: 18px;
-      align-items: stretch;
-      margin-top: 24px;
-    }
-
-    .mini-panel {
-      padding: 18px;
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, #fbfaf6, #f3efe4);
-    }
-
-    .mini-panel h3 {
-      font-size: 15px;
-      margin-bottom: 10px;
-    }
-
-    .mini-panel ul {
-      margin: 0;
-      padding-left: 18px;
-      color: var(--muted);
-      line-height: 1.8;
-      font-size: 14px;
-    }
-
-        .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 22px;
-    }
-    .hero-minimal {
-      min-height: 48vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 42px 20px;
-    }
-    .hero-minimal::after { display: none; }
-    .hero-minimal h1 {
-      max-width: none;
-      margin: 0;
-    }
-    .hero-actions-single {
-      justify-content: center;
-      margin-top: 28px;
-    }
-
-    button {
-      border: 0;
-      cursor: pointer;
-      transition: transform .16s ease, box-shadow .16s ease, opacity .16s ease;
-      font: inherit;
-    }
-
-    button:hover { transform: translateY(-1px); }
-    button:disabled { cursor: not-allowed; opacity: 0.55; transform: none; }
-
-    .btn-primary {
-      background: var(--accent-strong);
-      color: #fff;
-      padding: 14px 20px;
-      border-radius: 14px;
-      box-shadow: 0 12px 30px rgba(77, 106, 83, 0.18);
-      font-weight: 700;
-    }
-
-    .btn-secondary {
-      background: #fff;
-      color: var(--accent-strong);
-      padding: 14px 20px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      font-weight: 700;
-    }
-
-    .screen { display: none; }
-    .screen.active { display: block; }
-
-    .test-wrap,
-    .result-wrap {
-      margin-top: 22px;
-      padding: 22px;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 18px;
-      flex-wrap: wrap;
-    }
-
-    .progress {
-      flex: 1;
-      min-width: 240px;
-      height: 10px;
-      background: #f0ebe0;
-      border-radius: 999px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .progress > span {
-      display: block;
-      width: 0;
-      height: 100%;
-      background: linear-gradient(90deg, #d4b86a, #8a6d24);
-      border-radius: inherit;
-      transition: width .22s ease;
-    }
-
-    .progress-text {
-      color: var(--muted);
-      font-size: 13px;
-      white-space: nowrap;
-    }
-
-    .question-list {
-      display: grid;
-      gap: 16px;
-    }
-
-    .question {
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 18px;
-      background: linear-gradient(180deg, #ffffff, #fbf9f4);
-    }
-
-    .question-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 10px;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      border-radius: 999px;
-      padding: 6px 10px;
-      background: var(--soft);
-      border: 1px solid var(--line);
-    }
-
-    .question-title {
-      font-size: 16px;
-      line-height: 1.7;
-      white-space: pre-wrap;
-    }
-
-    .options {
-      display: grid;
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .option {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      padding: 14px 14px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: #fff;
-      transition: border-color .16s ease, background .16s ease, transform .16s ease;
-    }
-
-    .option:hover {
-      border-color: #d4c9a8;
-      background: #faf6ee;
-    }
-
-    .option input {
-      margin-top: 3px;
-      accent-color: var(--accent-strong);
-      transform: scale(1.1);
-      flex-shrink: 0;
-    }
-
-    .option-code {
-      font-weight: 800;
-      color: var(--accent-strong);
-      min-width: 22px;
-    }
-
-    .actions-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 18px;
-      padding-top: 6px;
-    }
-
-    .hint {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.7;
-    }
-
-    .result-hero {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 18px;
-      align-items: stretch;
-    }
-
-    .type-box,
-    .score-box,
-    .dim-box,
-    .top3-box,
-    .about-box {
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 18px;
-      background: linear-gradient(180deg, #ffffff, #fbf9f4);
-    }
-
-    .type-kicker {
-      font-size: 12px;
-      color: var(--accent-strong);
-      margin-bottom: 8px;
-      letter-spacing: .05em;
-    }
-
-    .type-name {
-      font-size: clamp(30px, 5vw, 48px);
-      line-height: 1.08;
-      letter-spacing: -0.03em;
-    }
-
-    .type-subname {
-      margin-top: 8px;
-      color: var(--muted);
-      font-size: 15px;
-    }
-
-    .match {
-      margin-top: 18px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border-radius: 999px;
-      padding: 10px 14px;
-      background: var(--soft);
-      border: 1px solid var(--line);
-      color: var(--accent-strong);
-      font-weight: 700;
-    }
-
-    .type-desc {
-      margin-top: 18px;
-      line-height: 1.85;
-      font-size: 15px;
-      color: #304034;
-    }
-
-    .score-box h3,
-    .dim-box h3,
-    .top3-box h3,
-    .about-box h3 {
-      font-size: 16px;
-      margin-bottom: 12px;
-    }
-
-    .score-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .score-item {
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 12px;
-      background: #fff;
-    }
-
-    .score-item .k {
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-
-    .score-item .v {
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--accent-strong);
-    }
-
-    .dim-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .dim-pill {
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 12px;
-      background: #fff;
-    }
-
-    .dim-pill .label {
-      color: var(--muted);
-      font-size: 12px;
-      margin-bottom: 6px;
-    }
-
-    .dim-pill .value {
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--accent-strong);
-    }
-
-    .top3-list {
-      display: grid;
-      gap: 10px;
-    }
-
-    .top3-item {
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 12px;
-      background: #fff;
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .top3-item strong {
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .top3-item span {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .top3-score {
-      color: var(--accent-strong);
-      font-weight: 800;
-      white-space: nowrap;
-    }
-
-    .about-box p {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.8;
-    }
-
-    .footer-note {
-      margin-top: 16px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.7;
-    }
-
-    
-    .result-layout {
-      display: grid;
-      gap: 18px;
-    }
-    .result-top {
-      display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 18px;
-      align-items: stretch;
-    }
-    .poster-box, .type-box, .analysis-box, .dim-box, .note-box {
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 18px;
-      background: linear-gradient(180deg, #ffffff, #fbf9f4);
-    }
-        .poster-box {
-      display: grid;
-      grid-template-rows: 1fr auto;
-      min-height: 280px;
-      overflow: hidden;
-      position: relative;
-      background:
-        radial-gradient(circle at top right, rgba(184,148,62,0.16), rgba(184,148,62,0) 40%),
-        linear-gradient(180deg, #ffffff, #f7f4eb);
-    }
-    .poster-box::after {
-      content: "";
-      position: absolute;
-      right: -46px;
-      bottom: -46px;
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      background: linear-gradient(180deg, rgba(184,148,62,0.12), rgba(184,148,62,0.01));
-      pointer-events: none;
-    }
-    .poster-image {
-      width: 100%;
-      min-height: 220px;
-      max-height: 460px;
-      object-fit: contain;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.75);
-      position: relative;
-      z-index: 1;
-    }
-    .poster-box.no-image .poster-image {
-      display: none;
-    }
-    .poster-caption {
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.8;
-      position: relative;
-      z-index: 1;
-    }
-    .type-kicker {
-      font-size: 12px;
-      color: var(--accent-strong);
-      margin-bottom: 8px;
-      letter-spacing: .06em;
-    }
-    .type-name {
-      font-size: clamp(30px, 5vw, 48px);
-      line-height: 1.08;
-      letter-spacing: -0.03em;
-    }
-    .type-subname {
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.8;
-    }
-    .match {
-      margin-top: 18px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border-radius: 999px;
-      padding: 10px 14px;
-      background: var(--soft);
-      border: 1px solid var(--line);
-      color: var(--accent-strong);
-      font-weight: 700;
-      font-size: 14px;
-      line-height: 1.4;
-    }
-    .analysis-box h3, .dim-box h3, .note-box h3 {
-      font-size: 16px;
-      margin-bottom: 12px;
-    }
-    .result-actions {
-      margin-top: 22px;
-      display: flex;
-      justify-content: flex-end;
-    }
-    .analysis-box p {
-      margin: 0;
-      color: #304034;
-      font-size: 15px;
-      line-height: 1.9;
-      white-space: pre-wrap;
-    }
-    .dim-list {
-      display: grid;
-      gap: 12px;
-    }
-    .dim-item {
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 14px;
-      background: #fff;
-    }
-    .dim-item-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 10px;
-      margin-bottom: 8px;
-      flex-wrap: wrap;
-    }
-    .dim-item-name {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text);
-    }
-    .dim-item-score {
-      color: var(--accent-strong);
-      font-weight: 800;
-      font-size: 14px;
-      white-space: nowrap;
-    }
-    .dim-item p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.8;
-    }
-    .note-box p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.8;
-    }
-
-    .author-box {
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: linear-gradient(180deg, #ffffff, #fbf9f4);
-      overflow: hidden;
-    }
-    .author-box summary {
-      list-style: none;
-      cursor: pointer;
-      padding: 18px;
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-    .author-box summary::-webkit-details-marker { display: none; }
-    .author-box summary::after {
-      content: '展开';
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--accent-strong);
-      border: 1px solid var(--line);
-      background: var(--soft);
-      padding: 6px 10px;
-      border-radius: 999px;
-      flex-shrink: 0;
-    }
-    .author-box[open] summary::after {
-      content: '收起';
-    }
-    .author-content {
-      border-top: 1px solid var(--line);
-      padding: 0 18px 18px;
-    }
-    .author-content p {
-      margin: 14px 0 0;
-      color: #304034;
-      font-size: 14px;
-      line-height: 1.9;
-    }
-
-    .result-actions {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 22px;
-    }
-    @media (max-width: 860px) {
-      .result-top { grid-template-columns: 1fr; }
-    }
-
-@media (max-width: 860px) {
-      .hero-grid,
-      .result-hero {
-        grid-template-columns: 1fr;
-      }
-      .dim-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-
-    @media (max-width: 600px) {
-      .shell { padding: 14px 12px 42px; }
-      .hero, .test-wrap, .result-wrap { padding: 16px; }
-      .hero h1 { font-size: 32px; }
-      .question-title { font-size: 15px; }
-      .dim-grid,
-      .score-grid { grid-template-columns: 1fr; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NDT 扫盲课 · 总目录</title>
+<style>
+:root{--primary:#1a5276;--primary-light:#2980b9;--accent:#e67e22;--bg:#f4f6f7;--card:#fff;--text:#2c3e50;--text-light:#7f8c8d;--border:#d5dbdb;--success:#27ae60;--shadow:0 2px 8px rgba(0,0,0,.08)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Microsoft YaHei","Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.8;font-size:15px}
+.container{max-width:1000px;margin:0 auto;padding:24px 20px 60px}
+/* 顶部标题 */
+.hero{text-align:center;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;padding:48px 28px;border-radius:12px;margin-bottom:28px;box-shadow:var(--shadow)}
+.hero h1{font-size:30px;margin-bottom:10px}
+.hero p{font-size:15px;opacity:.92;margin:6px 0}
+.hero .meta{margin-top:18px;font-size:12.5px;opacity:.85}
+.hero .meta span{margin:0 12px}
+/* 阶段块 */
+.stage{background:var(--card);border-radius:12px;padding:24px 28px;margin-bottom:24px;box-shadow:var(--shadow);border-top:5px solid var(--primary)}
+.stage.s1{border-top-color:var(--success)}
+.stage.s2{border-top-color:var(--accent)}
+.stage.s3{border-top-color:var(--primary-light)}
+.stage.extra{border-top-color:#9b59b6}
+.stage h2{font-size:20px;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.stage.s1 h2{color:var(--success)}.stage.s2 h2{color:var(--accent)}.stage.s3 h2{color:var(--primary)}.stage.extra h2{color:#9b59b6}
+.stage .desc{font-size:13.5px;color:var(--text-light);margin-bottom:16px}
+/* 课程卡片网格 */
+.lessons{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.lesson{display:block;background:#f8f9fa;border:2px solid var(--border);border-radius:10px;padding:14px 16px;text-decoration:none;color:var(--text);transition:.2s;position:relative}
+.lesson:hover{border-color:var(--primary-light);background:#eaf2f8;transform:translateY(-2px);box-shadow:var(--shadow)}
+.lesson .num{display:inline-block;background:var(--primary);color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:12px;margin-bottom:6px}
+.lesson.s1 .num{background:var(--success)}
+.lesson.s2 .num{background:var(--accent)}
+.lesson.s3 .num{background:var(--primary-light)}
+.lesson.extra .num{background:#9b59b6}
+.lesson .title{font-weight:600;font-size:14.5px;color:var(--text);line-height:1.5}
+.lesson .quiz{font-size:11.5px;color:var(--text-light);margin-top:4px}
+.lesson .star{position:absolute;top:12px;right:12px;font-size:13px}
+/* 提示框 */
+.tip{background:#eafaf1;border-left:4px solid var(--success);padding:12px 16px;border-radius:6px;margin:18px 0;font-size:13.5px}
+.tip strong{color:var(--success)}
+.warn{background:#fef9e7;border-left:4px solid #f39c12;padding:12px 16px;border-radius:6px;margin:18px 0;font-size:13.5px}
+/* 学习建议 */
+.guide{background:var(--card);border-radius:12px;padding:24px 28px;margin-bottom:24px;box-shadow:var(--shadow)}
+.guide h2{color:var(--primary);font-size:19px;margin-bottom:12px;border-bottom:2px solid var(--primary-light);padding-bottom:8px}
+.guide ol{margin:8px 0 8px 22px}.guide li{margin:6px 0}
+.guide strong{color:var(--primary)}
+@media(max-width:600px){.lessons{grid-template-columns:1fr}.hero h1{font-size:24px}}
+</style>
 </head>
 <body>
-  <div class="shell">
-    <section id="intro" class="screen active">
-      <div class="hero card hero-minimal">
-        <h1>别做MBTI了，测测你是哪个哲学家。</h1>
-        <p class="sub" style="margin-top:14px;color:var(--muted);font-size:15px;line-height:1.75;max-width:720px;">
-          30道题，测出你的哲学灵魂伴侣。纯属娱乐，苏格拉底不会来找你。（本网页由AI制作，仅为本人学习和练习用途）
-        </p>
-        <div class="hero-actions hero-actions-single">
-          <button id="startBtn" class="btn-primary">开始测试</button>
-        </div>
-      </div>
-    </section>
+<div class="container">
 
-    <section id="test" class="screen">
-      <div class="test-wrap card">
-        <div class="topbar">
-          <div class="progress"><span id="progressBar"></span></div>
-          <div class="progress-text" id="progressText">0 / 31</div>
+<div class="hero">
+<h1>🔬 NDT 扫盲课 · 总目录</h1>
+<p>面向销售+技术一肩挑的 NDT 工程师 · 16 课主线 + 1 补充 + 行业纵深</p>
+<p style="margin-top:10px;font-size:14px">北极星辰科技（ccndt）· 便携 A 扫 + 水浸 C 扫 + 检测服务</p>
+<div class="meta">
+<span>📚 共 19 篇</span>
+<span>📝 108+ 道测验</span>
+<span>🎯 零基础扫盲</span>
+<span>⏱ 约 18 课时</span>
+</div>
+</div>
 
-        </div>
+<div class="guide">
+<h2>📍 学习建议（先看这个）</h2>
+<ol>
+<li><strong>按顺序学</strong>：L01 → L16，中间穿插 S01（在 L02 后看最合适）</li>
+<li><strong>每课流程</strong>：读内容（45–60 分钟）→ 做 6/8 道测验 → 错了看解析</li>
+<li><strong>节奏</strong>：每周 2–3 课，6–8 周学完最扎实，别贪多</li>
+<li><strong>重点课</strong>：L04/L05（焊缝）、L08（焊缝缺陷）、L14（毕业课·方案设计）—— 销售核心</li>
+<li><strong>阶段收官</strong>：L06 / L09 / L16 每个阶段末有总结，看完检查自己是否掌握</li>
+<li><strong>所有文件自包含</strong>：双击任意 .html 即可打开，断网也能学</li>
+</ol>
+<div class="tip"><strong>远程学习提示</strong>：把整个文件夹上传到服务器，访问 <code>index.html</code> 就是这个目录页，点链接跳转到各课。文件间用相对路径链接，同目录即可。</div>
+</div>
 
-        <div id="questionList" class="question-list"></div>
+<!-- 补充教材（建议先看） -->
+<div class="stage extra">
+<h2>📘 补充教材（零基础先看这篇）</h2>
+<p class="desc">把加工方式、工件、材料组织、钢种、检测方法、水冷板全打通。基础弱的<strong>从这里入门</strong>。</p>
+<div class="lessons">
+<a class="lesson extra" href="S01_补充_加工工件组织水冷板.html">
+<span class="num">S01 补充</span>
+<span class="title">加工方式 × 工件 × 组织 × 钢种 × 检测（含水冷板专题）</span>
+<div class="quiz">📝 10 道测验 · 约 60 分钟 · ⭐ 含水冷板钎着率</div>
+</a>
+</div>
+</div>
 
-        <div class="actions-bottom">
-          <div class="hint" id="testHint">全选完才会放行。哲学不是逃避问题，先把题做完再说。</div>
-          <div style="display:flex; gap:12px; flex-wrap:wrap;">
-            <button id="backIntroBtn" class="btn-secondary">返回首页</button>
-            <button id="submitBtn" class="btn-primary" disabled>提交并查看结果</button>
-          </div>
-        </div>
-      </div>
-    </section>
+<!-- 第一阶段 -->
+<div class="stage s1">
+<h2>🟢 第一阶段 · 懂对象（工业基础）</h2>
+<p class="desc">客户拿来的工件是什么材料、怎么造的、长什么样。学完不外行。</p>
+<div class="lessons">
+<a class="lesson s1" href="L01_材料科学上_钢是什么.html">
+<span class="num">L01</span><span class="star">⭐</span>
+<span class="title">材料科学（上）：钢是什么（晶体/相图/组织）</span>
+<div class="quiz">📝 8 题 · 约 45 分钟</div>
+</a>
+<a class="lesson s1" href="L02_材料科学下_牌号与特种材料.html">
+<span class="num">L02</span>
+<span class="title">材料科学（下）：牌号与特种材料（Q345R/304/铝）</span>
+<div class="quiz">📝 8 题 · 约 60 分钟</div>
+</a>
+<a class="lesson s1" href="L03_材料成型工艺.html">
+<span class="num">L03</span>
+<span class="title">材料成型工艺（铸/轧/锻/挤/焊 · 分层/白点）</span>
+<div class="quiz">📝 8 题 · 约 50 分钟</div>
+</a>
+<a class="lesson s1" href="L04_焊接技术上_方法接头HAZ.html">
+<span class="num">L04</span><span class="star">⭐</span>
+<span class="title">焊接技术（上）：方法/接头/坡口/热影响区</span>
+<div class="quiz">📝 8 题 · 约 50 分钟 · 销售核心</div>
+</a>
+<a class="lesson s1" href="L05_焊接技术下_焊缝缺陷.html">
+<span class="num">L05</span><span class="star">⭐</span>
+<span class="title">焊接技术（下）：焊缝缺陷 + 检测流程</span>
+<div class="quiz">📝 8 题 · 约 55 分钟 · 销售核心</div>
+</a>
+<a class="lesson s1" href="L06_工件图纸机加工_阶段收官.html">
+<span class="num">L06</span><span class="star">🎓</span>
+<span class="title">典型工件 + 图纸术语 + 机加工（第一阶段收官）</span>
+<div class="quiz">📝 8 题 · 约 55 分钟</div>
+</a>
+</div>
+</div>
 
-    
-    <section id="result" class="screen">
-      <div class="result-wrap card">
-        <div class="result-layout">
-          <div class="result-top">
-            <div class="poster-box" id="posterBox">
-              <img id="posterImage" class="poster-image" alt="人格结果图" />
-              <div id="posterCaption" class="poster-caption">怎么样，被我拿捏了吧？</div>
-            </div>
+<!-- 第二阶段 -->
+<div class="stage s2">
+<h2>🟠 第二阶段 · 懂靶标（缺陷认知）</h2>
+<p class="desc">客户要查的缺陷长什么样、怎么来的、UT 怎么查。回答"能不能测 XX 缺陷"的关键。</p>
+<div class="lessons">
+<a class="lesson s2" href="L07_钢材与铸件缺陷.html">
+<span class="num">L07</span>
+<span class="title">钢材与铸件缺陷（分层/白点/缩孔/气孔）</span>
+<div class="quiz">📝 6 题 · 约 40 分钟</div>
+</a>
+<a class="lesson s2" href="L08_焊缝缺陷深化.html">
+<span class="num">L08</span><span class="star">⭐</span>
+<span class="title">焊缝缺陷专题深化（裂纹/未熔合/气孔 速查表）</span>
+<div class="quiz">📝 6 题 · 约 40 分钟 · 销售核心</div>
+</a>
+<a class="lesson s2" href="L09_在役有色复材缺陷_阶段收官.html">
+<span class="num">L09</span><span class="star">🎓</span>
+<span class="title">在役/有色/复材缺陷（疲劳/SCC/钎着率/分层）</span>
+<div class="quiz">📝 6 题 · 约 40 分钟</div>
+</a>
+</div>
+</div>
 
-            <div class="type-box">
-              <div class="type-kicker" id="resultModeKicker">你的主类型</div>
-              <div class="type-name" id="resultTypeName">CTRL（拿捏者）</div>
-              <div class="match" id="matchBadge">匹配度 92%</div>
-              <div class="type-subname" id="resultTypeSub">系统备注会显示在这里。</div>
-            </div>
-          </div>
+<!-- 第三阶段 -->
+<div class="stage s3">
+<h2>🔵 第三阶段 · 懂手段（检测方法，UT 为主）</h2>
+<p class="desc">你的本行——讲透 UT，能专业介绍设备、配探头、出方案。其他方法做选型。</p>
+<div class="lessons">
+<a class="lesson s3" href="L10_NDT总论与五大方法.html">
+<span class="num">L10</span>
+<span class="title">NDT 总论与五大方法（方法选型决策树）</span>
+<div class="quiz">📝 6 题 · 约 40 分钟</div>
+</a>
+<a class="lesson s3" href="L11_UT物理基础.html">
+<span class="num">L11</span>
+<span class="title">UT 物理基础（声速/声阻抗/波型/近场远场）</span>
+<div class="quiz">📝 6 题 · 约 45 分钟</div>
+</a>
+<a class="lesson s3" href="L12_UT设备与探头.html">
+<span class="num">L12</span>
+<span class="title">UT 设备与探头（直/斜/双晶/聚焦 + K 值）</span>
+<div class="quiz">📝 6 题 · 约 45 分钟</div>
+</a>
+<a class="lesson s3" href="L13_UT检测方法与评定.html">
+<span class="num">L13</span>
+<span class="title">UT 检测方法与评定（DAC/AVG + PAUT/TOFD）</span>
+<div class="quiz">📝 6 题 · 约 45 分钟</div>
+</a>
+<a class="lesson s3" href="L14_UT实战方案设计_毕业课.html">
+<span class="num">L14</span><span class="star">⭐⭐</span>
+<span class="title">UT 实战方案设计（毕业课 · 5 个案例 + 方案模板）</span>
+<div class="quiz">📝 6 题 · 约 50 分钟 · 销售核心</div>
+</a>
+<a class="lesson s3" href="L15_其他NDT方法.html">
+<span class="num">L15</span>
+<span class="title">其他 NDT 方法（RT/MT/PT/ET + 互补关系）</span>
+<div class="quiz">📝 6 题 · 约 40 分钟</div>
+</a>
+<a class="lesson s3" href="L16_标准体系_全课程收官.html">
+<span class="num">L16</span><span class="star">🎓</span>
+<span class="title">标准体系（NB/T 47013 + 全课程收官）</span>
+<div class="quiz">📝 6 题 · 约 45 分钟</div>
+</a>
+</div>
+</div>
 
-          <div class="analysis-box">
-            <h3>哲学家画像</h3>
-            <p id="resultDesc"></p>
-          </div>
+<!-- 行业纵深 -->
+<div class="stage extra">
+<h2>🟣 行业纵深（商业视角，选学）</h2>
+<p class="desc">从技术到生意——产品定位、行业全景、竞争策略。学完主线课程后看，能加深理解。</p>
+<div class="lessons">
+<a class="lesson extra" href="D0_行业纵深导论.html">
+<span class="num">D0</span>
+<span class="title">行业纵深导论：视角转弯（从技术到生意）</span>
+<div class="quiz">延伸阅读 · 商业视角</div>
+</a>
+<a class="lesson extra" href="D6_UT应用行业全景图.html">
+<span class="num">D6</span>
+<span class="title">UT 应用行业全景图（北极星辰定位版）</span>
+<div class="quiz">延伸阅读 · 商业视角</div>
+</a>
+</div>
+</div>
 
-          <div class="dim-box">
-            <h3>哲学十五维度评分</h3>
-            <div id="dimList" class="dim-list"></div>
-          </div>
+<div class="tip" style="margin-top:28px">
+<strong>学完这套课程你应该能做到：</strong><br>
+✅ 客户报材料牌号（Q345R/304/3003铝），你判断好不好检、配什么方法<br>
+✅ 客户拿焊缝/钢板/锻件/水冷板来，你说得出查什么缺陷、用什么探头<br>
+✅ 听得懂客户引用的标准（NB/T 47013、GB/T 11345）<br>
+✅ 看得懂检测委托单，能按六步法出方案、报价<br>
+✅ 知道边界——奥氏体焊缝/长钢管/芯片封装敢坦诚说"这个我们不做"
+</div>
 
-          <div class="note-box">
-            <h3>免责声明</h3>
-            <p id="funNote">本测试仅供娱乐，别拿它当诊断、面试、相亲、分手、招魂、算命或人生判决书。</p>
-          </div>
+<div style="text-align:center;margin-top:32px;padding:20px;color:var(--text-light);font-size:12.5px;border-top:1px solid var(--border)">
+NDT 扫盲课 · 北极星辰科技内部学习材料<br>
+共 19 篇 · 108+ 道测验 · 断网可用 · 双击任意 HTML 即可学习
+</div>
 
-                    <details class="author-box">
-            <summary>关于这个测试</summary>
-            <div class="author-content">
-              <p>本测试基于SBTI（恶搞MBTI）的技术框架修改而成，纯属娱乐，和任何正经学术都没有关系。</p>
-              <p>维度设置和哲学家画像都是作者主观编排的，不代表哲学史的真实观点。如果你觉得尼采不应该匹配到你，恭喜你，你比作者更懂尼采。</p>
-              <p>题目设计尽量让不懂哲学的人也能做，所以很多哲学概念被粗暴地日常化了。哲学院的同学请高抬贵手。</p>
-            </div>
-          </details>
-        </div>
-
-        <div class="result-actions">
-          <div style="display:flex; gap:12px; flex-wrap:wrap;">
-            <button id="restartBtn" class="btn-secondary">重新测试</button>
-            <button id="toTopBtn" class="btn-primary">回到首页</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </div>
-
-  
-  <script>
-    const dimensionMeta = {
-      Ep1: { name: 'Ep1 理性vs经验', model: '认识论' },
-      Ep2: { name: 'Ep2 确定性vs怀疑', model: '认识论' },
-      Ep3: { name: 'Ep3 普遍vs相对', model: '认识论' },
-      Et1: { name: 'Et1 义务vs功利', model: '伦理学' },
-      Et2: { name: 'Et2 利他vs利己', model: '伦理学' },
-      Et3: { name: 'Et3 德性vs规则', model: '伦理学' },
-      Me1: { name: 'Me1 唯物vs唯心', model: '形而上学' },
-      Me2: { name: 'Me2 决定论vs自由意志', model: '形而上学' },
-      Me3: { name: 'Me3 本质vs存在', model: '形而上学' },
-      Sp1: { name: 'Sp1 个人vs集体', model: '社会哲学' },
-      Sp2: { name: 'Sp2 激进vs保守', model: '社会哲学' },
-      Sp3: { name: 'Sp3 理想vs现实', model: '社会哲学' },
-      Lp1: { name: 'Lp1 意义vs荒诞', model: '人生哲学' },
-      Lp2: { name: 'Lp2 入世vs出世', model: '人生哲学' },
-      Lp3: { name: 'Lp3 审美vs实践', model: '人生哲学' }
-    };
-    const questions = [
-      { id: 'q1', dim: 'Ep1',
-        text: '你手机丢了，找了一圈没找到，你第一反应是：',
-        options: [
-          { label: '让朋友打一下我的电话，听声音在哪', value: 1 },
-          { label: '先冷静想想，再结合回忆和感觉', value: 2 },
-          { label: '仔细回忆最后一次用手机的时间地点，进行逻辑推理', value: 3 }
-        ]
-      },
-      { id: 'q2', dim: 'Ep1',
-        text: '解决复杂问题时，我更相信逻辑分析而非直觉和经验。',
-        options: [
-          { label: '不认同，直觉和经验比逻辑靠谱多了', value: 1 },
-          { label: '中立，看情况', value: 2 },
-          { label: '认同，逻辑才是王道', value: 3 }
-        ]
-      },
-      { id: 'q3', dim: 'Ep2',
-        text: '刷到一个"科学研究表明"的视频，你会：',
-        options: [
-          { label: '"研究表明"四个字就让我条件反射地想查原始论文', value: 1 },
-          { label: '看看评论区的反对意见再说', value: 2 },
-          { label: '先信为敬，专家说的还能有假？', value: 3 }
-        ]
-      },
-      { id: 'q4', dim: 'Ep2',
-        text: '我怀疑这个世界的很多"常识"可能都是错的。',
-        options: [
-          { label: '认同，我怀疑一切', value: 1 },
-          { label: '也许吧，偶尔会这么想', value: 2 },
-          { label: '不至于，常识之所以是常识是有道理的', value: 3 }
-        ]
-      },
-      { id: 'q5', dim: 'Ep3',
-        text: '有人说"道德是相对的，没有绝对的对错"，你怎么看？',
-        options: [
-          { label: '说得好，你之蜜糖我之砒霜，别拿你的标准套我', value: 1 },
-          { label: '有些事确实因人而异，但有些底线是公认的', value: 2 },
-          { label: '别拿"文化差异"当借口逃避对错判断，有些真理放之四海皆准', value: 3 }
-        ]
-      },
-      { id: 'q6', dim: 'Ep3',
-        text: '我觉得不同文化之间的价值观差异，最终是可以找到共识的。',
-        options: [
-          { label: '不认同，每个文化自成体系，没有高下之分', value: 1 },
-          { label: '也许能找到一些最低限度的共识', value: 2 },
-          { label: '认同，人类终将走向普世价值', value: 3 }
-        ]
-      },
-      { id: 'q7', dim: 'Et1',
-        text: '电车难题：拉杆救五个人但会杀死一个人。你拉不拉？',
-        options: [
-          { label: '拉！能救五个就救五个，别跟我扯什么道德洁癖', value: 1 },
-          { label: '这个问题太极端了，现实中肯定有更好的办法', value: 2 },
-          { label: '不拉，主动杀人和见死不救是两码事，我不能决定别人的生死', value: 3 }
-        ]
-      },
-      { id: 'q8', dim: 'Et1',
-        text: '只要结果是好的，过程中的手段可以适当灵活。',
-        options: [
-          { label: '认同，结果导向没毛病', value: 1 },
-          { label: '看情况，有些底线不能破', value: 2 },
-          { label: '不认同，过程不正义，结果也不会正义', value: 3 }
-        ]
-      },
-      { id: 'q9', dim: 'Et2',
-        text: '看到路边有人摔倒了，你的第一反应是：',
-        options: [
-          { label: '赶紧去扶！看到别人受苦比我自己受苦还难受', value: 1 },
-          { label: '看有没有别人先去，有的话我就不用了', value: 2 },
-          { label: '先观察一下情况，别被讹了', value: 3 }
-        ]
-      },
-      { id: 'q10', dim: 'Et2',
-        text: '"人不为己天诛地灭"——',
-        options: [
-          { label: '太极端了，人还是要多为别人想想', value: 1 },
-          { label: '有一定道理，但也不能太自私', value: 2 },
-          { label: '没毛病，先照顾好自己才有余力管别人', value: 3 }
-        ]
-      },
-      { id: 'q11', dim: 'Et3',
-        text: '与其制定一堆法律和制度，不如培养好人的品德。',
-        options: [
-          { label: '不认同，制度比人靠得住', value: 1 },
-          { label: '制度和品德都很重要，缺一不可', value: 2 },
-          { label: '认同，一个有德性的人不需要规则也能做对的事', value: 3 }
-        ]
-      },
-      { id: 'q12', dim: 'Et3',
-        text: '一个社会的良好运转，主要靠：',
-        options: [
-          { label: '完善的法律和制度，别指望每个人的道德自觉', value: 1 },
-          { label: '好制度配上好公民，两者缺一不可', value: 2 },
-          { label: '有教养有品格的人，制度只是兜底的', value: 3 }
-        ]
-      },
-      { id: 'q13', dim: 'Me1',
-        text: '你做了一个特别真实的梦，醒来那一刻，你更接近哪种想法？',
-        options: [
-          { label: '也许现实也只是一场更长的梦，庄周梦蝶嘛', value: 1 },
-          { label: '梦就是梦，现实就是现实，别想太多', value: 2 },
-          { label: '梦是大脑神经活动的产物，没什么玄学含义', value: 3 }
-        ]
-      },
-      { id: 'q14', dim: 'Me1',
-        text: '意识、灵魂这些东西——',
-        options: [
-          { label: '存在，而且可能是比物质更根本的东西', value: 1 },
-          { label: '说不好，科学还没研究明白', value: 2 },
-          { label: '不过是脑神经放电的副产品，别整那些虚的', value: 3 }
-        ]
-      },
-      { id: 'q15', dim: 'Me2',
-        text: '考试没考好，你内心最真实的归因是：',
-        options: [
-          { label: '我下次一定能考好，这次只是意外', value: 1 },
-          { label: '没复习好 + 这次题太难了', value: 2 },
-          { label: '说实在的，可能我就不太擅长这个', value: 3 }
-        ]
-      },
-      { id: 'q16', dim: 'Me2',
-        text: '人的命运在很大程度上在出生时就已经被基因和环境决定了。',
-        options: [
-          { label: '不认同，我命由我不由天', value: 1 },
-          { label: '部分认同，但后天努力也有用', value: 2 },
-          { label: '认同，你以为的自由意志只是幻觉', value: 3 }
-        ]
-      },
-      { id: 'q17', dim: 'Me3',
-        text: '你觉得一个人之所以成为现在的自己，主要是因为：',
-        options: [
-          { label: '自己的选择和经历，人不是生来就定型的', value: 1 },
-          { label: '先天条件和后天环境各占一半', value: 2 },
-          { label: '内在的本质和天赋，有些人天生就是那样的', value: 3 }
-        ]
-      },
-      { id: 'q18', dim: 'Me3',
-        text: '"做自己"这个说法——',
-        options: [
-          { label: '挺好的，人本来就没有预设的模板，自己定义自己', value: 1 },
-          { label: '听起来很美好，但人确实有些改不了的天性', value: 2 },
-          { label: '扯淡，你所谓的"做自己"不过是发现自己的本质而已', value: 3 }
-        ]
-      },
-      { id: 'q19', dim: 'Sp1',
-        text: '公司组织团建，要求全员参加。你内心更接近哪种想法？',
-        options: [
-          { label: '能不能别搞？我的休息时间是我自己的', value: 1 },
-          { label: '参加就参加吧，团建也不全是坏事', value: 2 },
-          { label: '挺好的，团队凝聚力很重要', value: 3 }
-        ]
-      },
-      { id: 'q20', dim: 'Sp1',
-        text: '集体利益和个人权利冲突时，个人应该做出让步。',
-        options: [
-          { label: '不认同，集体不能凌驾于个人之上', value: 1 },
-          { label: '看具体情况，小让步可以，核心利益不行', value: 2 },
-          { label: '认同，没有集体的好哪来个人的好', value: 3 }
-        ]
-      },
-      { id: 'q21', dim: 'Sp2',
-        text: '公司宣布要用AI替代80%的员工，你的第一反应：',
-        options: [
-          { label: '好啊！早该变变了，旧体制早就该淘汰', value: 1 },
-          { label: '看看具体情况，也许没那么糟', value: 2 },
-          { label: '又来？每次技术革命最后不都是一地鸡毛', value: 3 }
-        ]
-      },
-      { id: 'q22', dim: 'Sp2',
-        text: '传统的东西往往经得起时间考验，不应该轻易抛弃。',
-        options: [
-          { label: '不认同，传统就是用来打破的', value: 1 },
-          { label: '有些传统确实有用', value: 2 },
-          { label: '认同，老祖宗的智慧不容小觑', value: 3 }
-        ]
-      },
-      { id: 'q23', dim: 'Sp3',
-        text: '朋友说想辞职去流浪，写诗，追寻内心。你的反应是：',
-        options: [
-          { label: '去啊！人生苦短，总得为理想活一回', value: 1 },
-          { label: '可以先请个长假试试，别冲动', value: 2 },
-          { label: '醒醒，先把房租交了再说', value: 3 }
-        ]
-      },
-      { id: 'q24', dim: 'Sp3',
-        text: '我更看重事情"应该怎样"而非"实际怎样"。',
-        options: [
-          { label: '认同，没有理想拿什么来改善现实', value: 1 },
-          { label: '理想和现实都要看', value: 2 },
-          { label: '不认同，先把眼前的烂摊子收拾好', value: 3 }
-        ]
-      },
-      { id: 'q25', dim: 'Lp1',
-        text: '凌晨三点失眠，盯着天花板，你脑子里最可能出现的是：',
-        options: [
-          { label: '反正都是虚无的，焦虑也没用', value: 1 },
-          { label: '明天吃什么？算了先睡觉', value: 2 },
-          { label: '我的人生有什么意义？我到底在干什么？', value: 3 }
-        ]
-      },
-      { id: 'q26', dim: 'Lp1',
-        text: '我相信人活着一定有某种意义和使命。',
-        options: [
-          { label: '不认同，人生本无意义，都是人自己编的', value: 1 },
-          { label: '也许有吧，但我还没找到', value: 2 },
-          { label: '认同，每个人来到世上都有其意义', value: 3 }
-        ]
-      },
-      { id: 'q27', dim: 'Lp2',
-        text: '中了五百万彩票，你的第一反应：',
-        options: [
-          { label: '辞职！找个山清水秀的地方过下半辈子', value: 1 },
-          { label: '先把房贷还了，剩下的慢慢规划', value: 2 },
-          { label: '拿去投资/创业，让五百万变成五千万', value: 3 }
-        ]
-      },
-      { id: 'q28', dim: 'Lp2',
-        text: '真正的幸福在于内心的平静，而非外在的成就。',
-        options: [
-          { label: '认同，心远地自偏', value: 1 },
-          { label: '内心平静和外在成就都要', value: 2 },
-          { label: '不认同，没有外在成就哪来内心平静', value: 3 }
-        ]
-      },
-      { id: 'q29', dim: 'Lp3',
-        text: '如果只能选一个周末活动，你更想：',
-        options: [
-          { label: '在家整理房间、做计划、把该办的事都办了', value: 1 },
-          { label: '看情况，有时宅有时出去', value: 2 },
-          { label: '去看展、听音乐会、在咖啡馆发呆看书', value: 3 }
-        ]
-      },
-      { id: 'q30', dim: 'Lp3',
-        text: '"哲学家们只是用不同方式解释世界，问题在于改变世界"——',
-        options: [
-          { label: '认同，光想不做等于白搭', value: 1 },
-          { label: '解释和改变都重要', value: 2 },
-          { label: '不认同，理解世界本身就是最高价值', value: 3 }
-        ]
-      }
-    ];
-    const specialQuestions = [
-      {
-        id: 'null_gate_q1',
-        special: true,
-        kind: 'null_gate',
-        text: '如果有一个哲学家的灵魂能附体你一天，你最想体验谁的人生？',
-        options: [
-          { label: '苏格拉底——到处找人辩论', value: 1 },
-          { label: '孔子——周游列国传道授业', value: 2 },
-          { label: '第欧根尼——晒太阳什么都不做', value: 3 },
-          { label: '我谁都不想体验，当自己挺好的', value: 4 }
-        ]
-      },
-      {
-        id: 'null_gate_q2',
-        special: true,
-        kind: 'null_trigger',
-        text: '你选择什么都不做。但认真地说，你觉得这个世界的一切——',
-        options: [
-          { label: '还是有意义的，只是我懒得找', value: 1 },
-          { label: '说有就有，说没有就没有', value: 2 },
-          { label: '本质上就是虚无的，包括这句话本身', value: 3 }
-        ]
-      }
-    ];
-
-    const TYPE_LIBRARY = {
-  "SOCR": {
-    "code": "SOCR",
-    "cn": "苏格拉底",
-    "intro": "我只知道一件事，那就是我什么都不知道。（然后继续把你说到哑口无言）",
-    "desc": "恭喜你，你是古代雅典最烦人的那个家伙——走到哪儿问到哪儿，一个问题接一个问题，直到对方怀疑人生为止。你没写过一本书，没发过一条朋友圈，却成了整个西方哲学的祖师爷。你的核心技能就是\"无知\"：我知道我不知道，但你们比我还惨，因为你们不知道自己不知道。广场辩论是你的PVP竞技场，无论对方是什么级别的大佬，你都能用一串反问把他逼到墙角。你不是在抬杠，你是在帮别人认识自己——虽然别人可能并不想被你帮。"
-  },
-  "PLATO": {
-    "code": "PLATO",
-    "cn": "柏拉图",
-    "intro": "你看到的世界是假的，真正的完美世界在另一个维度。（没错，古希腊版的元宇宙）",
-    "desc": "你是理想国度的总设计师，相信我们日常看到的一切都只是\"真正世界\"的拙劣投影。就像你刷的短视频，不过是4K高清原版的360p压缩版。你追求完美、相信理念，对现实世界永远有一种\"就这？\"的不满。你写的对话录是哲学界的畅销书，你的洞穴寓言是史上第一个矩阵/缸中之脑思想实验。你不是不接地气，你只是相信天上还有一个更完美的你在发光。"
-  },
-  "ARIS": {
-    "code": "ARIS",
-    "cn": "亚里士多德",
-    "intro": "吾爱吾师，吾更爱真理。而且我基本上什么都研究过了。",
-    "desc": "你是人类历史上最恐怖的全能型选手——逻辑学、物理学、生物学、伦理学、政治学、美学、天文学……就没有你没写过的学科。你发明的三段论统治了逻辑学两千多年，你的中庸之道至今还是中国人处理人际关系的万能公式。你不是天才，你是天才的批量生产工厂。你说\"人是理性的动物\"，但其实你的意思可能是\"除了我以外的人勉强算动物\"。你的学生亚历山大大帝征服了大半个世界，而你征服了整个知识界。"
-  },
-  "DESC": {
-    "code": "DESC",
-    "cn": "笛卡尔",
-    "intro": "我思故我在。翻译：你刷手机的时候不存在，只有放下手机思考的时候才活着。",
-    "desc": "你是那个把所有东西都怀疑了一遍最后发现只有\"我在怀疑\"这件事不能怀疑的狠人。你的方法论怀疑堪称哲学界的极简主义装修——把所有家具都扔了，最后只剩下一个念头：我在想。所以我在。你是理性主义的旗帜，解析几何的发明者，数学和哲学双修的终极学霸。你每天赖在床上思考到中午，然后把一辈子想明白了的事情写成书。你的金句\"我思故我在\"被印在了无数文化衫上，虽然大多数人只是穿着它继续不思考。"
-  },
-  "KANT": {
-    "code": "KANT",
-    "cn": "康德",
-    "intro": "每天下午三点半准时散步，邻居拿我对表。我的自律程度足以让所有打卡软件汗颜。",
-    "desc": "你是哲学界的纪律委员。一辈子没出过老家柯尼斯堡，但这不妨碍你成为哲学史上最伟大的人之一。你的三大批判把理性研究的透透的，你的绝对命令让所有想钻道德空子的人无路可走。你说\"要把人当作目的而不能当作手段\"，翻译成现代话就是：别把别人当工具人。你的作息规律到令人发指——据说你唯一一次散步迟到了，是因为在读卢梭的《爱弥儿》入了迷。你用一个普通人的生活方式活出了最不普通的思想。"
-  },
-  "HEGEL": {
-    "code": "HEGEL",
-    "cn": "黑格尔",
-    "intro": "正题、反题、合题。简单来说就是：你说的对，他说的也对，但我说的最对。",
-    "desc": "你是哲学界最让人头疼的作者，没有之一。你的《精神现象学》据说全世界真正读完的不超过一百人，但每个读完的人都假装自己读完了。你发明的辩证法堪称吵架终极武器：你说A，我说非A，然后我们一起升级到B。这套逻辑可以用来解释一切——历史、文化、艺术、甚至你为什么还单身。你相信历史有方向，世界精神在不断地自我实现，而你写的那些书就是世界精神最精致的表达方式。哪怕没人读得懂。"
-  },
-  "SCHP": {
-    "code": "SCHP",
-    "cn": "叔本华",
-    "intro": "人生就像钟摆，在痛苦和无聊之间来回摆。你问我为什么不跳下来？因为我懒。",
-    "desc": "你是哲学界最专业的悲观主义者。在你眼里，人类就是欲望的奴隶——得不到就痛苦，得到了就无聊，然后产生新的欲望，继续循环。你以为刷手机能让你快乐，其实只是暂时麻醉了你的痛苦而已。你说\"世界是我的表象\"，翻译成人话就是：你以为你看到了真实世界，其实你看到的是你的大脑编给你的PPT。你讨厌黑格尔，觉得他的哲学是一堆空洞的废话，但讽刺的是，你的书卖得远没有他的好。你最后唯一的安慰是——你养的那条狗。"
-  },
-  "NIETZ": {
-    "code": "NIETZ",
-    "cn": "尼采",
-    "intro": "上帝已死。但他没说的是：上帝死后的那个周末，他抱着马脖子哭了一下午。",
-    "desc": "你是哲学界最矛盾的存在：一边喊着\"超人\"和\"权力意志\"，一边在都灵街头抱着被鞭打的马痛哭流涕。你宣布上帝死了，但你为此难过了好久。你鄙视平庸的大众，又对每一个个体充满深切的关怀。你说\"没有事实，只有诠释\"，这句话本身就是一种诠释，这让你陷入了哲学的自己咬自己尾巴的尴尬。你的查拉图斯特拉是一个孤独的先知，在山上想明白了所有道理，下山以后发现没人听他的。这不就是发完朋友圈没人点赞的你吗？"
-  },
-  "SARTRE": {
-    "code": "SARTRE",
-    "cn": "萨特",
-    "intro": "他人即地狱。尤其是你对象问你'今晚吃什么'的时候。",
-    "desc": "你是存在主义的头号带货主播。你的核心金句\"存在先于本质\"翻译成人话就是：你先被生出来了，然后才慢慢长成了你现在的样子——不是出厂设置决定了你，是你后天的选择定义了你。所以别甩锅给命运、基因或者童年阴影，是你自己选的。你拒绝诺贝尔文学奖，理由是\"作家不应该让自己被体制化\"，堪称史上最硬核的拒offer。你的视力很差，但这不妨碍你成为20世纪最有魅力的哲学家之一。你和波伏娃的开放式关系，至今仍是情感博主最爱的素材。"
-  },
-  "CAMUS": {
-    "code": "CAMUS",
-    "cn": "加缪",
-    "intro": "应当想象西西弗斯是快乐的。（但我合理怀疑西西弗斯本人并不这么想）",
-    "desc": "你是哲学界颜值最高的人，没有之一。你的侧脸照片至今仍是文艺青年的头像首选。你说世界是荒诞的——不是悲惨，不是可怕，就是荒诞。你推石头上山，石头滚下来，你再推上去，永远这样。别人觉得这是悲剧，你说\"不，我们应当想象西西弗斯是快乐的\"。你踢足球、你抽烟、你在法国抵抗运动中冲在前面，你还拿了个诺贝尔奖。你47岁死于车祸，口袋里还装着一张去巴黎的火车票。你的人生比你的小说还荒诞。"
-  },
-  "WITTG": {
-    "code": "WITTG",
-    "cn": "维特根斯坦",
-    "intro": "凡是能说的，都能说清楚；凡是不能说的，就必须沉默。（然后他沉默了）",
-    "desc": "你是哲学界最有钱的叛逆富二代——把巨额遗产全部分给了兄弟姐妹，自己跑去当小学老师、园丁和医院护工。你写了一本薄薄的《逻辑哲学论》，然后觉得哲学问题全解决了，就跑去教小学生了。过了十几年你发现好像没解决，又回来写了一本《哲学研究》，基本上把自己上一本书推翻了。你说哲学的问题出在语言上，\"语言游戏\"这个词是你发明的。你一生都在追求绝对的清晰和诚实，最后你的遗言是：\"告诉他们，我度过了美好的一生。\"酷到没朋友。"
-  },
-  "MARX": {
-    "code": "MARX",
-    "cn": "马克思",
-    "intro": "哲学家们只是用不同的方式解释世界，问题在于改变世界。（然后他真的改变了世界）",
-    "desc": "你是哲学界行动力最强的那个人。别人写完书就完了，你写完书直接搞了一场（好几场）社会革命。你说唯物史观，说剩余价值，说阶级斗争，每一条都像一颗子弹打在资本主义的脑门上。你常年穷困潦倒，靠好兄弟恩格斯接济度日，但你写出的文字改变了半个地球的社会制度。你不是在书斋里做学问，你是在大英图书馆的阅览室里写出了改变世界的宣言。你的《资本论》至今还是华尔街精英们最不愿提起的书名。"
-  },
-  "HUME": {
-    "code": "HUME",
-    "cn": "休谟",
-    "intro": "因果关系？不存在的。太阳明天可能不会升起。但别担心，我仍然会按时吃早餐。",
-    "desc": "你是哲学界最让人舒适的怀疑论者。你把因果关系给拆了——你看到太阳每天都升起，但你不能证明它明天一定会升起，你只是\"习惯性地期待\"它会。你把人类知识的地基刨了个底朝天，然后像一个什么都没发生过的英国绅士一样，按时吃饭、打牌、聊天。你说\"理性是激情的奴隶\"，意思是你的感情才是你真正的主人，理性只是个事后诸葛亮。你是哲学界的拆家队队长，但拆完之后还能若无其事地喝下午茶。"
-  },
-  "DIOG": {
-    "code": "DIOG",
-    "cn": "第欧根尼",
-    "intro": "亚历山大大帝挡住了我的阳光，我让他让开。别挡光，谢了。",
-    "desc": "你是人类历史上最早的躺平大师和反消费主义先锋。你住在一个木桶里，唯一的财产是一个碗——后来你看到一个小孩用手捧水喝，你就把碗也扔了。白天你打着一个灯笼在街上走，别人问你干嘛，你说\"我在找一个真正的人\"。你当众做各种不体面的事，以此证明\"社会规范都是扯淡\"。亚历山大大帝慕名而来问你需要什么，你说\"请你让开，别挡着我的阳光\"。你是犬儒学派的祖师爷，当代躺平学的精神先驱。"
-  },
-  "EPICU": {
-    "code": "EPICU",
-    "cn": "伊壁鸠鲁",
-    "intro": "快乐就是最高的善。但不是你想的那种快乐，我说的是安静的快乐。（躺平学鼻祖）",
-    "desc": "你是被误解最深的哲学家，没有之一。你说\"快乐是至善\"，然后所有人都以为你在提倡吃喝玩乐。其实你说的快乐是\"身体无痛苦，灵魂无纷扰\"——你住在自家花园里和朋友们聊天、吃面包、喝清水，过着极简的生活。你不是享乐主义者，你是极简主义者的祖师爷。你说怕死是愚蠢的，因为\"死亡来时你不存在，你存在时死亡不来\"。这套逻辑完美到让死亡本身都觉得尴尬。你的花园是古代世界的乌托邦，门口还挂着\"陌生人，你在这里会过得很好\"的牌子。"
-  },
-  "STOIC": {
-    "code": "STOIC",
-    "cn": "奥勒留",
-    "intro": "罗马帝国皇帝，白天治国理政，晚上写日记反思人生。古代打工人精神导师。",
-    "desc": "你是人类历史上权力最大的哲学家——罗马帝国的皇帝，同时又是斯多葛学派的忠实修行者。你白天要处理国家大事、应付蛮族入侵、对付宫廷阴谋，晚上回到帐篷里写《沉思录》反省自己今天哪里做得不够好。你相信人应该只关注自己能控制的事，不能控制的事就别操心。你有一句名言：\"你拥有控制内心思想的力量——而非外在事件。认识到这一点，你就会找到力量。\"你就是古代版的\"可控范围内全力以赴，可控范围外随他去吧\"。"
-  },
-  "LAOZ": {
-    "code": "LAOZ",
-    "cn": "老子",
-    "intro": "道可道，非常道。翻译：我能说清楚，但我偏不。（然后骑着牛走了）",
-    "desc": "你是中国哲学界的终极神秘人。写了五千字的《道德经》就人间蒸发，骑着青牛出了函谷关再也没有消息。你什么都不想争，什么都不想说，结果你说出来的这五千字成了全中国被引用最多的哲学文本。\"无为而无不为\"是你的核心思想，翻译成人话就是：你越不折腾，事情越往好的方向发展。你教导水是最强的物质，因为它不争、处下、利万物。你是佛系青年的精神祖先，躺平界的理论奠基人。你的哲学被后来的人用来治国、修道、炼丹、打太极，甚至炒股。"
-  },
-  "ZHUAN": {
-    "code": "ZHUAN",
-    "cn": "庄子",
-    "intro": "我梦见自己是蝴蝶，醒来不知道是蝴蝶梦见自己是我。元宇宙概念股的最大持有者。",
-    "desc": "你是中国哲学界最有想象力的那个人。你讲的故事一个比一个离谱：鲲鹏展翅九万里、庖丁解牛游刃有余、混沌被凿七窍而死。但每个离谱故事的背后都藏着一个深刻的道理。你嘲笑一切教条和权威，你觉得有用的树木被砍伐，无用的树木活千年——所以\"无用\"才是最大的\"有用\"。老婆死了你鼓盆而歌，别人说你冷血，你说她只是回到了天地之间。你是自由精神的化身，你的\"逍遥游\"是每一个被KPI追着跑的打工人的精神出口。"
-  },
-  "CONF": {
-    "code": "CONF",
-    "cn": "孔子",
-    "intro": "三人行必有我师。虽然我是所有人的老师，但我仍然谦虚地说我还在学习。（凡尔赛大师）",
-    "desc": "你是中国哲学界影响力最大的KOL，粉丝数量从春秋时期一直增长到现在。你带着学生们周游列国十四年推销你的治国方案，虽然没人买账，但你从未放弃。你的\"仁\"是中国伦理学的地基，你的\"己所不欲勿施于人\"比西方的黄金法则早了好几百年。你不是一个高高在上的圣人，你是一个有血有肉的人——你会生气、会开玩笑、会吐槽学生、会因为不合礼制的事情而暴怒。你说\"君子不器\"，意思是别把自己活成一个工具人。你的《论语》是中国人的精神操作系统。"
-  },
-  "MENCI": {
-    "code": "MENCI",
-    "cn": "孟子",
-    "intro": "人性本善！如果你不同意，我可以跟你辩论三天三夜。（孔子学说的最强带货主播）",
-    "desc": "你是儒家学派的头号辩论家。你走到哪儿辩到哪儿，从君王到路人，没人能在嘴上赢你。你说人性本善，就像水本来往下流一样自然。你不怕权贵，你敢当面跟国王说\"民为贵，社稷次之，君为轻\"。你提出的\"四端\"理论——恻隐之心、羞恶之心、辞让之心、是非之心——是人之所以为人的出厂标配。你是古代最能说的哲学家，每一个念头都要用三个比喻来论证，每一个对手都要用五个反问来击溃。你是儒学2.0的总架构师。"
-  },
-  "HANFE": {
-    "code": "HANFE",
-    "cn": "韩非子",
-    "intro": "别信人性，信制度。法律面前人人平等（被平等地管）。法家精神，职场必备。",
-    "desc": "你是中国古代最清醒的现实主义者。你看着你的老师荀子说\"人性本恶\"，然后你说\"说得好，所以我们需要严刑峻法\"。你不相信道德说教，不相信以德服人，你只相信制度和赏罚。你的法家思想被秦始皇全盘采纳，帮你完成了中国历史上第一次大一统。你的理论冷酷但有效：设定明确规则、严格执行奖惩、让所有人知道越线的后果。你不是没有感情，你只是认为管理一个国家不能靠感情。你是古代的HR总监和风控主管。"
-  },
-  "WANGY": {
-    "code": "WANGY",
-    "cn": "王阳明",
-    "intro": "知行合一。你听懂了吗？听懂了就去做！别光点收藏不动手！",
-    "desc": "你是中国哲学界的行动派代表。龙场悟道那一夜，你在贵州的蛮荒之地想明白了\"心即理\"——天理不在外面，就在你心里。你不用去格竹子格到吐血（朱熹的方法），你只需要回归本心。你的\"知行合一\"是对所有\"我懂了但就是做不到\"的人的终极嘲讽：如果你真的知了，你就一定会行；如果你没有行，说明你根本不知。你不只是哲学家，你是军事家、政治家，你真的带兵打仗平定了叛乱。你用一生证明了你的理论——知和行根本就是一件事。"
-  },
-  "HUIN": {
-    "code": "HUIN",
-    "cn": "慧能",
-    "intro": "菩提本无树，明镜亦非台。翻译：你们争论的那些都不存在，包括这句话本身。",
-    "desc": "你是禅宗六祖，中国佛教界的最强逆袭者。你不识字，在寺庙里干杂活，但写出了史上最霸气的偈子——\"菩提本无树，明镜亦非台，本来无一物，何处惹尘埃\"。你把北宗神秀那套\"时时勤拂拭\"的渐修理论直接掀翻了。你说顿悟就在一瞬间，不需要苦苦修行，不需要积累功德，只要你真正明白\"本来无一物\"。你是哲学界的极简主义大师——砍掉一切概念、一切分别心、一切思维活动。你教导的方法就是：别想了，你越想越远。"
-  },
-  "SOPHI": {
-    "code": "SOPHI",
-    "cn": "哲学巨婴",
-    "intro": "恭喜，你的脑回路过于清奇，两千年的哲学史没有一个人能拿捏你。",
-    "desc": "恭喜你！你的思维模式在人类哲学史上找不到对应物。两千年来，从古希腊到现代，从先秦到当代，没有一个哲学家能完全代表你。你不是不够格，你是太独特了。你是哲学界的量子态——在被测量之前，你同时是所有哲学家，也不是任何一个。你的思想横跨多个维度，在理性与感性之间自由穿梭，在东方与西方之间无缝切换。也许将来会有人总结出以你命名的新哲学流派。但现在，你只能先做一个快乐的哲学巨婴。"
-  },
-  "NULL": {
-    "code": "NULL",
-    "cn": "虚无主义者",
-    "intro": "一切皆虚无。包括这个测试本身。你花十分钟做题？这十分钟本来也是虚无的。",
-    "desc": "你达到了哲学的终极境界——否定一切。不是悲观，不是愤怒，就是纯粹的\"无所谓\"。尼采说上帝死了，你说\"那又怎样\"。萨特说存在先于本质，你说\"都不存在，先不先的有什么区别\"。你看到别人在追寻人生意义，就像看到一个在跑步机上拼命跑却始终在原地的人——有点好笑，有点心酸，但最终什么感觉也没有。你不是消极，你只是已经穿越了所有的主义和理论，到达了另一边。那一边什么也没有。你觉得这样挺好的。"
-  }
-};
-    const TYPE_PLACEHOLDER_COLORS = {
-  "SOCR": "#e8d5b7",
-  "PLATO": "#c9b896",
-  "ARIS": "#a8c4b8",
-  "DESC": "#b7c8d9",
-  "KANT": "#d1c4a3",
-  "HEGEL": "#c4a882",
-  "SCHP": "#9ba8b0",
-  "NIETZ": "#d4a0a0",
-  "SARTRE": "#b8a9c4",
-  "CAMUS": "#c9b896",
-  "WITTG": "#a8b8a8",
-  "MARX": "#c44444",
-  "HUME": "#b0a898",
-  "DIOG": "#d4c896",
-  "EPICU": "#a8c4a8",
-  "STOIC": "#96a8b8",
-  "LAOZ": "#8faa8f",
-  "ZHUAN": "#a0b8a0",
-  "CONF": "#c4a070",
-  "MENCI": "#d4b896",
-  "HANFE": "#a0a0b0",
-  "WANGY": "#b8a090",
-  "HUIN": "#a0a0a0",
-  "SOPHI": "#d0d0d0",
-  "NULL": "#333333"
-    };
-    const TYPE_PLACEHOLDER_ICONS = {
-  "SOCR": "?", "PLATO": "理念", "ARIS": "中庸", "DESC": "思",
-  "KANT": "律", "HEGEL": "辩", "SCHP": "欲", "NIETZ": "超人",
-  "SARTRE": "在", "CAMUS": "石", "WITTG": "默", "MARX": "斗",
-  "HUME": "?", "DIOG": "躺", "EPICU": "乐", "STOIC": "忍",
-  "LAOZ": "道", "ZHUAN": "逍遥", "CONF": "仁", "MENCI": "善",
-  "HANFE": "法", "WANGY": "心", "HUIN": "空", "SOPHI": "??", "NULL": "∅"
-    };
-
-    const NORMAL_TYPES = [
-      { "code": "SOCR", "pattern": "MMM-MMH-HMH-HMH-HLM" },
-      { "code": "PLATO", "pattern": "HHM-MMM-HLL-MHM-HHH" },
-      { "code": "ARIS", "pattern": "HHH-MHM-MHM-HMM-MHM" },
-      { "code": "DESC", "pattern": "HHH-MHH-HLM-HMM-MHL" },
-      { "code": "KANT", "pattern": "HHH-MHM-MMH-HHM-MHM" },
-      { "code": "HEGEL", "pattern": "HHH-MHM-HLL-HHM-HHM" },
-      { "code": "SCHP", "pattern": "MHL-LLM-LHL-MLM-LML" },
-      { "code": "NIETZ", "pattern": "HML-MLL-LHH-LML-HML" },
-      { "code": "SARTRE", "pattern": "HHL-LLL-LHH-LML-HML" },
-      { "code": "CAMUS", "pattern": "MHL-LLL-MLL-LML-LHL" },
-      { "code": "WITTG", "pattern": "HHH-MHH-MHM-MMM-MLM" },
-      { "code": "MARX", "pattern": "MHH-MHL-MHH-HHH-HMH" },
-      { "code": "HUME", "pattern": "MLL-LLL-MMH-MMM-MML" },
-      { "code": "DIOG", "pattern": "MLL-LLL-LLL-LLM-LHL" },
-      { "code": "EPICU", "pattern": "MLL-MML-MMM-LML-LLH" },
-      { "code": "STOIC", "pattern": "HHH-MHM-MHH-HMM-MHM" },
-      { "code": "LAOZ", "pattern": "LML-MLL-HLL-LML-LLH" },
-      { "code": "ZHUAN", "pattern": "LHL-LLL-LLL-LML-LLH" },
-      { "code": "CONF", "pattern": "MHH-MHM-MHH-HMH-HMH" },
-      { "code": "MENCI", "pattern": "HHH-MHM-MHH-HMH-HHM" },
-      { "code": "HANFE", "pattern": "HHM-MHM-MHH-HLL-MHM" },
-      { "code": "WANGY", "pattern": "HHH-MHM-HMH-MHM-MHH" },
-      { "code": "HUIN", "pattern": "LLL-LLL-LLL-LML-LML" }
-    ];
-    const DIM_EXPLANATIONS = {
-      "Ep1": {
-        "L": "经验派——别跟我扯理论，我信亲眼所见、亲身所历。书读再多不如挨一次社会毒打。",
-        "M": "理论实践五五开——书本知识有用，但实践经验也很重要，看情况吧。",
-        "H": "理性派——逻辑推理和理性思考才是真理之源，感官会欺骗你，但数学不会。"
-      },
-      "Ep2": {
-        "L": "怀疑论者——一切皆可疑。你确定你现在是醒着的？绝对真理不存在的。",
-        "M": "审慎型——大部分事情有定论，但也有不少值得怀疑的地方。",
-        "H": "确定性追求者——世界有客观真理，科学和理性终将揭示一切。怀疑太多只会原地打转。"
-      },
-      "Ep3": {
-        "L": "相对主义者——什么对错，看语境。你之蜜糖我之砒霜，别拿你的标准套我。",
-        "M": "兼顾型——有些事有普遍标准，有些事确实因人而异。",
-        "H": "普遍主义者——有些真理放之四海而皆准。别拿'文化差异'当借口逃避对错判断。"
-      },
-      "Et1": {
-        "L": "功利主义——结果最重要。能救五个人就牺牲一个？干！别跟我扯什么道德洁癖。",
-        "M": "混合型——通常看结果，但有些底线还是不能破。",
-        "H": "义务论——有些事就是不能做，哪怕结果再好。不能因为'大局'就合理化一切。"
-      },
-      "Et2": {
-        "L": "利他优先——帮助别人让我快乐。看到别人受苦比我自己受苦还难受。",
-        "M": "有条件利他——在力所能及的范围内帮人，但不会牺牲自己的核心利益。",
-        "H": "利己底色——人不为己天诛地灭。先照顾好自己，才有余力管别人。这没什么好羞耻的。"
-      },
-      "Et3": {
-        "L": "规则派——制度比人靠得住。别指望每个人的道德自觉，把规则定好才是王道。",
-        "M": "规则与修养并重——好规则配上好品格，缺一不可。",
-        "H": "德性派——与其定一堆规矩，不如培养好人。一个有德性的人，不需要规则也能做对的事。"
-      },
-      "Me1": {
-        "L": "唯心倾向——意识先于物质。你的世界只是你脑子里的投影，你死了你的宇宙也灭了。",
-        "M": "模糊地带——物质世界很真实，但精神世界也很重要，不好说谁决定谁。",
-        "H": "唯物底色——世界就是物质运动。意识？不过是脑神经放电的副产品，别整那些虚的。"
-      },
-      "Me2": {
-        "L": "自由意志派——我的选择我做主！什么基因决定论、环境决定论，都是扯淡。我命由我不由天。",
-        "M": "半自由型——有些事确实身不由己，但在有限范围内还是能做选择的。",
-        "H": "决定论底色——你以为你有自由意志？你的每个决定都是基因加环境的必然结果，你的'选择'只是幻觉。"
-      },
-      "Me3": {
-        "L": "存在先于本质——没有预设的'人性'，你先存在着，然后才通过选择定义自己。别让标签定义你。",
-        "M": "兼而有之——人确实有些天性，但后天也在不断塑造自己。",
-        "H": "本质主义——万物皆有其本质。一把椅子之所以是椅子，是因为它有'椅子性'。人也是如此。"
-      },
-      "Sp1": {
-        "L": "个人主义——集体利益不能凌驾于个人权利之上。牺牲小我成全大我？我的'小我'不同意。",
-        "M": "平衡型——个人和集体各有道理，具体情况具体分析。",
-        "H": "集体主义——没有集体的好，哪来个人的好？大河有水小河满，别光顾着自己。"
-      },
-      "Sp2": {
-        "L": "激进派——破旧立新！不改就是等死，保守就是慢性自杀。",
-        "M": "渐进改良——变革有必要，但不能急，循序渐进才稳。",
-        "H": "保守底色——能不改就不改，传统里有大智慧。别动不动就颠覆，万一改错了呢？"
-      },
-      "Sp3": {
-        "L": "理想主义者——乌托邦不是幻想，是尚未实现的蓝图。因为现实烂就不做梦了？那活着干嘛？",
-        "M": "务实理想——理想要有，但得脚踏实地。画饼充饥没意义。",
-        "H": "现实主义者——理想很丰满，现实很骨感。别做白日梦了，先把眼前的事搞定再说。"
-      },
-      "Lp1": {
-        "L": "荒诞派——人生本无意义，你偏要找一个，找到了又怕是假的。推石头的西西弗斯才是真相。",
-        "M": "摇摆型——有时觉得人生有意义，有时又觉得一切皆空，反反复复。",
-        "H": "意义追寻者——人生一定有意义，只是需要你去发现和创造。觉得没意义只是你还没找到而已。"
-      },
-      "Lp2": {
-        "L": "出世倾向——功名利禄皆为浮云。不如归隐山林，清茶淡饭，与天地精神相往来。",
-        "M": "可进可退——该入世时入世，该出世时出世，看心情和时机。",
-        "H": "入世派——担当！士不可以不弘毅。世界需要你去改变，躲在山里算什么本事？"
-      },
-      "Lp3": {
-        "L": "实践优先——别光想，做！知行合一，光说不练假把式。",
-        "M": "审美与实践兼顾——既追求精神享受，也注重实际行动，两手都要抓。",
-        "H": "审美优先——美即真理，真理即美。一首好诗、一幅好画，比一千篇论文更能抵达心灵深处。"
-      }
-    };
-    const dimensionOrder = ['Ep1','Ep2','Ep3','Et1','Et2','Et3','Me1','Me2','Me3','Sp1','Sp2','Sp3','Lp1','Lp2','Lp3'];
-
-    const NULL_TRIGGER_QUESTION_ID = 'null_gate_q2';
-
-    const app = {
-      shuffledQuestions: [],
-      answers: {},
-      previewMode: false
-    };
-
-    const screens = {
-      intro: document.getElementById('intro'),
-      test: document.getElementById('test'),
-      result: document.getElementById('result')
-    };
-
-    const questionList = document.getElementById('questionList');
-    const progressBar = document.getElementById('progressBar');
-    const progressText = document.getElementById('progressText');
-    const submitBtn = document.getElementById('submitBtn');
-    const testHint = document.getElementById('testHint');
-
-    function showScreen(name) {
-      Object.entries(screens).forEach(([key, el]) => {
-        el.classList.toggle('active', key === name);
-      });
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function shuffle(array) {
-      const arr = [...array];
-      for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-      return arr;
-    }
-
-    function getVisibleQuestions() {
-      const visible = [...app.shuffledQuestions];
-      const gateIndex = visible.findIndex(q => q.id === 'null_gate_q1');
-      if (gateIndex !== -1 && app.answers['null_gate_q1'] === 3) {
-        visible.splice(gateIndex + 1, 0, specialQuestions[1]);
-      }
-      return visible;
-    }
-
-    function getQuestionMetaLabel(q) {
-      if (q.special) return '补充题';
-      return app.previewMode ? dimensionMeta[q.dim].name : '维度已隐藏';
-    }
-
-    function renderQuestions() {
-      const visibleQuestions = getVisibleQuestions();
-      questionList.innerHTML = '';
-      visibleQuestions.forEach((q, index) => {
-        const card = document.createElement('article');
-        card.className = 'question';
-        card.innerHTML = `
-          <div class="question-meta">
-            <div class="badge">第 ${index + 1} 题</div>
-            <div>${getQuestionMetaLabel(q)}</div>
-          </div>
-          <div class="question-title">${q.text}</div>
-          <div class="options">
-            ${q.options.map((opt, i) => {
-              const code = ['A', 'B', 'C', 'D'][i] || String(i + 1);
-              const checked = app.answers[q.id] === opt.value ? 'checked' : '';
-              return `
-                <label class="option">
-                  <input type="radio" name="${q.id}" value="${opt.value}" ${checked} />
-                  <div class="option-code">${code}</div>
-                  <div>${opt.label}</div>
-                </label>
-              `;
-            }).join('')}
-          </div>
-        `;
-        questionList.appendChild(card);
-      });
-
-      questionList.querySelectorAll('input[type="radio"]').forEach(input => {
-        input.addEventListener('change', (e) => {
-          const { name, value } = e.target;
-          app.answers[name] = Number(value);
-
-          if (name === 'null_gate_q1') {
-            if (Number(value) !== 3) {
-              delete app.answers['null_gate_q2'];
-            }
-            renderQuestions();
-            return;
-          }
-
-          updateProgress();
-        });
-      });
-
-      updateProgress();
-    }
-
-    function updateProgress() {
-      const visibleQuestions = getVisibleQuestions();
-      const total = visibleQuestions.length;
-      const done = visibleQuestions.filter(q => app.answers[q.id] !== undefined).length;
-      const percent = total ? (done / total) * 100 : 0;
-      progressBar.style.width = `${percent}%`;
-      progressText.textContent = `${done} / ${total}`;
-      const complete = done === total && total > 0;
-      submitBtn.disabled = !complete;
-      testHint.textContent = complete
-        ? '都做完了。现在可以把你交给哲学史审判了。'
-        : '全选完才会放行。哲学不是逃避问题，先把题做完再说。';
-    }
-
-    function sumToLevel(score) {
-      if (score <= 3) return 'L';
-      if (score === 4) return 'M';
-      return 'H';
-    }
-
-    function levelNum(level) {
-      return { L: 1, M: 2, H: 3 }[level];
-    }
-
-    function parsePattern(pattern) {
-      return pattern.replace(/-/g, '').split('');
-    }
-
-    function getNullTriggered() {
-      return app.answers[NULL_TRIGGER_QUESTION_ID] === 3;
-    }
-
-    function computeResult() {
-      const rawScores = {};
-      const levels = {};
-      Object.keys(dimensionMeta).forEach(dim => { rawScores[dim] = 0; });
-
-      questions.forEach(q => {
-        rawScores[q.dim] += Number(app.answers[q.id] || 0);
-      });
-
-      Object.entries(rawScores).forEach(([dim, score]) => {
-        levels[dim] = sumToLevel(score);
-      });
-
-      const userVector = dimensionOrder.map(dim => levelNum(levels[dim]));
-      const ranked = NORMAL_TYPES.map(type => {
-        const vector = parsePattern(type.pattern).map(levelNum);
-        let distance = 0;
-        let exact = 0;
-        for (let i = 0; i < vector.length; i++) {
-          const diff = Math.abs(userVector[i] - vector[i]);
-          distance += diff;
-          if (diff === 0) exact += 1;
-        }
-        const similarity = Math.max(0, Math.round((1 - distance / 30) * 100));
-        return { ...type, ...TYPE_LIBRARY[type.code], distance, exact, similarity };
-      }).sort((a, b) => {
-        if (a.distance !== b.distance) return a.distance - b.distance;
-        if (b.exact !== a.exact) return b.exact - a.exact;
-        return b.similarity - a.similarity;
-      });
-
-      const bestNormal = ranked[0];
-      const drunkTriggered = getNullTriggered();
-
-      let finalType;
-      let modeKicker = '你的主类型';
-      let badge = `匹配度 ${bestNormal.similarity}% · 精准命中 ${bestNormal.exact}/15 维`;
-      let sub = '维度命中度较高，当前结果可视为你的第一人格画像。';
-      let special = false;
-      let secondaryType = null;
-
-      if (drunkTriggered) {
-        finalType = TYPE_LIBRARY.NULL;
-        secondaryType = bestNormal;
-        modeKicker = '隐藏人格已激活';
-        badge = '匹配度 ???% · 虚无异常因子已接管';
-        sub = '虚无主义亲和性过强，系统已直接跳过常规哲学审判。';
-        special = true;
-      } else if (bestNormal.similarity < 60) {
-        finalType = TYPE_LIBRARY.SOPHI;
-        modeKicker = '系统强制兜底';
-        badge = `哲学家库最高匹配仅 ${bestNormal.similarity}%`;
-        sub = '从苏格拉底到慧能，没有一个哲学家能完全代表你。系统把你分配给了哲学巨婴。';
-        special = true;
-      } else {
-        finalType = bestNormal;
-      }
-
-      return {
-        rawScores,
-        levels,
-        ranked,
-        bestNormal,
-        finalType,
-        modeKicker,
-        badge,
-        sub,
-        special,
-        secondaryType
-      };
-    }
-
-    function renderDimList(result) {
-      const dimList = document.getElementById('dimList');
-      dimList.innerHTML = dimensionOrder.map(dim => {
-        const level = result.levels[dim];
-        const explanation = DIM_EXPLANATIONS[dim][level];
-        return `
-          <div class="dim-item">
-            <div class="dim-item-top">
-              <div class="dim-item-name">${dimensionMeta[dim].name}</div>
-              <div class="dim-item-score">${level} / ${result.rawScores[dim]}分</div>
-            </div>
-            <p>${explanation}</p>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function renderResult() {
-      const result = computeResult();
-      const type = result.finalType;
-
-      document.getElementById('resultModeKicker').textContent = result.modeKicker;
-      document.getElementById('resultTypeName').textContent = `${type.code}（${type.cn}）`;
-      document.getElementById('matchBadge').textContent = result.badge;
-      document.getElementById('resultTypeSub').textContent = result.sub;
-      document.getElementById('resultDesc').textContent = type.desc;
-      document.getElementById('posterCaption').textContent = type.intro;
-      document.getElementById('funNote').textContent = result.special
-        ? '本测试纯属娱乐，哲学教授看了会沉默。虚无主义者和哲学巨婴都是作者故意埋的，别当真。'
-        : '本测试纯属娱乐，不代表任何学术观点。你可以笑，但别拿它写论文。';
-
-      const posterBox = document.getElementById('posterBox');
-      const posterImage = document.getElementById('posterImage');
-      const placeholderColor = TYPE_PLACEHOLDER_COLORS[type.code] || '#d0d0d0';
-      const placeholderIcon = TYPE_PLACEHOLDER_ICONS[type.code] || '?';
-      posterImage.style.display = 'none';
-      let placeholder = posterBox.querySelector('.poster-placeholder');
-      if (!placeholder) {
-        placeholder = document.createElement('div');
-        placeholder.className = 'poster-placeholder';
-        posterBox.insertBefore(placeholder, posterBox.firstChild);
-      }
-      placeholder.style.cssText = 'width:100%;min-height:220px;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:' + placeholderColor + ';position:relative;z-index:1;';
-      placeholder.innerHTML = '<div style="font-size:56px;font-weight:900;color:rgba(255,255,255,0.85);">' + type.code + '</div><div style="font-size:32px;color:rgba(255,255,255,0.6);margin-top:8px;">' + placeholderIcon + '</div><div style="font-size:14px;color:rgba(255,255,255,0.5);margin-top:12px;">' + type.cn + '</div>';
-
-      renderDimList(result);
-      showScreen('result');
-    }
-
-    function startTest(preview = false) {
-      app.previewMode = preview;
-      app.answers = {};
-      const shuffledRegular = shuffle(questions);
-      const insertIndex = Math.floor(Math.random() * shuffledRegular.length) + 1;
-      app.shuffledQuestions = [
-        ...shuffledRegular.slice(0, insertIndex),
-        specialQuestions[0],
-        ...shuffledRegular.slice(insertIndex)
-      ];
-      renderQuestions();
-      showScreen('test');
-    }
-
-    document.getElementById('startBtn').addEventListener('click', () => startTest(false));
-    document.getElementById('backIntroBtn').addEventListener('click', () => showScreen('intro'));
-    document.getElementById('submitBtn').addEventListener('click', renderResult);
-    document.getElementById('restartBtn').addEventListener('click', () => startTest(false));
-    document.getElementById('toTopBtn').addEventListener('click', () => showScreen('intro'));
-  </script>
-
+</div>
 </body>
 </html>

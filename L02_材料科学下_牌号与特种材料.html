@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第02课 · 材料科学基础（下）—— 牌号与特种材料</title>
+<style>
+:root{--primary:#1a5276;--primary-light:#2980b9;--accent:#e67e22;--bg:#f4f6f7;--card:#fff;--text:#2c3e50;--text-light:#7f8c8d;--border:#d5dbdb;--success:#27ae60;--danger:#e74c3c;--warning:#f39c12;--info:#3498db;--shadow:0 2px 8px rgba(0,0,0,.08)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Microsoft YaHei","Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.85;font-size:15.5px;scroll-behavior:smooth}
+.topbar{position:fixed;top:0;left:0;right:0;height:52px;background:var(--primary);color:#fff;display:flex;align-items:center;padding:0 20px;z-index:1000;box-shadow:0 4px 20px rgba(0,0,0,.12)}
+.topbar h1{font-size:16px;font-weight:600;white-space:nowrap}
+.topbar .crumb{font-size:12px;opacity:.75;margin-left:8px}
+.topbar nav{margin-left:auto;display:flex;gap:4px;overflow-x:auto}
+.topbar nav a{color:#cfd8dc;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:4px;white-space:nowrap}
+.topbar nav a:hover{background:rgba(255,255,255,.15);color:#fff}
+.sidebar{position:fixed;top:52px;left:0;bottom:0;width:240px;background:#fff;border-right:1px solid var(--border);overflow-y:auto;padding:14px 0;z-index:900}
+.sidebar a{display:block;padding:8px 20px;color:var(--text-light);text-decoration:none;font-size:13px;border-left:3px solid transparent;transition:.2s}
+.sidebar a:hover{background:var(--bg);color:var(--primary);border-left-color:var(--primary-light)}
+.sidebar a.active{background:#eaf2f8;color:var(--primary);border-left-color:var(--primary);font-weight:600}
+.sidebar a.sub{padding-left:34px;font-size:12px}
+.sidebar .group-label{padding:12px 20px 4px;font-size:11px;color:var(--accent);font-weight:700;letter-spacing:1px}
+.main{margin-left:240px;margin-top:52px;padding:28px 36px;max-width:1000px}
+.section{background:var(--card);border-radius:10px;padding:26px 30px;margin-bottom:22px;box-shadow:var(--shadow)}
+.section h2{color:var(--primary);font-size:22px;border-bottom:2px solid var(--primary-light);padding-bottom:10px;margin-bottom:16px}
+.section h3{color:var(--primary);font-size:17px;margin:22px 0 10px;padding-left:10px;border-left:4px solid var(--accent)}
+.section h4{color:var(--text);font-size:15.5px;margin:16px 0 6px}
+.section p{margin:9px 0}.section ul,.section ol{margin:9px 0 9px 26px}.section li{margin:5px 0}
+.section strong{color:var(--primary)}
+.tip{background:#eafaf1;border-left:4px solid var(--success);padding:12px 16px;border-radius:6px;margin:14px 0}
+.tip::before{content:"💡 记住";display:block;font-weight:700;color:var(--success);font-size:13px;margin-bottom:4px}
+.warn{background:#fef9e7;border-left:4px solid var(--warning);padding:12px 16px;border-radius:6px;margin:14px 0}
+.warn::before{content:"⚠️ 注意";display:block;font-weight:700;color:var(--warning);font-size:13px;margin-bottom:4px}
+.key{background:#eaf2f8;border-left:4px solid var(--primary-light);padding:12px 16px;border-radius:6px;margin:14px 0}
+.key::before{content:"🔑 核心";display:block;font-weight:700;color:var(--primary);font-size:13px;margin-bottom:4px}
+.sale{background:#fdf2e9;border-left:4px solid var(--accent);padding:12px 16px;border-radius:6px;margin:14px 0}
+.sale::before{content:"💬 客户对话";display:block;font-weight:700;color:var(--accent);font-size:13px;margin-bottom:4px}
+.ndt{background:#eef5fb;border-left:4px solid var(--info);padding:12px 16px;border-radius:6px;margin:14px 0}
+.ndt::before{content:"🔬 对检测的意义";display:block;font-weight:700;color:var(--info);font-size:13px;margin-bottom:4px}
+.good{background:#eafaf1;border-left:4px solid var(--success);padding:12px 16px;border-radius:6px;margin:14px 0}
+.good::before{content:"✅ 好检（我们主场）";display:block;font-weight:700;color:var(--success);font-size:13px;margin-bottom:4px}
+.bad{background:#fdedec;border-left:4px solid var(--danger);padding:12px 16px;border-radius:6px;margin:14px 0}
+.bad::before{content:"❌ 难检（小心）";display:block;font-weight:700;color:var(--danger);font-size:13px;margin-bottom:4px}
+.analogy{background:linear-gradient(135deg,#fdf2e9,#fef9e7);border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;margin:14px 0}
+.analogy::before{content:"🎯 打个比方";display:block;font-weight:700;color:var(--accent);font-size:13px;margin-bottom:6px}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13.5px}
+th,td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--primary);color:#fff;font-weight:600}
+tr:nth-child(even){background:#f8f9fa}tr:hover{background:#eaf2f8}
+td strong{color:var(--primary)}
+.good-row{background:#eafaf1 !important}.bad-row{background:#fdedec !important}
+.quick-card{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:14px 0}
+.quick-item{background:#fff;border:2px solid var(--border);border-radius:8px;padding:14px;text-align:center}
+.quick-item:hover{border-color:var(--primary-light);transform:translateY(-2px)}
+.quick-item .icon{font-size:28px;margin-bottom:4px}
+.quick-item .title{font-weight:700;color:var(--primary);font-size:14px}
+.quick-item .desc{font-size:12px;color:var(--text-light);margin-top:4px}
+.work-card{background:linear-gradient(135deg,#fff,#f8f9fa);border:1px solid var(--border);border-radius:8px;padding:16px;margin:14px 0}
+.work-card .w-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.work-card .w-icon{font-size:26px}
+.work-card .w-name{font-weight:700;color:var(--primary);font-size:15.5px}
+.work-card .w-tag{display:inline-block;background:var(--accent);color:#fff;font-size:11px;padding:2px 8px;border-radius:3px;margin-left:6px}
+.work-card .w-desc{font-size:13.5px;color:var(--text)}
+details{background:#f8f9fa;border:1px solid var(--border);border-radius:6px;margin:12px 0;overflow:hidden}
+summary{cursor:pointer;padding:10px 16px;font-weight:600;color:var(--primary);background:#eaf2f8}
+details .inner{padding:12px 16px}
+.quiz-intro{background:#eaf2f8;border-radius:8px;padding:14px 18px;margin:16px 0;color:var(--primary)}
+.quiz-question{background:#fff;border:1px solid var(--border);border-radius:8px;padding:16px;margin:14px 0}
+.quiz-question .q-text{font-weight:600;margin-bottom:10px}
+.quiz-question .q-num{display:inline-block;background:var(--primary);color:#fff;width:26px;height:26px;border-radius:50%;text-align:center;line-height:26px;font-size:13px;margin-right:8px}
+.quiz-option{display:block;padding:10px 14px;margin:6px 0;border:2px solid var(--border);border-radius:6px;cursor:pointer;transition:.2s}
+.quiz-option:hover{border-color:var(--primary-light);background:#eaf2f8}
+.quiz-option.correct{border-color:var(--success);background:#eafaf1}
+.quiz-option.wrong{border-color:var(--danger);background:#fdedec}
+.quiz-option .mark{float:right;font-weight:700}
+.quiz-explain{margin-top:10px;padding:10px;background:#f8f9fa;border-radius:4px;font-size:13px;display:none}
+.quiz-explain.show{display:block}
+#quiz-result{display:none;text-align:center;padding:32px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin:16px 0}
+#quiz-result .score{font-size:48px;font-weight:700;margin:10px 0}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:10px 28px;border-radius:6px;border:none;cursor:pointer;font-size:15px;font-weight:600}
+.btn:hover{background:var(--accent-light);transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--primary);border:2px solid var(--primary)}
+.hero{text-align:center;padding:44px 32px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin-bottom:22px}
+.hero .course-tag{display:inline-block;background:rgba(255,255,255,.2);padding:4px 14px;border-radius:14px;font-size:12px;margin-bottom:10px}
+.hero h1{font-size:28px;margin-bottom:10px}.hero p{font-size:15px;opacity:.92;margin:6px 0}
+.hero .meta{margin-top:16px;font-size:13px;opacity:.8}.hero .meta span{margin:0 10px}
+@media(max-width:900px){.sidebar{transform:translateX(-100%)}.main{margin-left:0;padding:16px}.topbar nav{display:none}}
+</style>
+</head>
+<body>
+<div class="topbar"><h1>🔬 NDT 扫盲课</h1><span class="crumb">第 2 课 · 牌号与特种材料</span><nav><a href="#hero">封面</a><a href="#ch1">钢牌号</a><a href="#ch2">不锈钢</a><a href="#ch3">铸铁</a><a href="#ch4">有色</a><a href="#ch5">复材</a><a href="#ch6">对照</a><a href="#exam">测验</a></nav></div>
+<div class="sidebar">
+<a href="#hero">封面</a>
+<div class="group-label">钢的牌号</div>
+<a href="#ch1">一、钢的分类与牌号</a>
+<a href="#ch1-2" class="sub">1.2 牌号怎么读</a>
+<a href="#ch1-3" class="sub">1.3 客户口中的牌号</a>
+<div class="group-label">特种材料</div>
+<a href="#ch2">二、不锈钢专题</a>
+<a href="#ch2-2" class="sub">2.2 五大类不锈钢</a>
+<a href="#ch2-3" class="sub">2.3 奥氏体为什么难检</a>
+<a href="#ch3">三、铸铁四类</a>
+<a href="#ch4">四、有色金属（铝钛铜）</a>
+<a href="#ch5">五、复合材料</a>
+<a href="#ch6">六、国际牌号对照</a>
+<a href="#summary">本课总结</a>
+<a href="#exam">📝 测验</a>
+</div>
+<div class="main">
+
+<div class="section" id="hero" style="padding:0;overflow:hidden">
+<div class="hero">
+<span class="course-tag">扫盲课 · 第一阶段 · 第 2 课</span>
+<h1>材料科学基础（下）：牌号与特种材料</h1>
+<p>客户嘴里的 Q345R、304、316L、碳纤维到底都是什么？好不好检？这课给你一张"听牌号就知能不能测"的地图。</p>
+<div class="meta"><span>⏱ 约 60 分钟</span><span>📚 对应 B1 §3-§7</span><span>🎯 扫盲级别</span></div>
+</div>
+</div>
+
+<div class="section">
+<h2>📍 本课学完你能做到</h2>
+<div class="quick-card">
+<div class="quick-item"><div class="icon">🏷️</div><div class="title">听懂钢牌号</div><div class="desc">Q235/Q345R/45钢/40Cr 客户一说你就知道是啥</div></div>
+<div class="quick-item"><div class="icon">🔒</div><div class="title">认得五大不锈钢</div><div class="desc">304/316/430/410/2205 各是哪类、好不好检</div></div>
+<div class="quick-item"><div class="icon">🧱</div><div class="title">分清四类铸铁</div><div class="desc">灰铸铁/球铁/可锻/蠕墨，声速差一截</div></div>
+<div class="quick-item"><div class="icon">🛩️</div><div class="title">有色+复材定位</div><div class="desc">铝钛铜+碳纤维/玻璃钢，哪些是我们的主场</div></div>
+</div>
+<div class="tip"><strong>本课是第 1 课的延续</strong>。第 1 课讲了"钢是什么组织"（铁素体/奥氏体/马氏体），本课讲"客户嘴里的牌号对应什么材料、好不好检"。两课合起来，你就有了完整的"材料→检测"地图。</div>
+</div>
+
+<div class="section" id="ch1">
+<h2>一、钢的分类与牌号——听懂客户嘴里的"Q345R"</h2>
+<p>客户报价时最常说一串字母数字："这是 Q345R 的"、"用 304 焊的"、"45 号钢轴"。这节教你怎么听懂。</p>
+
+<h3>1.1 钢的四种分类法（先有个全貌）</h3>
+<table>
+<tr><th>分类法</th><th>怎么分</th><th>举例</th></tr>
+<tr><td><strong>按碳含量</strong></td><td>低碳 &lt;0.25% / 中碳 0.25–0.6% / 高碳 &gt;0.6%</td><td>低碳：Q235、压力容器钢；高碳：弹簧、刀具</td></tr>
+<tr><td><strong>按合金元素</strong></td><td>碳素钢 / 低合金钢（&lt;5%）/ 高合金钢（&gt;10%）</td><td>碳素：20钢；高合金：不锈钢</td></tr>
+<tr><td><strong>按室温组织</strong></td><td>铁素体钢 / 奥氏体钢 / 马氏体钢 / 双相钢</td><td>奥氏体：304（<strong>UT 难</strong>）；双相：2205</td></tr>
+<tr><td><strong>按用途</strong>（最常用）</td><td>结构钢/压力容器钢/锅炉钢/不锈钢/工具钢/轴承钢...</td><td>结构：Q235；容器：Q345R</td></tr>
+</table>
+<div class="key"><strong>工程上最常用的是"按用途分"</strong>，因为客户报的就是用途牌号。下面专门讲怎么读。</div>
+
+<h3 id="ch1-2">1.2 牌号怎么读（看到就能猜个八九不离十）</h3>
+
+<h4>① 碳素结构钢："Q + 数字" = 屈服强度</h4>
+<div class="analogy"><strong>Q = 屈服（Qu）的首字母，数字 = 屈服强度（MPa）</strong>，数字越大越强。</div>
+<table>
+<tr><th>牌号</th><th>含义</th><th>用途</th><th>UT 难度</th></tr>
+<tr class="good-row"><td><strong>Q235</strong></td><td>屈服 235 MPa，最普通的结构钢（旧牌号 A3）</td><td>建筑、桥梁、一般钢结构</td><td>✅ 优</td></tr>
+<tr class="good-row"><td><strong>Q345</strong></td><td>屈服 345 MPa（旧牌号 16Mn），比 Q235 强 40%</td><td>桥梁、起重机、压力容器</td><td>✅ 优</td></tr>
+<tr><td>Q390/Q420/Q460</td><td>更高强度的结构钢</td><td>高层建筑、大跨度</td><td>✅ 优</td></tr>
+</table>
+
+<h4>② 压力容器钢："Q + 数字 + R" = 屈服 + 容器</h4>
+<div class="analogy"><strong>R = "容"（Rong）的首字母</strong>。带 R 的就是压力容器专用钢，冶炼纯净度高、可焊性好、韧性好。</div>
+<table>
+<tr><th>牌号</th><th>对应</th><th>用途</th></tr>
+<tr class="good-row"><td><strong>Q245R</strong></td><td>≈ 20 钢容器版</td><td>中低压压力容器</td></tr>
+<tr class="good-row"><td><strong>Q345R</strong></td><td>≈ Q345 容器版（最常用容器钢）</td><td>绝大多数压力容器</td></tr>
+<tr><td>Q370R</td><td>更高强度容器钢</td><td>大型容器</td></tr>
+<tr><td>15CrMoR / 12Cr2Mo1R</td><td>Cr-Mo 耐热容器钢</td><td>高温容器（炼油、加氢）</td></tr>
+</table>
+<div class="sale"><strong>客户对话</strong>：客户："我们是做压力容器的，材质 Q345R。"<br>你心里立刻反应：Q345R = 最常见的容器钢，铁素体+珠光体细晶，UT 极好检。可以接："Q345R 是常规容器钢，UT 完全没问题，便携 A 扫能做焊缝，水浸 C 扫能扫板材分层。按 NB/T 47013 标准走就行。"</div>
+
+<h4>③ 优质碳素钢："两位数字" = 碳含量的万分之几</h4>
+<div class="analogy">数字直接告诉你碳含量。<strong>20 钢 = 碳 0.20%，45 钢 = 碳 0.45%</strong>。万分之几的记法。</div>
+<table>
+<tr><th>牌号</th><th>碳含量</th><th>用途</th><th>特点</th></tr>
+<tr><td><strong>20 钢</strong></td><td>0.20%（低碳）</td><td>钢管、锅炉管、渗碳件</td><td>塑性好、可焊性好</td></tr>
+<tr><td><strong>45 钢</strong></td><td>0.45%（中碳）</td><td><strong>最常用的调质钢</strong>：轴、齿轮、连杆</td><td>调质后强度韧性均衡</td></tr>
+<tr><td>65 钢</td><td>0.65%（高碳）</td><td>弹簧</td><td>弹性好</td></tr>
+</table>
+
+<h4>④ 合金结构钢："数字 + 元素 + 数字"</h4>
+<table>
+<tr><th>牌号</th><th>含义</th><th>用途</th></tr>
+<tr><td><strong>40Cr</strong></td><td>碳 0.40% + 铬约 1%</td><td>轴、齿轮（最常用合金调质钢）</td></tr>
+<tr><td>20CrMnTi</td><td>碳 0.20% + 铬锰钛</td><td>汽车齿轮（渗碳淬火）</td></tr>
+<tr><td>42CrMo</td><td>碳 0.42% + 铬钼</td><td>高强度锻件（风电主轴、曲轴）</td></tr>
+<tr><td>GCr15</td><td>轴承钢（G=滚）</td><td>轴承（高纯净度）</td></tr>
+</table>
+
+<h3 id="ch1-3">1.3 客户口中常见牌号速查（背这张就够）</h3>
+<div class="key">
+<table>
+<tr><th>客户说</th><th>是啥</th><th>常见工件</th><th>UT 难度</th><th>我们怎么做</th></tr>
+<tr class="good-row"><td>Q235</td><td>最普通结构钢</td><td>建筑、钢构</td><td>✅ 优</td><td>A 扫焊缝</td></tr>
+<tr class="good-row"><td>Q345 / Q345R</td><td>低合金钢/容器钢</td><td>容器、桥梁</td><td>✅ 优</td><td>A 扫焊缝、C 扫分层</td></tr>
+<tr class="good-row"><td>20 钢 / 20G</td><td>低碳钢/锅炉钢</td><td>钢管、锅炉</td><td>✅ 优</td><td>A 扫焊缝、测厚</td></tr>
+<tr class="good-row"><td>45 钢</td><td>中碳调质钢</td><td>轴、齿轮</td><td>✅ 优</td><td>A 扫锻件</td></tr>
+<tr class="good-row"><td>42CrMo / 40Cr</td><td>合金调质钢</td><td>锻件、高强度件</td><td>✅ 优</td><td>A 扫锻件</td></tr>
+<tr class="good-row"><td>GCr15</td><td>轴承钢</td><td>轴承</td><td>✅ 良</td><td>A 扫（查夹杂）</td></tr>
+<tr><td>15CrMo / 12Cr1MoV</td><td>耐热钢</td><td>电厂高温管</td><td>✅ 优</td><td>A 扫焊缝（注意裂纹）</td></tr>
+<tr class="bad-row"><td><strong>304 / 316</strong></td><td><strong>奥氏体不锈钢</strong></td><td>化工、食品、医疗</td><td><strong>⚠️ 母材可/焊缝难</strong></td><td>母材可测，焊缝坦诚说明</td></tr>
+<tr class="bad-row"><td>灰铸铁 HT200</td><td>片状石墨铸铁</td><td>机床床身</td><td>❌ 差</td><td>坦诚说明难检</td></tr>
+<tr><td>球墨铸铁 QT500</td><td>球状石墨铸铁</td><td>曲轴、齿轮</td><td>⚠️ 中（看球化率）</td><td>声速法测球化率</td></tr>
+</table>
+</div>
+<div class="ndt"><strong>关键规律</strong>：声速从高到低大致是——低碳钢 ~5920 m/s（好检）→ 中高碳钢 ~5940–5990（好检）→ 铸钢 ~5800–5920（粗晶，中）→ <strong>奥氏体不锈钢 ~5740–5790（分散严重，难）</strong>。但<strong>声速是经验值，正式检测前必须用同材料试块校准</strong>。</div>
+</div>
+
+<div class="section" id="ch2">
+<h2>二、不锈钢专题——客户说"304"你该警惕</h2>
+
+<h3 id="ch2-1">2.1 不锈钢为什么"不锈"？</h3>
+<div class="analogy"><strong>核心：含铬量 ≥ 12%</strong>。铬会在表面形成一层极薄（3–5 nm）、致密、<strong>能自我修复</strong>的 Cr₂O₃ 钝化膜，把基体和腐蚀介质隔开。<br><br>
+比喻：钝化膜像<strong>健康的皮肤</strong>，划破了还能长好。普通钢的氧化皮像<strong>湿疹破皮</strong>——松散多孔，保护不了。铬是灵魂元素，≥12% 是分界线。</div>
+
+<h3 id="ch2-2">2.2 五大类不锈钢（重点记前两类）</h3>
+<table>
+<tr><th>类别</th><th>代表牌号</th><th>组织</th><th>磁性</th><th>特点</th><th>UT 难度</th></tr>
+<tr class="bad-row"><td><strong>① 奥氏体</strong></td><td><strong>304、316、316L</strong></td><td>奥氏体（FCC）</td><td><strong>无磁</strong></td><td>产量最大、耐蚀好、低温不脆</td><td><strong>⚠️ 焊缝极难</strong></td></tr>
+<tr><td>② 铁素体</td><td>430、409</td><td>铁素体（BCC）</td><td>有磁</td><td>成本低（不含镍）、耐蚀一般</td><td>良（晶粒较细）</td></tr>
+<tr><td>③ 马氏体</td><td>410、420、440C</td><td>马氏体</td><td>有磁</td><td>硬、耐磨、耐蚀差、焊接易裂</td><td>良（查淬火裂纹）</td></tr>
+<tr><td>④ 双相</td><td>2205、2507</td><td>铁素体+奥氏体各半</td><td>有磁</td><td>强度高、抗应力腐蚀好</td><td>中（比纯奥氏体好）</td></tr>
+<tr><td>⑤ 沉淀硬化</td><td>17-4PH</td><td>马氏体+析出相</td><td>有磁</td><td>强度极高（航空航天）</td><td>良（锻件细晶）</td></tr>
+</table>
+<div class="key"><strong>你只要记住两类</strong>：<br>
+• <strong>奥氏体（304/316）= 无磁 + UT 焊缝难</strong>——客户报这俩要警惕<br>
+• <strong>其他四类都有磁性，UT 相对好检</strong><br><br>
+<strong>磁性是现场快速鉴别法宝</strong>：拿块磁铁吸一下，吸不住的是奥氏体（304/316），要小心。</div>
+
+<h3 id="ch2-3">2.3 ★ 奥氏体不锈钢（304/316）为什么 UT 难检</h3>
+<p>这是 NDT 工程师必须能给客户讲清楚的"经典难题"。分四层原因：</p>
+<div class="bad">
+<ol>
+<li><strong>晶粒粗大</strong>：焊缝和铸态下，晶粒可达数毫米。声波波长（5MHz 钢中约 1.2mm）和晶粒同量级，<strong>散射极强</strong>。</li>
+<li><strong>各向异性强</strong>：焊缝柱状晶沿散热方向生长，声速随方向变 1–5%，声束偏转、定位困难。</li>
+<li><strong>草状回波</strong>：晶界散射的杂乱回波像草丛铺满屏幕，把小缺陷信号淹没。</li>
+<li><strong>声衰减大</strong>：信号传不远，深部缺陷难发现。横波衰减比纵波更厉害。</li>
+</ol>
+</div>
+<details>
+<summary>👉 行业里的应对策略（客户问起能答）</summary>
+<div class="inner">
+<ul>
+<li><strong>降低频率</strong>：用 1–2 MHz 甚至更低，波长变长，散射减弱（但分辨率也下降）</li>
+<li><strong>纵波斜探头（TRL）</strong>：纵波衰减比横波小，是奥氏体焊缝的主流方案</li>
+<li><strong>相控阵 PAUT / TOFD</strong>：聚焦能量提高信噪比，对裂纹特别有效</li>
+<li><strong>专用对比试块</strong>：必须用同炉号同工艺的试块校准</li>
+</ul>
+<strong>对我们意味着什么</strong>：奥氏体<strong>母材</strong>（板/管/锻件未焊接）我们 A 扫 + C 扫能做；奥氏体<strong>焊缝</strong>是难点，常规 A/C 扫不是最优，业内主流用 PAUT/TOFD。坦诚说明即可。
+</div>
+</details>
+<div class="sale"><strong>客户对话</strong>：客户："我们化工厂管道是 304 不锈钢，焊缝能 UT 吗？"<br>
+"304 是奥氏体不锈钢，<strong>母材我们 A 扫完全能做</strong>（测厚、查腐蚀、查夹杂）。但<strong>焊缝</strong>因为粗晶和各向异性，常规 UT 信噪比差，业内主流用 PAUT/TOFD。如果您重点是焊缝探伤，我帮您评估下，或者我们看下母材部分能不能先做起来。"</div>
+</div>
+
+<div class="section" id="ch3">
+<h2>三、铸铁四类——声速差一大截</h2>
+<p>铸铁 = 碳含量 &gt; 2.11% 的铁碳合金（第 1 课讲过这个分界）。碳太多，只能铸造不能锻造。按<strong>石墨形态</strong>分四类：</p>
+<div class="analogy"><strong>铸铁 vs 钢的区别，就是"碳"以什么形态存在</strong>。<br>
+钢里的碳溶解或化合得很均匀；铸铁里的碳析出成<strong>石墨</strong>，像在铁基体里塞了一堆"裂纹"。石墨形态决定铸铁性能——片状最差（像塞了一堆裂纹）、球状最好（像塞了一堆圆球，割裂小）。</div>
+<table>
+<tr><th>类别</th><th>石墨形态</th><th>牌号</th><th>声速 m/s</th><th>UT 难度</th><th>用途</th></tr>
+<tr class="bad-row"><td><strong>① 灰铸铁</strong></td><td><strong>片状</strong>（像裂缝）</td><td>HT200/HT250</td><td><strong>4400–5000</strong></td><td><strong>❌ 差</strong></td><td>机床床身、井盖、缸体</td></tr>
+<tr><td>② 球墨铸铁</td><td><strong>球状</strong>（圆球）</td><td>QT500/QT600</td><td>5500–5820</td><td>⚠️ 中（看球化率）</td><td>曲轴、齿轮、阀体</td></tr>
+<tr><td>③ 可锻铸铁</td><td>团絮状</td><td>KTH/KTZ</td><td>—</td><td>中</td><td>管件、农机的薄壁件</td></tr>
+<tr><td>④ 蠕墨铸铁</td><td>蠕虫状（介于片球）</td><td>RuT</td><td>5200–5600</td><td>中</td><td>柴油机缸盖、排气管</td></tr>
+</table>
+<div class="key"><strong>关键规律</strong>：<br>
+• <strong>石墨形态越接近球状，性能越好，声速越高，越好检</strong><br>
+• 灰铸铁片状石墨严重衰减声波（声速低到 4400–5000，比钢低一大截）→ UT 很难<br>
+• 球墨铸铁<strong>声速和球化率正相关</strong>：球化率越高，声速越接近钢 → 可以用<strong>声速法测球化率</strong></div>
+<div class="sale"><strong>客户对话</strong>：客户："球墨铸铁曲轴能 UT 吗？"<br>
+"能。球铁声速 5500–5820，比灰铸铁好检多了。常见的是用<strong>声速法测球化率</strong>——球化率越高声速越接近钢，低于某个值说明球化不良。常规 A 扫也能查内部缩松、夹渣。您主要想查什么缺陷？"</div>
+</div>
+
+<div class="section" id="ch4">
+<h2>四、有色金属——铝是我们的黄金客户</h2>
+
+<h3>4.1 铝及铝合金 ⭐（重点）</h3>
+<div class="good"><strong>铝是我们水浸 C 扫的黄金客户材料</strong>：声速高（6300 m/s，比钢还快）、晶粒细、衰减小、UT 极清晰。航空铝、铝型材、汽车铝、<strong>水冷板（铝合金）</strong>全是。</div>
+<table>
+<tr><th>类别</th><th>牌号</th><th>用途</th><th>UT 难度</th></tr>
+<tr class="good-row"><td><strong>工业纯铝</strong></td><td>1060、1050</td><td>不太受力的件、导电件</td><td>✅ 优</td></tr>
+<tr class="good-row"><td><strong>变形铝合金</strong></td><td>2024（硬铝）、7075（超硬铝）、6061、3003</td><td>航空、汽车、<strong>水冷板（3003/6061）</strong></td><td>✅ 优</td></tr>
+<tr><td>铝铸件</td><td>A356、ADC12</td><td>发动机缸体、壳体</td><td>⚠️ 中（缩孔气孔多）</td></tr>
+</table>
+<div class="key"><strong>水冷板用铝记忆</strong>：<br>
+• <strong>3003</strong>：钎焊性好，水冷板基材最常用<br>
+• <strong>6061</strong>：强度高，也用于水冷板和结构件<br>
+• 这俩都是<strong>我们的主场材料</strong>，C 扫查钎着率、A 扫查缺陷都很好做</div>
+
+<h3>4.2 钛合金</h3>
+<table>
+<tr><th>牌号</th><th>用途</th><th>UT 难度</th></tr>
+<tr class="good-row"><td><strong>TC4（Ti-6Al-4V）</strong></td><td>航空发动机叶片、飞机承力件、医疗植入物（钛骨头）</td><td>✅ 优（细晶，声速 6100–6200）</td></tr>
+<tr><td>工业纯钛</td><td>化工设备、海水淡化</td><td>✅ 优</td></tr>
+</table>
+<div class="ndt">钛合金<strong>细晶、声速高、UT 极好检</strong>。航空钛锻件几乎 100% 要 UT。是我们的优质客户材料。</div>
+
+<h3>4.3 铜及铜合金</h3>
+<table>
+<tr><th>类别</th><th>用途</th><th>UT 难度</th></tr>
+<tr><td>纯铜（紫铜）</td><td>电缆、母排、热交换器</td><td>⚠️ 中（声速低 4660、粗晶）</td></tr>
+<tr><td>黄铜</td><td>阀门、水管接头、散热器</td><td>⚠️ 中（声速 4430）</td></tr>
+<tr><td>青铜</td><td>轴承、蜗轮、船舶件</td><td>⚠️ 中~差（铸态粗晶）</td></tr>
+</table>
+<div class="warn">铜的<strong>声速低（4400–4660）、晶粒粗</strong>，UT 中等难度。尤其铜焊缝和青铜铸件粗晶，要小心。</div>
+</div>
+
+<div class="section" id="ch5">
+<h2>五、复合材料——我们水浸 C 扫的杀手锏市场</h2>
+<div class="analogy"><strong>复合材料 = "软基体 + 硬纤维"</strong>，就像钢筋混凝土——混凝土（基体）包裹，钢筋（纤维）受力。又轻又强，所以飞机、风机、体育器材用得多。</div>
+
+<div class="work-card">
+<div class="w-head"><span class="w-icon">✈️</span><span class="w-name">碳纤维 CFRP</span><span class="w-tag">⭐ 主场</span></div>
+<div class="w-desc">黑色、有编织纹路、又轻又硬。波音 787、空客 A350 一半机身都是它。F1 赛车、高端自行车。</div>
+</div>
+<div class="work-card">
+<div class="w-head"><span class="w-icon">🌊</span><span class="w-name">玻璃钢 GFRP</span><span class="w-tag">⭐ 主场</span></div>
+<div class="w-desc">白色/浅色。游船船身、风力发电机叶片、冷却塔、储罐。</div>
+</div>
+<div class="work-card">
+<div class="w-head"><span class="w-icon">🐝</span><span class="w-name">蜂窝夹芯板</span><span class="w-tag">⭐ 主场</span></div>
+<div class="w-desc">两层薄面板（铝或碳纤维）中间夹蜂窝。极轻但极刚。飞机地板、机舱内饰、卫星板。</div>
+</div>
+
+<div class="good"><strong>★ 复合材料的缺陷 = 水浸 C 扫的看家本领</strong>：<br>
+• <strong>分层</strong>（一层层分开）→ C 扫出图最直观<br>
+• <strong>脱粘</strong>（面板和芯子没粘牢）→ 蜂窝板/复合板的核心检测<br>
+• <strong>孔隙</strong>（成型时残留气泡）<br>
+• <strong>冲击损伤 BVID</strong>（外表没事里面分层了）<br><br>
+<strong>结论：复合材料检测 = 我们水浸 C 扫最核心的杀手锏市场之一。</strong></div>
+</div>
+
+<div class="section" id="ch6">
+<h2>六、国际牌号对照——客户报 ASTM/JIS 也听得懂</h2>
+<p>有些客户（外企、合资厂）报的是美国 ASTM、日本 JIS、德国 DIN 牌号。你要能对上国标。</p>
+<table>
+<tr><th>国标 GB</th><th>美 ASTM</th><th>日 JIS</th><th>德 DIN</th><th>是啥</th></tr>
+<tr><td>Q235</td><td>A36</td><td>SS400</td><td>S235JR</td><td>普碳结构钢</td></tr>
+<tr><td>Q345（16Mn）</td><td>A572 Gr50</td><td>SM490</td><td>S355JR</td><td>低合金结构钢</td></tr>
+<tr><td>06Cr19Ni10</td><td><strong>304</strong></td><td>SUS304</td><td>X5CrNi18-10</td><td>奥氏体不锈钢</td></tr>
+<tr><td>022Cr17Ni12Mo2</td><td><strong>316L</strong></td><td>SUS316L</td><td>X2CrNiMo17-12-2</td><td>低碳含钼不锈钢</td></tr>
+</table>
+<div class="tip"><strong>记忆窍门</strong>：客户说 <strong>"304"就是国标 06Cr19Ni10</strong>，说 <strong>"316L"就是国标 022Cr17Ni12Mo2</strong>。这俩最常见，记住就行。其他牌号现场查表。</div>
+</div>
+
+<div class="section" id="summary">
+<h2>📋 本课总结（10 条）</h2>
+<ol>
+<li><strong>Q + 数字 = 屈服强度</strong>：Q235、Q345、Q390，数字越大越强。</li>
+<li><strong>Q + 数字 + R = 压力容器钢</strong>：Q245R、Q345R（最常用容器钢）。</li>
+<li><strong>两位数字 = 碳含量万分之几</strong>：20 钢（0.20%）、45 钢（0.45%，最常用调质钢）。</li>
+<li><strong>合金钢 = 数字 + 元素</strong>：40Cr、42CrMo、GCr15（轴承钢）。</li>
+<li><strong>不锈钢含铬 ≥12% 才"不锈"</strong>，分五大类。<strong>奥氏体（304/316）无磁、焊缝难检</strong>；其他四类有磁、相对好检。</li>
+<li><strong>304 = 国标 06Cr19Ni10</strong>，<strong>316L = 国标 022Cr17Ni12Mo2</strong>，记住这俩对照。</li>
+<li><strong>铸铁按石墨形态分四类</strong>：灰铸铁（片状，UT 差）→ 球墨铸铁（球状，可测球化率）。</li>
+<li><strong>铝 = 我们黄金客户</strong>：3003/6061 是水冷板基材，声速高、好检。</li>
+<li><strong>钛合金（TC4）好检</strong>，铜合金中等（声速低粗晶）。</li>
+<li><strong>复合材料（碳纤维/玻璃钢/蜂窝）= C 扫杀手锏</strong>，查分层/脱粘/孔隙。</li>
+</ol>
+<div class="tip"><strong>下一课预告</strong>：第 3 课讲"材料成型工艺"——铸造/轧制/锻造怎么造出工件，每种工艺产生什么缺陷。学完你就明白"为什么锻件要查白点、铸件要查缩孔、钢板要查分层"。</div>
+</div>
+
+<div class="section" id="exam">
+<h2>📝 随堂测验（8 题）</h2>
+<div class="quiz-intro">这 8 题考的是"客户报牌号，你能不能对上号、判断好不好检"。做完整再看解析。</div>
+
+<div class="quiz-question" data-correct="B">
+<div class="q-text"><span class="q-num">1</span>客户说"这是 Q345R"，请问这是？</div>
+<div class="quiz-option" data-k="A">A. 普通结构钢，做建筑用</div>
+<div class="quiz-option" data-k="B">B. 压力容器专用钢（R 代表"容"）</div>
+<div class="quiz-option" data-k="C">C. 不锈钢</div>
+<div class="quiz-option" data-k="D">D. 工具钢</div>
+<div class="quiz-explain">✅ 选 B。Q345R = 屈服强度 345 MPa 的压力容器钢（R = "容" Rong 的首字母），是最常用的容器钢，铁素体+珠光体细晶，UT 极好检。Q235 才是普通结构钢（A）。</div>
+</div>
+
+<div class="quiz-question" data-correct="C">
+<div class="q-text"><span class="q-num">2</span>"45 钢"中的 45 代表什么？</div>
+<div class="quiz-option" data-k="A">A. 屈服强度 45 MPa</div>
+<div class="quiz-option" data-k="B">B. 抗拉强度 45 MPa</div>
+<div class="quiz-option" data-k="C">C. 碳含量 0.45%（万分之四十五）</div>
+<div class="quiz-option" data-k="D">D. 硬度 45 HRC</div>
+<div class="quiz-explain">✅ 选 C。优质碳素钢用"两位数字 = 碳含量的万分之几"表示。45 钢 = 碳 0.45%，是最常用的调质钢（轴、齿轮）。20 钢 = 碳 0.20%。Q235 那种才是用屈服强度表示。</div>
+</div>
+
+<div class="quiz-question" data-correct="A">
+<div class="q-text"><span class="q-num">3</span>现场快速鉴别"这块是不是奥氏体不锈钢（304/316）"，最简单的方法？</div>
+<div class="quiz-option" data-k="A">A. 用磁铁吸——吸不住的是奥氏体</div>
+<div class="quiz-option" data-k="B">B. 看颜色——发亮的是奥氏体</div>
+<div class="quiz-option" data-k="C">C. 称重量——重的是奥氏体</div>
+<div class="quiz-option" data-k="D">D. 敲一下听声音</div>
+<div class="quiz-explain">✅ 选 A。<strong>奥氏体不锈钢（304/316）无磁性</strong>，磁铁吸不住。其他四类不锈钢（铁素体/马氏体/双相/沉淀硬化）都有磁性，能吸住。这是现场最快的鉴别法。</div>
+</div>
+
+<div class="quiz-question" data-correct="C">
+<div class="q-text"><span class="q-num">4</span>下列哪种铸铁 UT 相对好检，还能用声速法测球化率？</div>
+<div class="quiz-option" data-k="A">A. 灰铸铁 HT200</div>
+<div class="quiz-option" data-k="B">B. 灰铸铁 HT250</div>
+<div class="quiz-option" data-k="C">C. 球墨铸铁 QT500</div>
+<div class="quiz-option" data-k="D">D. 都一样难检</div>
+<div class="quiz-explain">✅ 选 C。<strong>球墨铸铁声速和球化率正相关</strong>（5500–5820 m/s，球化越好越接近钢），可用声速法测球化率。灰铸铁（HT）片状石墨严重衰减声波（声速低到 4400–5000），UT 很难。</div>
+</div>
+
+<div class="quiz-question" data-correct="B">
+<div class="q-text"><span class="q-num">5</span>水冷板最常用的铝合金牌号是？</div>
+<div class="quiz-option" data-k="A">A. 2024（硬铝）</div>
+<div class="quiz-option" data-k="B">B. 3003（钎焊性好）/ 6061（强度高）</div>
+<div class="quiz-option" data-k="C">C. 7075（超硬铝）</div>
+<div class="quiz-option" data-k="D">D. 1060（纯铝）</div>
+<div class="quiz-explain">✅ 选 B。<strong>3003 钎焊性好、6061 强度高</strong>，这俩是水冷板基材最常用的。2024/7075 是航空硬铝，1060 是纯铝受力件少用。水冷板要钎焊（查钎着率），所以选钎焊性好的 3003。</div>
+</div>
+
+<div class="quiz-question" data-correct="D">
+<div class="q-text"><span class="q-num">6</span>客户报"304 不锈钢焊缝探伤"，你应该？</div>
+<div class="quiz-option" data-k="A">A. 没问题，常规 A 扫就能搞定</div>
+<div class="quiz-option" data-k="B">B. 304 不能检</div>
+<div class="quiz-option" data-k="C">C. 调高频率到 10MHz 就行了</div>
+<div class="quiz-option" data-k="D">D. 说明母材能做、焊缝是难点（粗晶），业内主流用 PAUT/TOFD</div>
+<div class="quiz-explain">✅ 选 D。304 是奥氏体，<strong>母材能做，焊缝是难点</strong>（粗晶草状回波）。A 错（焊缝难）；B 错（母材能测）；C 完全反了（频率越高衰减越大越糟）。坦诚说明焊缝难点，建议 PAUT/TOFD，是我们的专业做法。</div>
+</div>
+
+<div class="quiz-question" data-correct="A">
+<div class="q-text"><span class="q-num">7</span>下列哪个材料，是我们水浸 C 扫的<strong>杀手锏市场</strong>？</div>
+<div class="quiz-option" data-k="A">A. 碳纤维复合材料板的分层检测</div>
+<div class="quiz-option" data-k="B">B. 304 不锈钢焊缝</div>
+<div class="quiz-option" data-k="C">C. 灰铸铁机床床身</div>
+<div class="quiz-option" data-k="D">D. 铜合金阀门</div>
+<div class="quiz-explain">✅ 选 A。复合材料分层检测是水浸 C 扫的<strong>杀手锏</strong>——出图直观、耦合稳定、分辨率高。B（奥氏体焊缝）是盲区；C（灰铸铁）衰减大；D（铜合金）粗晶中等难度。</div>
+</div>
+
+<div class="quiz-question" data-correct="B">
+<div class="q-text"><span class="q-num">8</span>【销售场景】客户说"我们是外企，材质按 ASTM A36"，你心里对应的是？</div>
+<div class="quiz-option" data-k="A">A. 对应国标 304 不锈钢</div>
+<div class="quiz-option" data-k="B">B. 对应国标 Q235 普通结构钢</div>
+<div class="quiz-option" data-k="C">C. 对应国标 45 钢</div>
+<div class="quiz-option" data-k="D">D. 没法对应，得让客户换国标</div>
+<div class="quiz-explain">✅ 选 B。ASTM A36 = 国标 Q235 = 日标 SS400 = 德标 S235JR，都是普通碳素结构钢。常见对照要记住。D 错（不能让客户换标准，是我们要会换算）。</div>
+</div>
+
+<div id="quiz-result">
+<div>你的得分</div>
+<div class="score">0</div>
+<div id="result-text"></div>
+<br>
+<button class="btn ghost" onclick="resetQuiz()">重新作答</button>
+</div>
+
+<div style="text-align:center;margin-top:18px">
+<button class="btn" onclick="submitQuiz()">交卷查看成绩</button>
+</div>
+</div>
+
+<div style="display:flex;justify-content:space-between;align-items:center;margin:24px 0;padding:18px 24px;background:#fff;border-radius:10px;box-shadow:var(--shadow)">
+<a href="#hero" style="text-decoration:none"><span style="font-size:13px;color:#7f8c8d">↑ 本课开头</span></a>
+<div style="text-align:center"><div style="font-size:13px;color:#7f8c8d">下一课</div><div style="font-weight:600;color:#1a5276;font-size:15px">第03课 · 材料成型工艺 →</div></div>
+<span></span>
+</div>
+
+</div>
+
+<div style="text-align:center;margin:24px 0;padding:14px;background:#eaf2f8;border-radius:8px"><a href="index.html" style="display:inline-block;background:#1a5276;color:#fff;padding:10px 28px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px">🏠 返回总目录</a></div>
+<script>
+document.querySelectorAll('.quiz-question').forEach(function(q){
+  var correct=q.dataset.correct;
+  q.querySelectorAll('.quiz-option').forEach(function(opt){
+    opt.addEventListener('click',function(){
+      if(q.classList.contains('locked'))return;
+      q.querySelectorAll('.quiz-option').forEach(function(o){o.classList.remove('correct','wrong');var m=o.querySelector('.mark');if(m)m.remove();});
+      var k=opt.dataset.k;
+      if(k===correct){
+        opt.classList.add('correct');
+        opt.insertAdjacentHTML('beforeend','<span class="mark">✓</span>');
+      }else{
+        opt.classList.add('wrong');
+        opt.insertAdjacentHTML('beforeend','<span class="mark">✗</span>');
+        q.querySelectorAll('.quiz-option').forEach(function(o){if(o.dataset.k===correct){o.classList.add('correct');}});
+      }
+      q.querySelector('.quiz-explain').classList.add('show');
+      q.classList.add('locked');
+    });
+  });
+});
+function submitQuiz(){
+  var qs=document.querySelectorAll('.quiz-question');
+  var answered=0,score=0;
+  qs.forEach(function(q){
+    if(q.classList.contains('locked')){
+      answered++;
+      var sel=q.querySelector('.quiz-option.correct');
+      if(sel)score++;
+    }
+  });
+  var res=document.getElementById('quiz-result');
+  var txt=document.getElementById('result-text');
+  res.style.display='block';
+  res.querySelector('.score').textContent=score+' / '+qs.length;
+  var pct=score/qs.length;var msg='';
+  if(pct===1)msg='满分！牌号和材料都打通了，客户报啥你都接得住。';
+  else if(pct>=0.75)msg='不错！核心牌号都记住了，错题看解析巩固一下。';
+  else if(pct>=0.5)msg='有概念了，建议重看"钢的牌号"和"不锈钢"两节。';
+  else msg='别急，这课牌号多。重看一遍"牌号怎么读"和速查表再测一次。';
+  txt.textContent=msg+'（已答 '+answered+'/'+qs.length+' 题）';
+  res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQuiz(){
+  document.querySelectorAll('.quiz-question').forEach(function(q){
+    q.classList.remove('locked');
+    q.querySelectorAll('.quiz-option').forEach(function(o){
+      o.classList.remove('correct','wrong');
+      var m=o.querySelector('.mark');if(m)m.remove();
+    });
+    q.querySelector('.quiz-explain').classList.remove('show');
+  });
+  document.getElementById('quiz-result').style.display='none';
+}
+var sections=[].slice.call(document.querySelectorAll('.section[id]'));
+var sideLinks=[].slice.call(document.querySelectorAll('.sidebar a[href^="#"]'));
+window.addEventListener('scroll',function(){
+  var sc=window.scrollY+120;var cur=sections[0];
+  sections.forEach(function(s){if(s.offsetTop<=sc)cur=s;});
+  sideLinks.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+cur.id);});
+});
+</script>
+</body>
+</html>

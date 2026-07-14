@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第09课 · 在役·有色·复材缺陷</title>
+<style>
+:root{--primary:#1a5276;--primary-light:#2980b9;--accent:#e67e22;--bg:#f4f6f7;--card:#fff;--text:#2c3e50;--text-light:#7f8c8d;--border:#d5dbdb;--success:#27ae60;--danger:#e74c3c;--warning:#f39c12;--info:#3498db;--shadow:0 2px 8px rgba(0,0,0,.08)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.85;font-size:15.5px;scroll-behavior:smooth}
+.topbar{position:fixed;top:0;left:0;right:0;height:52px;background:var(--primary);color:#fff;display:flex;align-items:center;padding:0 20px;z-index:1000;box-shadow:0 4px 20px rgba(0,0,0,.12)}
+.topbar h1{font-size:16px;font-weight:600}.topbar .crumb{font-size:12px;opacity:.75;margin-left:8px}
+.topbar nav{margin-left:auto;display:flex;gap:4px;overflow-x:auto}
+.topbar nav a{color:#cfd8dc;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:4px;white-space:nowrap}
+.sidebar{position:fixed;top:52px;left:0;bottom:0;width:230px;background:#fff;border-right:1px solid var(--border);overflow-y:auto;padding:14px 0;z-index:900}
+.sidebar a{display:block;padding:8px 18px;color:var(--text-light);text-decoration:none;font-size:12.5px;border-left:3px solid transparent}
+.sidebar a:hover{background:var(--bg);color:var(--primary)}
+.sidebar a.sub{padding-left:30px;font-size:11.5px}
+.main{margin-left:230px;margin-top:52px;padding:26px 32px;max-width:1000px}
+.section{background:var(--card);border-radius:10px;padding:24px 28px;margin-bottom:20px;box-shadow:var(--shadow)}
+.section h2{color:var(--primary);font-size:21px;border-bottom:2px solid var(--primary-light);padding-bottom:8px;margin-bottom:14px}
+.section h3{color:var(--primary);font-size:16.5px;margin:18px 0 8px;padding-left:10px;border-left:4px solid var(--accent)}
+.section p{margin:8px 0}.section ul,.section ol{margin:8px 0 8px 24px}.section li{margin:4px 0}.section strong{color:var(--primary)}
+.tip{background:#eafaf1;border-left:4px solid var(--success);padding:11px 15px;border-radius:6px;margin:12px 0}.tip::before{content:"💡 记住";display:block;font-weight:700;color:var(--success);font-size:12.5px;margin-bottom:3px}
+.warn{background:#fef9e7;border-left:4px solid var(--warning);padding:11px 15px;border-radius:6px;margin:12px 0}.warn::before{content:"⚠️ 注意";display:block;font-weight:700;color:var(--warning);font-size:12.5px;margin-bottom:3px}
+.key{background:#eaf2f8;border-left:4px solid var(--primary-light);padding:11px 15px;border-radius:6px;margin:12px 0}.key::before{content:"🔑 核心";display:block;font-weight:700;color:var(--primary);font-size:12.5px;margin-bottom:3px}
+.sale{background:#fdf2e9;border-left:4px solid var(--accent);padding:11px 15px;border-radius:6px;margin:12px 0}.sale::before{content:"💬 客户对话";display:block;font-weight:700;color:var(--accent);font-size:12.5px;margin-bottom:3px}
+.ndt{background:#eef5fb;border-left:4px solid var(--info);padding:11px 15px;border-radius:6px;margin:12px 0}.ndt::before{content:"🔬 检测要点";display:block;font-weight:700;color:var(--info);font-size:12.5px;margin-bottom:3px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+th,td{border:1px solid var(--border);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--primary);color:#fff}tr:nth-child(even){background:#f8f9fa}
+td strong{color:var(--primary)}
+.bad-row{background:#fdedec !important}
+.quiz-intro{background:#eaf2f8;border-radius:8px;padding:12px 16px;margin:14px 0;color:var(--primary)}
+.quiz-question{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;margin:12px 0}
+.quiz-question .q-text{font-weight:600;margin-bottom:8px}
+.quiz-question .q-num{display:inline-block;background:var(--primary);color:#fff;width:24px;height:24px;border-radius:50%;text-align:center;line-height:24px;font-size:12px;margin-right:6px}
+.quiz-option{display:block;padding:9px 12px;margin:5px 0;border:2px solid var(--border);border-radius:6px;cursor:pointer}
+.quiz-option:hover{border-color:var(--primary-light);background:#eaf2f8}
+.quiz-option.correct{border-color:var(--success);background:#eafaf1}
+.quiz-option.wrong{border-color:var(--danger);background:#fdedec}
+.quiz-option .mark{float:right;font-weight:700}
+.quiz-explain{margin-top:8px;padding:9px;background:#f8f9fa;border-radius:4px;font-size:12.5px;display:none}
+.quiz-explain.show{display:block}
+#quiz-result{display:none;text-align:center;padding:28px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin:14px 0}
+#quiz-result .score{font-size:44px;font-weight:700;margin:8px 0}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:9px 24px;border-radius:6px;border:none;cursor:pointer;font-size:14px;font-weight:600}
+.btn:hover{background:var(--accent-light)}
+.btn.ghost{background:transparent;color:var(--primary);border:2px solid var(--primary)}
+.hero{text-align:center;padding:38px 28px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin-bottom:20px}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);padding:3px 12px;border-radius:12px;font-size:11.5px;margin-bottom:8px}
+.hero h1{font-size:26px;margin-bottom:8px}.hero p{font-size:14px;opacity:.92}
+.milestone{background:linear-gradient(135deg,#27ae60,#2ecc71);color:#fff;border-radius:10px;padding:20px;margin:18px 0;text-align:center}
+.milestone h3{color:#fff;border:none;padding:0;margin:0 0 8px}
+@media(max-width:900px){.sidebar{transform:translateX(-100%)}.main{margin-left:0;padding:14px}.topbar nav{display:none}}
+</style></head><body>
+<div class="topbar"><h1>🔬 NDT 扫盲课</h1><span class="crumb">第 9 课 · 在役·有色·复材缺陷</span><nav><a href="#hero">封面</a><a href="#ch1">在役</a><a href="#ch2">有色</a><a href="#ch3">复材</a><a href="#exam">测验</a></nav></div>
+<div class="sidebar">
+<a href="#hero">封面</a>
+<a href="#ch1">一、在役缺陷三剑客</a>
+<a href="#ch1-1" class="sub">1.1 疲劳裂纹</a>
+<a href="#ch1-2" class="sub">1.2 腐蚀</a>
+<a href="#ch1-3" class="sub">1.3 应力腐蚀 SCC</a>
+<a href="#ch2">二、有色金属缺陷</a>
+<a href="#ch2-1" class="sub">铝/钛/铜</a>
+<a href="#ch3">三、复合材料缺陷</a>
+<a href="#ch3-1" class="sub">分层/脱粘/孔隙</a>
+<a href="#milestone">第二阶段收官</a>
+<a href="#exam">📝 测验</a>
+</div>
+<div class="main">
+
+<div class="section" id="hero" style="padding:0;overflow:hidden"><div class="hero">
+<span class="tag">扫盲课 · 第二阶段 · 第 9 课（懂靶标③·收官）</span>
+<h1>在役·有色·复材缺陷</h1>
+<p>设备用着用着会出什么毛病？铝钛铜复材各有什么缺陷？这是第二阶段收官课。</p>
+</div></div>
+
+<div class="section" id="ch1">
+<h2>一、★ 在役缺陷三剑客（最贴近卖设备的场景）</h2>
+<p>制造缺陷是"出厂前就有的"；<strong>在役缺陷是"用着用着产生的"</strong>——这是你卖在役检测设备的核心市场。</p>
+
+<h3 id="ch1-1">1.1 疲劳裂纹——最危险的在役缺陷</h3>
+<div class="warn"><strong>疲劳 = 工件在交变应力（远低于屈服强度）下，长期循环后产生裂纹</strong>。最常见、最隐蔽的在役缺陷。</div>
+<table>
+<tr><th>项目</th><th>说明</th></tr>
+<tr><td><strong>三阶段</strong></td><td>① 萌生（表面/缺陷处，μm 级）→ ② 扩展（贝壳纹）→ ③ 瞬断</td></tr>
+<tr><td><strong>特征</strong></td><td>断口有<strong>贝壳纹（海滩纹）</strong>；常从表面缺陷（刀痕、腐蚀坑、夹杂）起裂</td></tr>
+<tr><td><strong>典型工况</strong></td><td>飞机起落架、火车轴、汽车悬挂、桥梁、压力容器波动工况、旋转件</td></tr>
+<tr><td><strong>易发位置</strong></td><td>应力集中处：尖角、孔边、焊趾、截面突变</td></tr>
+</table>
+<div class="ndt"><strong>疲劳裂纹 NDT</strong>：表面无损（PT/MT/ET）+ 内部 UT/PAUT + 在役 AE 监控。<strong>早期疲劳裂纹极小（μm 级），是检测难点</strong>。</div>
+
+<h3 id="ch1-2">1.2 腐蚀（均匀/点蚀/晶间/冲刷）</h3>
+<table>
+<tr><th>类型</th><th>是啥</th><th>检测</th></tr>
+<tr><td>均匀腐蚀</td><td>整个表面均匀变薄</td><td>UT 测厚（监控壁厚）</td></tr>
+<tr><td><strong>点蚀</strong></td><td>局部小坑（隐蔽危险）</td><td>UT/ET</td></tr>
+<tr><td>晶间腐蚀</td><td>沿晶界腐蚀（不锈钢敏化）</td><td>ET/金相</td></tr>
+<tr><td>冲刷腐蚀</td><td>流体冲刷+腐蚀（管道弯头）</td><td>UT 测厚</td></tr>
+</table>
+<div class="tip"><strong>UT 测厚</strong>是在役腐蚀检测最常用的方法——定期测壁厚，监控减薄。便携 A 扫的常规业务。</div>
+
+<h3 id="ch1-3">1.3 ★ 应力腐蚀开裂（SCC）——三要素缺一不可</h3>
+<div class="warn"><strong>SCC = 拉应力 + 特定腐蚀介质 + 敏感材料</strong>，三者同时存在才发生。裂纹像树枝，沿晶，隐蔽性极强。</div>
+<table>
+<tr><th>经典组合</th><th>典型工况</th></tr>
+<tr><td><strong>奥氏体不锈钢 + 氯离子 + 拉应力</strong></td><td>化工厂 304 管道（氯离子 SCC）</td></tr>
+<tr><td>碳钢 + 硝酸盐/氢氧化钠</td><td>化工设备</td></tr>
+<tr><td>黄铜 + 氨（季裂）</td><td>黄铜件</td></tr>
+<tr><td>铝合金 + 氯离子</td><td>航空铝件</td></tr>
+</table>
+<div class="ndt"><strong>SCC 检测</strong>：UT/PAUT（尤其 TOFD 对裂纹灵）、湿荧光磁粉、渗透、涡流。内壁 SCC 常用 IRIS（内壁旋转超声）。<strong>注意：焊接残余应力就是 SCC 主因之一，所以焊缝是 SCC 高发区。</strong></div>
+</div>
+
+<div class="section" id="ch2">
+<h2>二、有色金属缺陷（铝/钛/铜）</h2>
+
+<h3 id="ch2-1">2.1 铝合金（我们的黄金客户材料）</h3>
+<table>
+<tr><th>缺陷</th><th>来源</th><th>检测</th></tr>
+<tr><td><strong>氧化膜夹杂</strong></td><td>铝极易氧化，氧化膜卷入铸锭/焊缝</td><td>UT（A 扫/C 扫）</td></tr>
+<tr><td>缩孔/气孔（铸铝）</td><td>铸造收缩、气体</td><td>UT/RT</td></tr>
+<tr><td><strong>钎着率/虚焊（水冷板）</strong></td><td>钎焊未焊合</td><td><strong>水浸 C 扫（核心市场）</strong></td></tr>
+<tr><td>偏析</td><td>凝固成分不均</td><td>金相</td></tr>
+<tr><td>应力腐蚀</td><td>高强铝+氯离子</td><td>UT/ET</td></tr>
+</table>
+<div class="key"><strong>铝 UT 优势</strong>：声速高（6300）、晶粒细、衰减小 → <strong>UT 极清晰，是我们水浸 C 扫的主场材料</strong>。</div>
+
+<h3>2.2 钛合金</h3>
+<table>
+<tr><th>缺陷</th><th>说明</th><th>检测</th></tr>
+<tr><td><strong>硬 α 相</strong></td><td>钛中氧/氮富集的脆性相（航空致命）</td><td>UT（微焦点）</td></tr>
+<tr><td>孔洞</td><td>铸造/烧结不致密</td><td>UT/RT</td></tr>
+<tr><td>偏析</td><td>成分不均（α/β 相分布）</td><td>UT/金相</td></tr>
+<tr><td><strong>氢脆</strong></td><td>钛吸氢变脆（特别提醒）</td><td>化学分析</td></tr>
+</table>
+<div class="ndt">钛合金细晶、UT 极好检（声速 6100–6200）。航空钛件几乎 100% 要 UT。</div>
+
+<h3>2.3 铜合金</h3>
+<p>铜的<strong>声速低（4400–4660）、晶粒粗</strong>，UT 中等难度。主要缺陷：缩松（铸铜）、偏析、季裂（黄铜+氨的 SCC）。青铜铸件粗晶 UT 较难。</p>
+</div>
+
+<div class="section" id="ch3">
+<h2>三、★ 复合材料缺陷（我们水浸 C 扫的杀手锏）</h2>
+<div class="key"><strong>复材缺陷 = 水浸 C 扫的看家本领。</strong>这也是我们最该深挖的市场。</div>
+
+<h3 id="ch3-1">3.1 复材六大缺陷</h3>
+<table>
+<tr><th>缺陷</th><th>是啥</th><th>C 扫表现</th></tr>
+<tr class="bad-row"><td><strong>分层</strong></td><td>一层层分开（最常见最危险）</td><td><strong>强反射，C 扫绝活</strong></td></tr>
+<tr class="bad-row"><td><strong>脱粘</strong></td><td>面板和芯子没粘牢（蜂窝/复合板）</td><td>界面回波变化</td></tr>
+<tr><td><strong>孔隙</strong></td><td>成型残留气泡</td><td>底波衰减</td></tr>
+<tr><td><strong>冲击损伤 BVID</strong></td><td>外表没事里面分层（隐蔽）</td><td>分层回波</td></tr>
+<tr><td>纤维缺陷</td><td>纤维褶皱、错位、断股</td><td>UT/外观</td></tr>
+<tr><td>蜂窝特有</td><td>芯子压塌、进水、节点脱开</td><td>C 扫</td></tr>
+</table>
+<div class="sale"><strong>客户对话</strong>：客户："碳纤维板分层怎么检？"<br>
+"<strong>水浸 C 扫是分层检测的最佳方案</strong>——扫一张俯视热力图，红色是分层区，面积位置一目了然。能检 0.1–0.3mm 级的分层。寄块样板来我们扫一张给您看效果。"</div>
+</div>
+
+<div class="milestone" id="milestone">
+<h3>🎉 第二阶段（懂靶标·缺陷）完成！</h3>
+<p>学完 7-9 课，你已认识所有常见缺陷：钢材（分层/白点）、铸件（缩孔/气孔）、焊缝（裂纹/未熔合）、在役（疲劳/SCC）、有色（氧化膜）、复材（分层/脱粘）。</p>
+<p style="margin-top:10px"><strong>下一阶段（懂手段·检测方法）</strong>：第 10-16 课，从 NDT 总论到 UT 深入再到标准——这是你介绍自家设备、出方案的本行。</p>
+</div>
+
+<div class="section" id="exam">
+<h2>📝 随堂测验（6 题）</h2>
+<div class="quiz-intro">在役、有色、复材缺陷。</div>
+
+<div class="quiz-question" data-correct="A">
+<div class="q-text"><span class="q-num">1</span>疲劳裂纹最典型的断口特征是？</div>
+<div class="quiz-option" data-k="A">A. 贝壳纹（海滩纹）</div>
+<div class="quiz-option" data-k="B">B. 氧化发黑</div>
+<div class="quiz-option" data-k="C">C. 球状凹坑</div>
+<div class="quiz-option" data-k="D">D. 光滑镜面</div>
+<div class="quiz-explain">✅ 选 A。疲劳断口有典型的<strong>贝壳纹（海滩纹）</strong>——裂纹扩展时停停走走留下的痕迹。氧化发黑是热裂纹的特征。</div>
+</div>
+
+<div class="quiz-question" data-correct="C">
+<div class="q-text"><span class="q-num">2</span>应力腐蚀开裂（SCC）三要素是？</div>
+<div class="quiz-option" data-k="A">A. 高温+高压+腐蚀</div>
+<div class="quiz-option" data-k="B">B. 疲劳+腐蚀+磨损</div>
+<div class="quiz-option" data-k="C">C. 拉应力 + 特定腐蚀介质 + 敏感材料</div>
+<div class="quiz-option" data-k="D">D. 电流+电压+介质</div>
+<div class="quiz-explain">✅ 选 C。SCC 三要素<strong>缺一不可</strong>：拉应力（含焊接残余应力）+ 特定腐蚀介质（如氯离子对奥氏体不锈钢）+ 敏感材料。经典组合：304+氯离子+拉应力。</div>
+</div>
+
+<div class="quiz-question" data-correct="B">
+<div class="q-text"><span class="q-num">3</span>在役管道腐蚀减薄，最常用的监测方法是？</div>
+<div class="quiz-option" data-k="A">A. 磁粉 MT</div>
+<div class="quiz-option" data-k="B">B. UT 测厚（定期测壁厚）</div>
+<div class="quiz-option" data-k="C">C. 渗透 PT</div>
+<div class="quiz-option" data-k="D">D. 目视 VT</div>
+<div class="quiz-explain">✅ 选 B。UT 测厚是在役腐蚀监测的常规方法——便携 A 扫测厚仪定期测壁厚，监控减薄。这是便携 A 扫的常规业务。</div>
+</div>
+
+<div class="quiz-question" data-correct="A">
+<div class="q-text"><span class="q-num">4</span>碳纤维复合材料分层检测，最佳方法是？</div>
+<div class="quiz-option" data-k="A">A. 水浸 C 扫（出俯视热力图）</div>
+<div class="quiz-option" data-k="B">B. 磁粉 MT</div>
+<div class="quiz-option" data-k="C">C. 渗透 PT</div>
+<div class="quiz-option" data-k="D">D. 涡流 ET</div>
+<div class="quiz-explain">✅ 选 A。<strong>水浸 C 扫是复材分层检测的最佳方案</strong>——出俯视热力图，分层面积位置一目了然。MT/PT 只查表面，ET 只查导电表面，都不适合复材内部分层。</div>
+</div>
+
+<div class="quiz-question" data-correct="D">
+<div class="q-text"><span class="q-num">5</span>铝合金（水冷板材料）做 UT，难度如何？</div>
+<div class="quiz-option" data-k="A">A. 差（声速低）</div>
+<div class="quiz-option" data-k="B">B. 差（粗晶）</div>
+<div class="quiz-option" data-k="C">C. 中（衰减大）</div>
+<div class="quiz-option" data-k="D">D. 优（声速高 6300、晶粒细、衰减小）</div>
+<div class="quiz-explain">✅ 选 D。铝是 UT 的<strong>黄金客户材料</strong>：声速高（6300，比钢还快）、晶粒细、衰减小 → UT 极清晰。这就是为什么水冷板（铝合金）是水浸 C 扫的核心市场。</div>
+</div>
+
+<div class="quiz-question" data-correct="C">
+<div class="q-text"><span class="q-num">6</span>【销售场景】化工厂 304 管道在役检测，重点查什么？</div>
+<div class="quiz-option" data-k="A">A. 分层（钢板才有的）</div>
+<div class="quiz-option" data-k="B">B. 白点（锻件才有的）</div>
+<div class="quiz-option" data-k="C">C. 腐蚀减薄（UT 测厚）+ SCC（氯离子）+ 焊缝裂纹</div>
+<div class="quiz-option" data-k="D">D. 钎着率（水冷板才有的）</div>
+<div class="quiz-explain">✅ 选 C。304 化工管道在役：① <strong>腐蚀减薄</strong>（UT 测厚监控）② <strong>SCC</strong>（304+氯离子是经典 SCC 组合）③ <strong>焊缝裂纹</strong>。分层是钢板缺陷、白点是锻件缺陷、钎着率是水冷板缺陷，都不对应管道在役场景。</div>
+</div>
+
+<div id="quiz-result"><div>你的得分</div><div class="score">0</div><div id="result-text"></div><br><button class="btn ghost" onclick="resetQuiz()">重新作答</button></div>
+<div style="text-align:center;margin-top:14px"><button class="btn" onclick="submitQuiz()">交卷</button></div>
+</div>
+
+</div>
+<div style="text-align:center;margin:24px 0;padding:14px;background:#eaf2f8;border-radius:8px"><a href="index.html" style="display:inline-block;background:#1a5276;color:#fff;padding:10px 28px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px">🏠 返回总目录</a></div>
+<script>
+document.querySelectorAll('.quiz-question').forEach(function(q){var correct=q.dataset.correct;q.querySelectorAll('.quiz-option').forEach(function(opt){opt.addEventListener('click',function(){if(q.classList.contains('locked'))return;q.querySelectorAll('.quiz-option').forEach(function(o){o.classList.remove('correct','wrong');var m=o.querySelector('.mark');if(m)m.remove();});var k=opt.dataset.k;if(k===correct){opt.classList.add('correct');opt.insertAdjacentHTML('beforeend','<span class="mark">✓</span>');}else{opt.classList.add('wrong');opt.insertAdjacentHTML('beforeend','<span class="mark">✗</span>');q.querySelectorAll('.quiz-option').forEach(function(o){if(o.dataset.k===correct){o.classList.add('correct');}});}q.querySelector('.quiz-explain').classList.add('show');q.classList.add('locked');});});});
+function submitQuiz(){var qs=document.querySelectorAll('.quiz-question');var a=0,s=0;qs.forEach(function(q){if(q.classList.contains('locked')){a++;if(q.querySelector('.quiz-option.correct'))s++;}});var r=document.getElementById('quiz-result');r.style.display='block';r.querySelector('.score').textContent=s+' / '+qs.length;var p=s/qs.length,m='';if(p===1)m='满分！第二阶段完成，所有缺陷都认识了。';else if(p>=.75)m='不错！错题看解析。';else if(p>=.5)m='重看在役三剑客和复材。';else m='重看一遍再测。';document.getElementById('result-text').textContent=m+'（已答'+a+'/'+qs.length+'）';r.scrollIntoView({behavior:'smooth',block:'center'});}
+function resetQuiz(){document.querySelectorAll('.quiz-question').forEach(function(q){q.classList.remove('locked');q.querySelectorAll('.quiz-option').forEach(function(o){o.classList.remove('correct','wrong');var m=o.querySelector('.mark');if(m)m.remove();});q.querySelector('.quiz-explain').classList.remove('show');});document.getElementById('quiz-result').style.display='none';}
+</script>
+</body></html>

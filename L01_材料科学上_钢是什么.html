@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第01课 · 材料科学基础（上）—— 钢是什么</title>
+<style>
+:root{
+  --primary:#1a5276;--primary-light:#2980b9;--accent:#e67e22;--accent-light:#f39c12;
+  --bg:#f4f6f7;--card:#fff;--text:#2c3e50;--text-light:#7f8c8d;--border:#d5dbdb;
+  --success:#27ae60;--danger:#e74c3c;--warning:#f39c12;--info:#3498db;
+  --shadow:0 2px 8px rgba(0,0,0,.08);--shadow-lg:0 4px 20px rgba(0,0,0,.12);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Microsoft YaHei","Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.85;font-size:15px;scroll-behavior:smooth}
+/* 顶部导航 */
+.topbar{position:fixed;top:0;left:0;right:0;height:52px;background:var(--primary);color:#fff;display:flex;align-items:center;padding:0 20px;z-index:1000;box-shadow:var(--shadow-lg)}
+.topbar h1{font-size:16px;font-weight:600;white-space:nowrap}
+.topbar .crumb{font-size:12px;opacity:.75;margin-left:8px}
+.topbar nav{margin-left:auto;display:flex;gap:4px;overflow-x:auto;scrollbar-width:thin}
+.topbar nav a{color:#cfd8dc;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:4px;white-space:nowrap;transition:.2s}
+.topbar nav a:hover{background:rgba(255,255,255,.15);color:#fff}
+/* 侧边目录 */
+.sidebar{position:fixed;top:52px;left:0;bottom:0;width:230px;background:#fff;border-right:1px solid var(--border);overflow-y:auto;padding:14px 0;z-index:900;transition:transform .3s}
+.sidebar a{display:block;padding:8px 20px;color:var(--text-light);text-decoration:none;font-size:13px;border-left:3px solid transparent;transition:.2s}
+.sidebar a:hover{background:var(--bg);color:var(--primary);border-left-color:var(--primary-light)}
+.sidebar a.active{background:#eaf2f8;color:var(--primary);border-left-color:var(--primary);font-weight:600}
+.sidebar a.sub{padding-left:34px;font-size:12px}
+.sidebar .progress-wrap{padding:14px 20px 6px;border-top:1px solid var(--border);margin-top:10px}
+.sidebar .progress-wrap label{font-size:11px;color:var(--text-light)}
+.sidebar .progress-bar{height:6px;background:#ecf0f1;border-radius:3px;margin-top:4px;overflow:hidden}
+.sidebar .progress-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--primary-light),var(--accent));transition:width .3s}
+/* 主内容 */
+.main{margin-left:230px;margin-top:52px;padding:28px 36px;max-width:1000px}
+.section{background:var(--card);border-radius:10px;padding:26px 30px;margin-bottom:22px;box-shadow:var(--shadow)}
+.section h2{color:var(--primary);font-size:22px;border-bottom:2px solid var(--primary-light);padding-bottom:10px;margin-bottom:16px}
+.section h3{color:var(--primary);font-size:17px;margin:20px 0 10px;padding-left:10px;border-left:4px solid var(--accent)}
+.section h4{color:var(--text);font-size:15px;margin:14px 0 6px}
+.section p{margin:8px 0}
+.section ul,.section ol{margin:8px 0 8px 24px}
+.section li{margin:4px 0}
+.section strong{color:var(--primary)}
+/* 各种盒子 */
+.tip{background:#eafaf1;border-left:4px solid var(--success);padding:12px 16px;border-radius:6px;margin:14px 0}
+.tip::before{content:"💡 实战要点";display:block;font-weight:700;color:var(--success);font-size:13px;margin-bottom:4px}
+.warn{background:#fef9e7;border-left:4px solid var(--warning);padding:12px 16px;border-radius:6px;margin:14px 0}
+.warn::before{content:"⚠️ 注意";display:block;font-weight:700;color:var(--warning);font-size:13px;margin-bottom:4px}
+.key{background:#eaf2f8;border-left:4px solid var(--primary-light);padding:12px 16px;border-radius:6px;margin:14px 0}
+.key::before{content:"🔑 必背";display:block;font-weight:700;color:var(--primary);font-size:13px;margin-bottom:4px}
+.sale{background:#fdf2e9;border-left:4px solid var(--accent);padding:12px 16px;border-radius:6px;margin:14px 0}
+.sale::before{content:"💬 客户对话";display:block;font-weight:700;color:var(--accent);font-size:13px;margin-bottom:4px}
+.ndt{background:#eef5fb;border-left:4px solid var(--info);padding:12px 16px;border-radius:6px;margin:14px 0}
+.ndt::before{content:"🔬 对UT的意义";display:block;font-weight:700;color:var(--info);font-size:13px;margin-bottom:4px}
+/* 表格 */
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13.5px}
+th,td{border:1px solid var(--border);padding:7px 10px;text-align:left}
+th{background:var(--primary);color:#fff;font-weight:600}
+tr:nth-child(even){background:#f8f9fa}
+tr:hover{background:#eaf2f8}
+/* 折叠 */
+details{background:#f8f9fa;border:1px solid var(--border);border-radius:6px;padding:0;margin:12px 0;overflow:hidden}
+summary{cursor:pointer;padding:10px 16px;font-weight:600;color:var(--primary);background:#eaf2f8;user-select:none}
+summary:hover{background:#d4e6f1}
+details[open] summary{border-bottom:1px solid var(--border)}
+details .inner{padding:12px 16px}
+/* 场景卡片 */
+.scenario{background:linear-gradient(135deg,#fff 0%,#f8f9fa 100%);border:1px solid var(--border);border-radius:8px;padding:16px;margin:14px 0}
+.scenario .q{background:var(--primary);color:#fff;padding:8px 12px;border-radius:4px;font-weight:600;margin-bottom:10px}
+.scenario .a{padding:6px 0}
+/* 速查卡 */
+.quick-card{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:14px 0}
+.quick-item{background:#fff;border:2px solid var(--border);border-radius:8px;padding:12px;text-align:center;transition:.2s}
+.quick-item:hover{border-color:var(--primary-light);box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+.quick-item .icon{font-size:26px;margin-bottom:4px}
+.quick-item .title{font-weight:700;color:var(--primary);font-size:14px}
+.quick-item .desc{font-size:12px;color:var(--text-light);margin-top:4px}
+/* 结构示意（晶胞） */
+.struct-demo{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:14px 0}
+.struct-demo .cell{background:#f8f9fa;border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center}
+.struct-demo .cell .name{font-weight:700;color:var(--primary);font-size:15px}
+.struct-demo .cell .glyph{font-size:30px;margin:6px 0;letter-spacing:3px;font-family:monospace}
+.struct-demo .cell .stat{font-size:12px;color:var(--text-light);margin-top:4px}
+/* 考试 */
+.quiz-intro{background:#eaf2f8;border-radius:8px;padding:14px 18px;margin:16px 0;color:var(--primary)}
+.quiz-question{background:#fff;border:1px solid var(--border);border-radius:8px;padding:16px;margin:14px 0}
+.quiz-question .q-text{font-weight:600;margin-bottom:10px;color:var(--text)}
+.quiz-question .q-num{display:inline-block;background:var(--primary);color:#fff;width:26px;height:26px;border-radius:50%;text-align:center;line-height:26px;font-size:13px;margin-right:8px}
+.quiz-option{display:block;padding:10px 14px;margin:6px 0;border:2px solid var(--border);border-radius:6px;cursor:pointer;transition:.2s}
+.quiz-option:hover{border-color:var(--primary-light);background:#eaf2f8}
+.quiz-option.selected{border-color:var(--primary);background:#d4e6f1}
+.quiz-option.correct{border-color:var(--success);background:#eafaf1}
+.quiz-option.wrong{border-color:var(--danger);background:#fdedec}
+.quiz-option .mark{float:right;font-weight:700}
+.quiz-explain{margin-top:10px;padding:10px;background:#f8f9fa;border-radius:4px;font-size:13px;display:none}
+.quiz-explain.show{display:block}
+#quiz-result{display:none;text-align:center;padding:32px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin:16px 0}
+#quiz-result .score{font-size:48px;font-weight:700;margin:10px 0}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:10px 28px;border-radius:6px;border:none;cursor:pointer;font-size:15px;font-weight:600;transition:.2s}
+.btn:hover{background:var(--accent-light);transform:translateY(-1px);box-shadow:var(--shadow-lg)}
+.btn.ghost{background:transparent;color:var(--primary);border:2px solid var(--primary)}
+.btn.ghost:hover{background:var(--primary);color:#fff}
+/* 封面 */
+.hero{text-align:center;padding:44px 32px;background:linear-gradient(135deg,var(--primary) 0%,var(--primary-light) 100%);color:#fff;border-radius:10px;margin-bottom:22px}
+.hero .course-tag{display:inline-block;background:rgba(255,255,255,.2);padding:4px 14px;border-radius:14px;font-size:12px;margin-bottom:10px}
+.hero h1{font-size:30px;margin-bottom:10px}
+.hero p{font-size:15px;opacity:.92;margin:6px 0}
+.hero .meta{margin-top:16px;font-size:13px;opacity:.8}
+.hero .meta span{margin:0 10px}
+/* 流程图 */
+.flow{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;margin:16px 0}
+.flow-step{background:var(--primary);color:#fff;padding:10px 16px;border-radius:6px;font-size:13px;font-weight:600;text-align:center;min-width:80px}
+.flow-arrow{color:var(--accent);font-size:20px;font-weight:700}
+/* 课后导航 */
+.nav-foot{display:flex;justify-content:space-between;align-items:center;margin:24px 0;padding:18px 24px;background:#fff;border-radius:10px;box-shadow:var(--shadow)}
+.nav-foot .label{font-size:13px;color:var(--text-light)}
+.nav-foot .title{font-weight:600;color:var(--primary);font-size:15px}
+.nav-foot a{text-decoration:none}
+.nav-foot .btn{padding:8px 20px;font-size:14px}
+/* 响应式 */
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0;padding:16px}
+  .topbar nav{display:none}
+  .struct-demo{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>🔬 NDT 扫盲课</h1>
+  <span class="crumb">第 1 课 · 钢是什么</span>
+  <nav>
+    <a href="#hero">封面</a>
+    <a href="#ch1">晶 体</a>
+    <a href="#ch2">铁碳相图</a>
+    <a href="#ch3">组 织</a>
+    <a href="#ch4">UT 落点</a>
+    <a href="#summary">总 结</a>
+    <a href="#exam">测验</a>
+  </nav>
+</div>
+
+<div class="sidebar" id="sidebar">
+  <a href="#hero">封面</a>
+  <a href="#ch1">一、金属是晶体</a>
+  <a href="#ch1-1" class="sub">1.1 晶体 vs 非晶体</a>
+  <a href="#ch1-2" class="sub">1.2 晶胞与三种结构</a>
+  <a href="#ch1-3" class="sub">1.3 BCC/FCC/HCP</a>
+  <a href="#ch1-4" class="sub">1.4 晶粒与晶界</a>
+  <a href="#ch2">二、铁碳相图</a>
+  <a href="#ch2-1" class="sub">2.1 相图是什么</a>
+  <a href="#ch2-2" class="sub">2.2 几个关键点</a>
+  <a href="#ch2-3" class="sub">2.3 2.11% 分界</a>
+  <a href="#ch2-4" class="sub">2.4 冷却时组织转变</a>
+  <a href="#ch3">三、钢的组织相</a>
+  <a href="#ch3-1" class="sub">3.1 五大组织相</a>
+  <a href="#ch3-2" class="sub">3.2 为什么这么硬/软</a>
+  <a href="#ch4">四、对 UT 的意义</a>
+  <a href="#ch4-1" class="sub">4.1 晶粒→衰减</a>
+  <a href="#ch4-2" class="sub">4.2 组织→声速</a>
+  <a href="#ch4-3" class="sub">4.3 声速速查表</a>
+  <a href="#summary">本课总结</a>
+  <a href="#exam">📝 随堂测验</a>
+  <div class="progress-wrap">
+    <label>阅读进度</label>
+    <div class="progress-bar"><i id="progress"></i></div>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ========== 封面 ========== -->
+<div class="section" id="hero" style="padding:0;overflow:hidden">
+  <div class="hero">
+    <span class="course-tag">扫盲课 · 第一阶段 · 第 1 课</span>
+    <h1>材料科学基础（上）：钢是什么</h1>
+    <p>在认识 UT 仪器之前，先认识客户手里那块钢——它是什么组织？声速多少？为什么有的钢"难测"？</p>
+    <div class="meta">
+      <span>⏱ 约 45 分钟</span>
+      <span>📚 对应 B1 §1-§3</span>
+      <span>🎯 扫盲级别</span>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 学习目标 ========== -->
+<div class="section">
+  <h2>📍 本课学完你能做到</h2>
+  <div class="quick-card">
+    <div class="quick-item"><div class="icon">🧱</div><div class="title">认识晶体结构</div><div class="desc">BCC/FCC/HCP 是什么，铁属于哪一种</div></div>
+    <div class="quick-item"><div class="icon">🗺️</div><div class="title">看懂铁碳相图</div><div class="desc">2.11% 是钢和铸铁的分界</div></div>
+    <div class="quick-item"><div class="icon">🔬</div><div class="title">分清五大组织</div><div class="desc">铁素体/奥氏体/珠光体/马氏体/渗碳体</div></div>
+    <div class="quick-item"><div class="icon">🔊</div><div class="title">说出声速规律</div><div class="desc">为什么奥氏体焊缝难 UT</div></div>
+  </div>
+  <div class="tip">这一课是整个 NDT 的地基。后面所有课——焊接、缺陷、UT 参数——都建立在"材料组织"之上。听不懂这课，后面就是空中楼阁。</div>
+</div>
+
+<!-- ========== 第一章 晶体结构 ========== -->
+<div class="section" id="ch1">
+  <h2>一、金属是晶体：原子的排列方式</h2>
+
+  <h3 id="ch1-1">1.1 先搞清楚：晶体 vs 非晶体</h3>
+  <p>理解金属的第一步，是理解<strong>"原子怎么排"</strong>。</p>
+  <table>
+    <tr><th>类别</th><th>原子排列</th><th>举例</th><th>关键特性</th></tr>
+    <tr><td><strong>晶体</strong></td><td>规则、周期性排列</td><td>几乎所有金属</td><td>有固定熔点、<strong>各向异性</strong>（不同方向性能不同）</td></tr>
+    <tr><td><strong>非晶体</strong></td><td>混乱无序（像被冻住的液体）</td><td>玻璃、松香、塑料</td><td>无固定熔点、各向同性</td></tr>
+  </table>
+  <div class="key">一个生活类比：晶体像<strong>停车场里整齐排列的车</strong>——你沿车道走 vs 横穿车位走，"路程体验"完全不同，这就是<strong>各向异性</strong>。非晶体像早高峰乱停的车。</div>
+
+  <h3 id="ch1-2">1.2 晶胞：整面墙里的一块砖</h3>
+  <p>材料学家把每个原子抽象成一个点，这些点在三维空间周期排列成网格，叫<strong>晶格</strong>（打掉肉的骨架）。能代表整个晶格特征的最小重复单元，叫<strong>晶胞</strong>——就像砖墙里的一块砖，整面墙就是它无数次的复制粘贴。</p>
+
+  <h3 id="ch1-3">1.3 三种常见金属晶体结构（本课核心）</h3>
+  <p>金属因为"想挤得最紧"，最后主要形成三种结构。<strong>这一节务必记住</strong>，因为铁在不同温度下会变结构，这正是钢能热处理的根本原因。</p>
+
+  <div class="struct-demo">
+    <div class="cell">
+      <div class="name">体心立方 BCC</div>
+      <div class="glyph">⬛•⬛</div>
+      <div class="stat">8顶角+中心1个 = 2原子<br>致密度 68%<br>α-Fe 铬 钨 钼<br><strong>强而脆</strong></div>
+    </div>
+    <div class="cell">
+      <div class="name">面心立方 FCC</div>
+      <div class="glyph">⬛⬛⬛</div>
+      <div class="stat">8顶角+6面心 = 4原子<br>致密度 74%（最密）<br>γ-Fe 铝 铜 镍 金 银<br><strong>软而韧</strong></div>
+    </div>
+    <div class="cell">
+      <div class="name">密排六方 HCP</div>
+      <div class="glyph">⬢⬢⬢</div>
+      <div class="stat">六棱柱结构<br>致密度 74%（最密）<br>镁 锌 钛(α) 钴<br><strong>难变形</strong></div>
+    </div>
+  </div>
+
+  <div class="key">快速记忆口诀：<br>
+    • <strong>BCC</strong>：体心，2 原子，68%——铁铬钨，强而脆<br>
+    • <strong>FCC</strong>：面心，4 原子，74%——铝铜镍金银，软而韧<br>
+    • <strong>HCP</strong>：六方，最密排——镁锌钛，难变形
+  </div>
+
+  <div class="warn"><strong>关键：铁会"变身"</strong><br>
+    铁在 <strong>912℃</strong> 会从 α-Fe（BCC）变成 γ-Fe（FCC），在 1394℃ 又变回 δ-Fe（BCC）。这种<strong>同素异构转变</strong>是钢能通过热处理改变性能的根本原因，也是焊接热影响区组织复杂、容易出缺陷的根源。
+  </div>
+
+  <div class="ndt"><strong>各向异性对 UT 的影响</strong>：单晶不同晶向弹性模量不同→声速有方向性。多晶材料若晶粒有"择优取向"（织构，比如轧制板），整体声速也会各向异性——<strong>这是奥氏体不锈钢焊缝检测的大难题</strong>（后面详述）。</div>
+
+  <h3 id="ch1-4">1.4 晶粒与晶界：金属"难不难检"的钥匙</h3>
+  <p>实际金属不是一整块单一晶体，而是由大量小晶体拼起来的。</p>
+  <ul>
+    <li><strong>晶粒（Grain）</strong>：一个个外形不规则的小晶体，每个内部原子方向一致，但相邻晶粒方向不同。</li>
+    <li><strong>晶界（Grain Boundary）</strong>：相邻晶粒间的过渡区，宽约 2~3 个原子距离，这里原子排列混乱、能量高。</li>
+  </ul>
+
+  <div class="key"><strong>Hall-Petch 关系</strong>：晶粒越细 → 晶界越多 → 材料强度硬度越高，<strong>同时</strong>塑性韧性也越好。细晶强化是<strong>唯一</strong>能同时提升强度和韧性的强化机制。</div>
+
+  <div class="ndt"><strong>★ 晶粒大小直接决定 UT 衰减程度（极重要）</strong>：
+    <ul>
+      <li>晶粒尺寸 d 远小于波长 λ → 瑞利散射，衰减弱（细晶钢，UT 清晰）</li>
+      <li>晶粒尺寸 d 接近波长 λ → 随机散射，衰减最强，产生"草状回波"淹没缺陷信号（粗晶奥氏体焊缝就是这样）</li>
+      <li><strong>经验法则</strong>：d &gt; λ/10 时散射明显；d 接近 λ 时几乎不可检</li>
+      <li>这就是为什么<strong>奥氏体焊缝要用 1~2 MHz，而细晶锻钢可以用 5~10 MHz</strong></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ========== 第二章 铁碳相图 ========== -->
+<div class="section" id="ch2">
+  <h2>二、铁碳相图：钢的"地图"</h2>
+
+  <h3 id="ch2-1">2.1 为什么要学相图？</h3>
+  <p>钢的本质是<strong>"铁里加了少量碳"</strong>。碳含量哪怕只差 0.1%，钢的组织和性能就可能差很多。铁碳相图就是描述"在不同温度、不同碳含量下，铁碳合金内部会出现什么组织、组织如何转化"的地图。</p>
+  <div class="tip">类比：相图像"水的冰点/沸点图"——告诉你什么时候是冰、水、水蒸气。只不过铁碳体系复杂得多，因为它有多个固相。</div>
+
+  <h3 id="ch2-2">2.2 不必背全图，记住几个关键点</h3>
+  <table>
+    <tr><th>关键线/点</th><th>含义</th><th>记住什么</th></tr>
+    <tr><td><strong>液相线/固相线</strong></td><td>以上全液态/以下全固态</td><td>中间是固液共存（糊状区）</td></tr>
+    <tr><td><strong>A₁ 线（727℃）</strong></td><td>共析线</td><td>奥氏体 → 铁素体+渗碳体 = <strong>珠光体</strong></td></tr>
+    <tr><td><strong>E 点（2.11% C）</strong></td><td>奥氏体最大溶碳量</td><td><strong>钢和铸铁的分界！</strong></td></tr>
+    <tr><td><strong>S 点（0.77% C）</strong></td><td>共析点</td><td>全是珠光体的钢叫"共析钢"</td></tr>
+  </table>
+
+  <h3 id="ch2-3">2.3 ★ 2.11% 碳：钢和铸铁的分界线</h3>
+  <div class="key">
+    <strong>钢（Steel）</strong>：碳含量 &lt; 2.11%（实际工业钢多在 0.05%~1.3%）<br>
+    → 加热到高温可得单相奥氏体，<strong>能锻造、轧制</strong><br><br>
+    <strong>铸铁（Cast Iron）</strong>：碳含量 &gt; 2.11%（常用 2.5%~4.0%）<br>
+    → 碳太多，加热也无法得到单相奥氏体，塑性差，<strong>只能铸造不能锻造</strong>
+  </div>
+  <p>这个分界的本质是"奥氏体最多能溶多少碳"。超过这个量，多余的碳以石墨或渗碳体大量析出，严重割裂基体——这就是为什么铸铁不能锻造。</p>
+
+  <div class="sale"><strong>客户对话</strong>
+    <div class="scenario">
+      <div class="q">客户："这个件是铸铁的，能超声测吗？"</div>
+      <div class="a">你："能测，但要看是哪种铸铁。灰铸铁衰减大、声速低（约 4400~5000 m/s），UT 比较困难；球墨铸铁声速 5500~5820 m/s，可用声速法测球化率。您这是哪种铸铁？"</div>
+    </div>
+  </div>
+
+  <h3 id="ch2-4">2.4 钢在缓慢冷却时组织怎么变</h3>
+  <p>以亚共析钢（碳 &lt; 0.77%）为例，从高温缓慢冷却：</p>
+  <div class="flow">
+    <div class="flow-step">高温<br>奥氏体 γ</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step">A₃~A₁之间<br>析出铁素体</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step">727℃<br>剩余奥氏体→珠光体</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step">室温<br>铁素体+珠光体</div>
+  </div>
+  <div class="warn">注意：上面是<strong>缓慢冷却（平衡）</strong>得到的组织。如果冷却很快（比如水淬），组织来不及按平衡走，会得到完全不同的组织——这就引出了下面要讲的<strong>马氏体</strong>。</div>
+</div>
+
+<!-- ========== 第三章 组织相 ========== -->
+<div class="section" id="ch3">
+  <h2>三、钢中的五大组织相：认识钢的"角色"</h2>
+
+  <h3 id="ch3-1">3.1 五大组织相速查</h3>
+  <p>把这几个"角色"认清楚，你就基本看懂钢了。</p>
+  <table>
+    <tr><th>组织相</th><th>本质</th><th>性能特点</th><th>出现场合</th></tr>
+    <tr><td><strong>铁素体</strong><br>(α-Fe)</td><td>碳在 BCC 铁中的固溶体</td><td>强度硬度低、塑性好、<strong>软磁</strong></td><td>低碳钢主体相</td></tr>
+    <tr><td><strong>奥氏体</strong><br>(γ-Fe)</td><td>碳在 FCC 铁中的固溶体</td><td>强度低、塑性极好、<strong>无磁性</strong></td><td>高温存在；不锈钢中可保留到室温</td></tr>
+    <tr><td><strong>渗碳体</strong><br>(Fe₃C)</td><td>铁碳化合物（6.67%C）</td><td><strong>极硬（HV≈800~1000）、极脆</strong></td><td>珠光体中的硬相</td></tr>
+    <tr><td><strong>珠光体</strong></td><td>铁素体+渗碳体的<strong>层片状</strong>混合物</td><td>强度硬度中等、塑性韧性适中</td><td>共析钢、亚共析钢冷却后</td></tr>
+    <tr><td><strong>马氏体</strong></td><td>碳在 α-Fe 中的<strong>过饱和</strong>固溶体</td><td><strong>极硬（HV 600~900）、极脆、内应力大</strong></td><td>淬火得到</td></tr>
+  </table>
+
+  <h3 id="ch3-2">3.2 几个"为什么"——理解了就忘不掉</h3>
+  <details>
+    <summary>为什么奥氏体能溶那么多碳？（FCC 更密却溶更多？）</summary>
+    <div class="inner">FCC 结构虽然更紧密，但它的<strong>"八面体间隙"比 BCC 大</strong>，能塞下更多碳原子。BCC 虽然总空隙率大，但<strong>单个间隙小</strong>，反而容不下碳。所以高温奥氏体能溶 2.11% 碳，而室温铁素体几乎溶不了碳。</div>
+  </details>
+  <details>
+    <summary>为什么马氏体这么硬又这么脆？</summary>
+    <div class="inner">淬火冷却太快，碳原子来不及扩散出去，被强行"困"在 α-Fe 晶格里，把晶格撑成体心四方（BCT），产生<strong>巨大内应力</strong>和位错阻力——所以硬度极高但极脆，<strong>必须回火后才能用</strong>。马氏体内应力大，也是淬火裂纹的根源（UT 常见检测对象）。</div>
+  </details>
+  <details>
+    <summary>为什么珠光体是层片状（像千层糕）？</summary>
+    <div class="inner">共析转变时，铁素体和渗碳体交替形核长大，形成一层层交替排列的结构。在显微镜下看像珍珠光泽，所以叫珠光体。</div>
+  </details>
+
+  <div class="ndt"><strong>组织对 UT 的影响</strong>：
+    <ul>
+      <li>不同组织声速不同：一般规律 珠光体 &gt; 索氏体 &gt; 屈氏体 &gt; 马氏体（弹性模量变化导致）</li>
+      <li>粗晶组织声衰减大：奥氏体（尤其焊缝柱状晶）晶粒粗大，是 UT "老大难"</li>
+      <li>马氏体内应力大：淬火件残余应力大，声速各向异性明显，易产生淬火裂纹</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ========== 第四章 对UT的意义 ========== -->
+<div class="section" id="ch4">
+  <h2>四、本课对 UT 的意义（销售必看）</h2>
+  <p>前面三节是材料知识，这一节把它<strong>翻译成你能跟客户讲的话</strong>。</p>
+
+  <h3 id="ch4-1">4.1 核心规律①：晶粒越粗，UT 越难</h3>
+  <div class="key">
+    <strong>晶粒尺寸 d 与波长 λ 的关系决定声学行为：</strong>
+    <table>
+      <tr><th>d/λ</th><th>散射类型</th><th>UT 表现</th></tr>
+      <tr><td>&lt;&lt;1</td><td>瑞利散射</td><td>细晶钢，UT 清晰</td></tr>
+      <tr><td>≈1</td><td>随机散射</td><td>粗晶（奥氏体焊缝），<strong>草状回波</strong></td></tr>
+      <tr><td>&gt;&gt;1</td><td>扩散散射</td><td>大晶粒铸件，难检</td></tr>
+    </table>
+    <strong>判据</strong>：d &gt; λ/10 时散射明显；d 接近 λ 时几乎不可检（除非降频）。
+  </div>
+
+  <h3 id="ch4-2">4.2 核心规律②：组织不同，声速不同</h3>
+  <p>即使成分相同的钢，淬火（马氏体）后声速和正火（铁素体+珠光体）后声速不同。<strong>同一块焊缝</strong>的母材、焊缝金属、热影响区，声速都会有差异——这就是焊缝 UT 复杂的根源之一。</p>
+
+  <h3 id="ch4-3">4.3 ★ 声速速查表（贴在检测箱旁）</h3>
+  <p>这是本课最实用的一张表，客户拿来工件你大致知道声速。</p>
+  <table>
+    <tr><th>材料</th><th>密度 g/cm³</th><th>纵波声速 m/s</th><th>横波声速 m/s</th><th>UT 可检性</th></tr>
+    <tr><td><strong>钢（碳钢、低合金钢）</strong></td><td>7.85</td><td><strong>5920</strong></td><td>3230</td><td>优</td></tr>
+    <tr><td>铸钢</td><td>7.8</td><td>5800~5920</td><td>3100~3200</td><td>中</td></tr>
+    <tr><td><strong>奥氏体不锈钢</strong></td><td>8.0</td><td>5740~5790</td><td>3100~3200</td><td><strong>中~差（焊缝极难）</strong></td></tr>
+    <tr><td>灰铸铁</td><td>7.2</td><td>4400~5000</td><td>2400~2700</td><td>差</td></tr>
+    <tr><td>球墨铸铁</td><td>7.2</td><td>5500~5820</td><td>2900~3200</td><td>中（看球化率）</td></tr>
+    <tr><td><strong>工业纯铝</strong></td><td>2.7</td><td><strong>6300~6400</strong></td><td>3130</td><td>优</td></tr>
+    <tr><td>铝合金</td><td>2.77</td><td>6250~6400</td><td>3100~3150</td><td>良</td></tr>
+    <tr><td>纯铜/黄铜</td><td>8.5~8.9</td><td>4430~4660</td><td>2120~2260</td><td>中（粗晶）</td></tr>
+    <tr><td><strong>钛合金 TC4</strong></td><td>4.43</td><td>6100~6200</td><td>3100~3150</td><td>优</td></tr>
+    <tr><td>镍基合金 Inconel</td><td>8.2~8.4</td><td>5700~5950</td><td>3000~3200</td><td>良（焊缝差）</td></tr>
+    <tr><td>铅</td><td>11.3</td><td><strong>2160</strong></td><td>700</td><td>差（声速低衰减大）</td></tr>
+    <tr><td>有机玻璃（斜楔）</td><td>1.18</td><td>2730</td><td>1430</td><td>—</td></tr>
+    <tr><td>水（20℃）</td><td>1.0</td><td>1480</td><td>—</td><td>—</td></tr>
+  </table>
+  <div class="warn">⚠️ 以上是<strong>典型参考值</strong>，实际声速受成分、组织、温度、热处理状态影响较大。<strong>任何正式检测都必须用同材料试块实测校准！</strong>不要直接用钢试块的声速去检铝、铜、钛。</div>
+
+  <h3 id="ch4-4">4.4 给销售的三条金科玉律</h3>
+  <div class="key">
+    <ol>
+      <li><strong>检测前必校准</strong>：用与工件同材料、同热处理状态的对比试块校准声速和零点。</li>
+      <li><strong>遇到"难检"先问组织</strong>：UT 信号不好时，先问"这材料什么组织？晶粒多大？有没有织构？"——八成问题在材料本身。</li>
+      <li><strong>方法选型看材料</strong>：细晶锻钢用常规 UT/PAUT 都行；奥氏体焊缝要用低频纵波斜探头/PAUT/TOFD；铸铁用声速法+射线。</li>
+    </ol>
+  </div>
+
+  <div class="sale"><strong>客户对话场景</strong>
+    <div class="scenario">
+      <div class="q">客户："我们这是奥氏体不锈钢焊缝，之前别家测老有杂波、定位也不准，你们设备行不行？"</div>
+      <div class="a">你心里应该立刻反应：奥氏体焊缝是<strong>粗大柱状晶 + 各向异性</strong>，是 UT 公认的"最难工况"。然后答："奥氏体焊缝确实是难点，杂波主要是粗晶散射。我们建议用<strong>低频（1~2 MHz）纵波斜探头</strong>，或者用<strong>相控阵/TOFD</strong>，能显著改善信噪比。需要的话我们带试块来现场做个对比。"</div>
+    </div>
+    <div class="scenario">
+      <div class="q">客户："这批是锻件，有什么要注意的？"</div>
+      <div class="a">"锻件晶粒细、组织均匀，UT 一般很清晰，常规 5 MHz 直探头就能做。重点查的是<strong>白点和夹杂</strong>——这俩是锻件的典型缺陷。我们建议做 100% 纵波扫查。"</div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 总结 ========== -->
+<div class="section" id="summary">
+  <h2>📋 本课总结（8 句话）</h2>
+  <ol>
+    <li><strong>金属是晶体</strong>，原子规则排列成 BCC / FCC / HCP 三种结构之一。</li>
+    <li>铁在 912℃ 从 BCC 变 FCC（<strong>同素异构转变</strong>），是热处理和焊接组织复杂的基础。</li>
+    <li><strong>晶粒越细，强度韧性越好</strong>（Hall-Petch），UT 也越清晰。</li>
+    <li><strong>晶粒越粗，UT 衰减越大</strong>：d 接近 λ 时产生草状回波，这是奥氏体焊缝难检的根源。</li>
+    <li><strong>2.11% 碳是钢和铸铁的分界</strong>：钢能锻造，铸铁只能铸造。</li>
+    <li>五大组织相：铁素体（软）、奥氏体（韧无磁）、渗碳体（硬脆）、珠光体（适中）、马氏体（极硬极脆）。</li>
+    <li>不同组织声速不同：一般 珠光体 &gt; 索氏体 &gt; 屈氏体 &gt; 马氏体。</li>
+    <li><strong>检测前必校准</strong>：钢声速约 5920 m/s，但每种材料都不同，必须用同材料试块校准。</li>
+  </ol>
+  <div class="tip"><strong>下一课预告</strong>：第 2 课讲"材料科学基础（下）—— 牌号与特种材料"。你将认识 Q345R、304、316 这些客户嘴边的牌号，以及铸铁、有色金属、复合材料各自怎么测。</div>
+</div>
+
+<!-- ========== 随堂测验 ========== -->
+<div class="section" id="exam">
+  <h2>📝 随堂测验（8 题）</h2>
+  <div class="quiz-intro">先做完 8 道题再点"交卷"。每题点选项后立即出解析，答错也别急——搞懂原理比得分重要。</div>
+
+  <div class="quiz-question" data-correct="B">
+    <div class="q-text"><span class="q-num">1</span>钢和铸铁的分界线是碳含量多少？</div>
+    <div class="quiz-option" data-k="A">A. 0.77%</div>
+    <div class="quiz-option" data-k="B">B. 2.11%</div>
+    <div class="quiz-option" data-k="C">C. 4.3%</div>
+    <div class="quiz-option" data-k="D">D. 6.67%</div>
+    <div class="quiz-explain">✅ 选 B。2.11% 是奥氏体最大溶碳量（E 点）。低于此为钢（可锻造），高于此为铸铁（只能铸造）。0.77% 是共析点（全珠光体），4.3% 是共晶点，6.67% 是渗碳体的碳含量。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="B">
+    <div class="q-text"><span class="q-num">2</span>常温下的铁（α-Fe）属于哪种晶体结构？</div>
+    <div class="quiz-option" data-k="A">A. 面心立方 FCC</div>
+    <div class="quiz-option" data-k="B">B. 体心立方 BCC</div>
+    <div class="quiz-option" data-k="C">C. 密排六方 HCP</div>
+    <div class="quiz-option" data-k="D">D. 非晶体</div>
+    <div class="quiz-explain">✅ 选 B。常温 α-Fe 是 BCC（体心立方）；加热到 912℃ 变成 γ-Fe（FCC 面心立方）；1394℃ 又变回 δ-Fe（BCC）。这种转变是钢能热处理的基础。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="C">
+    <div class="q-text"><span class="q-num">3</span>奥氏体不锈钢焊缝为什么 UT 难检测？最根本原因是？</div>
+    <div class="quiz-option" data-k="A">A. 声速太高，仪器跟不上</div>
+    <div class="quiz-option" data-k="B">B. 材料太硬，声波进不去</div>
+    <div class="quiz-option" data-k="C">C. 粗大柱状晶产生草状回波，且各向异性</div>
+    <div class="quiz-option" data-k="D">D. 奥氏体有磁性，干扰声波</div>
+    <div class="quiz-explain">✅ 选 C。奥氏体焊缝晶粒粗大（0.5~2 mm），接近常用波长（1.2~3 mm），产生强散射→草状回波淹没缺陷信号；且晶粒柱状取向造成声速各向异性，定位不准。奥氏体本身<strong>无磁性</strong>（D 错）。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="C">
+    <div class="q-text"><span class="q-num">4</span>下列哪种组织是通过淬火得到的、极硬极脆的？</div>
+    <div class="quiz-option" data-k="A">A. 铁素体</div>
+    <div class="quiz-option" data-k="B">B. 珠光体</div>
+    <div class="quiz-option" data-k="C">C. 马氏体</div>
+    <div class="quiz-option" data-k="D">D. 奥氏体</div>
+    <div class="quiz-explain">✅ 选 C。马氏体是碳在 α-Fe 中的过饱和固溶体，HV 可达 600~900，极硬极脆、内应力大，<strong>必须回火后才能用</strong>。铁素体软，珠光体适中，奥氏体韧。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="A">
+    <div class="q-text"><span class="q-num">5</span>客户拿来一块工件，你估算声速时应该用什么校准？</div>
+    <div class="quiz-option" data-k="A">A. 与工件同材料、同热处理状态的对比试块</div>
+    <div class="quiz-option" data-k="B">B. 任意钢试块都行，反正都是金属</div>
+    <div class="quiz-option" data-k="C">C. 不用校准，仪器出厂值就准</div>
+    <div class="quiz-option" data-k="D">D. 用水校准即可</div>
+    <div class="quiz-explain">✅ 选 A。声速受成分、组织、热处理状态影响很大。钢 5920、铝 6300、铜 4660、铅 2160——差几倍。B 错（不同金属声速差很大）；C 错（同是钢，铸钢和锻钢声速都不同）；D 错（水声速 1480，与金属完全不同）。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="B">
+    <div class="q-text"><span class="q-num">6</span>"晶粒越细，材料强度越高、韧性也越好"——这叫什么关系？</div>
+    <div class="quiz-option" data-k="A">A. 胡克定律</div>
+    <div class="quiz-option" data-k="B">B. Hall-Petch 关系</div>
+    <div class="quiz-option" data-k="C">C. 瑞利散射定律</div>
+    <div class="quiz-option" data-k="D">D. 共析转变</div>
+    <div class="quiz-explain">✅ 选 B。Hall-Petch 关系：晶粒越细→晶界越多→阻碍位错运动→强度硬度升高；同时晶界多能分散应力→韧性也升高。这是<strong>唯一</strong>能同时提升强度和韧性的强化机制，也是锻造/正火改善性能的原理。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="A">
+    <div class="q-text"><span class="q-num">7</span>超声波遇到粗大晶粒时，当晶粒尺寸接近波长，会产生什么现象？</div>
+    <div class="quiz-option" data-k="A">A. 草状回波（grass echo），淹没缺陷信号</div>
+    <div class="quiz-option" data-k="B">B. 声波完全透过，没有任何回波</div>
+    <div class="quiz-option" data-k="C">C. 声速变快，定位更准</div>
+    <div class="quiz-option" data-k="D">D. 产生共振，放大缺陷信号</div>
+    <div class="quiz-explain">✅ 选 A。晶粒尺寸 d 接近波长 λ 时进入"随机散射"区，衰减最强，晶界散射在屏幕上形成一片杂乱的回波，叫<strong>草状回波</strong>，会把小缺陷信号淹没。这就是奥氏体焊缝难检的直接表现。</div>
+  </div>
+
+  <div class="quiz-question" data-correct="D">
+    <div class="q-text"><span class="q-num">8</span>【销售场景】客户说"我们这是奥氏体不锈钢焊缝，老有杂波"，你最好的回应是？</div>
+    <div class="quiz-option" data-k="A">A. "我们仪器好，不会有杂波的"</div>
+    <div class="quiz-option" data-k="B">B. "奥氏体不能测，您换 RT 吧"</div>
+    <div class="quiz-option" data-k="C">C. "调高频率试试，5MHz 以上"</div>
+    <div class="quiz-option" data-k="D">D. "建议用低频（1~2MHz）纵波斜探头或相控阵/TOFD，可改善信噪比"</div>
+    <div class="quiz-explain">✅ 选 D。奥氏体焊缝杂波来自粗晶散射，<strong>降频能减小散射</strong>（波长变大→d/λ 变小→散射减弱）；PAUT/TOFD 还能用聚焦和衍射提升信噪比。A 是不专业的忽悠；B 太绝对（能测，只是难）；C 完全反了——<strong>频率越高衰减越大</strong>，杂波会更严重。</div>
+  </div>
+
+  <div id="quiz-result">
+    <div>你的得分</div>
+    <div class="score">0</div>
+    <div id="result-text"></div>
+    <br>
+    <button class="btn ghost" onclick="resetQuiz()">重新作答</button>
+  </div>
+
+  <div style="text-align:center;margin-top:18px">
+    <button class="btn" onclick="submitQuiz()">交卷查看成绩</button>
+  </div>
+</div>
+
+<!-- 课后导航 -->
+<div class="nav-foot">
+  <a href="#hero"><div class="label">↑ 本课开头</div></a>
+  <div style="text-align:center"><div class="label">下一课</div><div class="title">第02课 · 牌号与特种材料 →</div></div>
+  <a href="#"><div class="label"></div></a>
+</div>
+
+</div><!-- /main -->
+
+<div style="text-align:center;margin:24px 0;padding:14px;background:#eaf2f8;border-radius:8px"><a href="index.html" style="display:inline-block;background:#1a5276;color:#fff;padding:10px 28px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px">🏠 返回总目录</a></div>
+<script>
+// 答题交互
+document.querySelectorAll('.quiz-question').forEach(q=>{
+  const correct=q.dataset.correct;
+  q.querySelectorAll('.quiz-option').forEach(opt=>{
+    opt.addEventListener('click',()=>{
+      if(q.classList.contains('locked'))return;
+      q.querySelectorAll('.quiz-option').forEach(o=>o.classList.remove('selected','correct','wrong'));
+      opt.classList.add('selected');
+      const k=opt.dataset.k;
+      if(k===correct){
+        opt.classList.add('correct');
+        opt.insertAdjacentHTML('beforeend','<span class="mark">✓</span>');
+      }else{
+        opt.classList.add('wrong');
+        opt.insertAdjacentHTML('beforeend','<span class="mark">✗</span>');
+        // 标出正确答案
+        q.querySelectorAll('.quiz-option').forEach(o=>{if(o.dataset.k===correct){o.classList.add('correct');}});
+      }
+      q.querySelector('.quiz-explain').classList.add('show');
+      q.classList.add('locked');
+    });
+  });
+});
+
+function submitQuiz(){
+  const qs=document.querySelectorAll('.quiz-question');
+  let answered=0,score=0;
+  qs.forEach(q=>{
+    if(q.classList.contains('locked')){
+      answered++;
+      const sel=q.querySelector('.quiz-option.correct.selected');
+      if(sel)score++;
+    }
+  });
+  const res=document.getElementById('quiz-result');
+  const txt=document.getElementById('result-text');
+  res.style.display='block';
+  res.querySelector('.score').textContent=score+' / '+qs.length;
+  let msg='';
+  const pct=score/qs.length;
+  if(pct===1)msg='满分！地基打得很扎实，可以放心学下一课。';
+  else if(pct>=0.75)msg='不错！重点概念都掌握了，错题看看解析就过。';
+  else if(pct>=0.5)msg='基本概念有了，建议回头看看晶粒/组织那两节。';
+  else msg='这课内容偏理论，别灰心——重看一遍"一、晶体"和"三、组织相"再测一次。';
+  txt.textContent=msg+'（已答 '+answered+'/'+qs.length+' 题）';
+  res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function resetQuiz(){
+  document.querySelectorAll('.quiz-question').forEach(q=>{
+    q.classList.remove('locked');
+    q.querySelectorAll('.quiz-option').forEach(o=>{
+      o.classList.remove('selected','correct','wrong');
+      const m=o.querySelector('.mark');if(m)m.remove();
+    });
+    q.querySelector('.quiz-explain').classList.remove('show');
+  });
+  document.getElementById('quiz-result').style.display='none';
+}
+
+// 阅读进度 + 侧边栏高亮
+const sections=[...document.querySelectorAll('.section[id]')];
+const sideLinks=[...document.querySelectorAll('.sidebar a[href^="#"]')];
+const progress=document.getElementById('progress');
+window.addEventListener('scroll',()=>{
+  const sc=window.scrollY+120;
+  let cur=sections[0];
+  sections.forEach(s=>{if(s.offsetTop<=sc)cur=s;});
+  sideLinks.forEach(a=>{
+    a.classList.toggle('active',a.getAttribute('href')==='#'+cur.id);
+  });
+  // 进度
+  const total=document.body.scrollHeight-window.innerHeight;
+  progress.style.width=Math.min(100,(window.scrollY/total)*100)+'%';
+});
+</script>
+
+</body>
+</html>

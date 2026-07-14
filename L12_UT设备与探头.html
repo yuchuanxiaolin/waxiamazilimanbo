@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第12课 · UT 设备与探头</title>
+<style>
+:root{--primary:#1a5276;--primary-light:#2980b9;--accent:#e67e22;--bg:#f4f6f7;--card:#fff;--text:#2c3e50;--text-light:#7f8c8d;--border:#d5dbdb;--success:#27ae60;--danger:#e74c3c;--warning:#f39c12;--info:#3498db;--shadow:0 2px 8px rgba(0,0,0,.08)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.85;font-size:15.5px;scroll-behavior:smooth}
+.topbar{position:fixed;top:0;left:0;right:0;height:52px;background:var(--primary);color:#fff;display:flex;align-items:center;padding:0 20px;z-index:1000;box-shadow:0 4px 20px rgba(0,0,0,.12)}
+.topbar h1{font-size:16px;font-weight:600}.topbar .crumb{font-size:12px;opacity:.75;margin-left:8px}
+.topbar nav{margin-left:auto;display:flex;gap:4px;overflow-x:auto}
+.topbar nav a{color:#cfd8dc;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:4px;white-space:nowrap}
+.sidebar{position:fixed;top:52px;left:0;bottom:0;width:230px;background:#fff;border-right:1px solid var(--border);overflow-y:auto;padding:14px 0;z-index:900}
+.sidebar a{display:block;padding:8px 18px;color:var(--text-light);text-decoration:none;font-size:12.5px;border-left:3px solid transparent}
+.sidebar a:hover{background:var(--bg);color:var(--primary)}
+.sidebar a.sub{padding-left:30px;font-size:11.5px}
+.main{margin-left:230px;margin-top:52px;padding:26px 32px;max-width:1000px}
+.section{background:var(--card);border-radius:10px;padding:24px 28px;margin-bottom:20px;box-shadow:var(--shadow)}
+.section h2{color:var(--primary);font-size:21px;border-bottom:2px solid var(--primary-light);padding-bottom:8px;margin-bottom:14px}
+.section h3{color:var(--primary);font-size:16.5px;margin:18px 0 8px;padding-left:10px;border-left:4px solid var(--accent)}
+.section p{margin:8px 0}.section ul,.section ol{margin:8px 0 8px 24px}.section li{margin:4px 0}.section strong{color:var(--primary)}
+.tip{background:#eafaf1;border-left:4px solid var(--success);padding:11px 15px;border-radius:6px;margin:12px 0}.tip::before{content:"💡 记住";display:block;font-weight:700;color:var(--success);font-size:12.5px;margin-bottom:3px}
+.warn{background:#fef9e7;border-left:4px solid var(--warning);padding:11px 15px;border-radius:6px;margin:12px 0}.warn::before{content:"⚠️ 注意";display:block;font-weight:700;color:var(--warning);font-size:12.5px;margin-bottom:3px}
+.key{background:#eaf2f8;border-left:4px solid var(--primary-light);padding:11px 15px;border-radius:6px;margin:12px 0}.key::before{content:"🔑 核心";display:block;font-weight:700;color:var(--primary);font-size:12.5px;margin-bottom:3px}
+.sale{background:#fdf2e9;border-left:4px solid var(--accent);padding:11px 15px;border-radius:6px;margin:12px 0}.sale::before{content:"💬 客户对话";display:block;font-weight:700;color:var(--accent);font-size:12.5px;margin-bottom:3px}
+.ndt{background:#eef5fb;border-left:4px solid var(--info);padding:11px 15px;border-radius:6px;margin:12px 0}.ndt::before{content:"🔬 检测要点";display:block;font-weight:700;color:var(--info);font-size:12.5px;margin-bottom:3px}
+.analogy{background:linear-gradient(135deg,#fdf2e9,#fef9e7);border:1px dashed var(--accent);border-radius:8px;padding:12px 15px;margin:12px 0}.analogy::before{content:"🎯 打个比方";display:block;font-weight:700;color:var(--accent);font-size:12.5px;margin-bottom:4px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+th,td{border:1px solid var(--border);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--primary);color:#fff}tr:nth-child(even){background:#f8f9fa}
+tr.bad-row{background:#fdedec}
+td strong{color:var(--primary)}
+.quiz-intro{background:#eaf2f8;border-radius:8px;padding:12px 16px;margin:14px 0;color:var(--primary)}
+.quiz-question{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;margin:12px 0}
+.quiz-question .q-text{font-weight:600;margin-bottom:8px}
+.quiz-question .q-num{display:inline-block;background:var(--primary);color:#fff;width:24px;height:24px;border-radius:50%;text-align:center;line-height:24px;font-size:12px;margin-right:6px}
+.quiz-option{display:block;padding:9px 12px;margin:5px 0;border:2px solid var(--border);border-radius:6px;cursor:pointer}
+.quiz-option:hover{border-color:var(--primary-light);background:#eaf2f8}
+.quiz-option.correct{border-color:var(--success);background:#eafaf1}
+.quiz-option.wrong{border-color:var(--danger);background:#fdedec}
+.quiz-option .mark{float:right;font-weight:700}
+.quiz-explain{margin-top:8px;padding:9px;background:#f8f9fa;border-radius:4px;font-size:12.5px;display:none}
+.quiz-explain.show{display:block}
+#quiz-result{display:none;text-align:center;padding:28px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin:14px 0}
+#quiz-result .score{font-size:44px;font-weight:700;margin:8px 0}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:9px 24px;border-radius:6px;border:none;cursor:pointer;font-size:14px;font-weight:600}
+.btn:hover{background:var(--accent-light)}
+.btn.ghost{background:transparent;color:var(--primary);border:2px solid var(--primary)}
+.hero{text-align:center;padding:38px 28px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin-bottom:20px}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);padding:3px 12px;border-radius:12px;font-size:11.5px;margin-bottom:8px}
+.hero h1{font-size:26px;margin-bottom:8px}.hero p{font-size:14px;opacity:.92}
+@media(max-width:900px){.sidebar{transform:translateX(-100%)}.main{margin-left:0;padding:14px}.topbar nav{display:none}}
+</style></head><body>
+<div class="topbar"><h1>🔬 NDT 扫盲课</h1><span class="crumb">第 12 课 · UT 设备与探头</span><nav><a href="#hero">封面</a><a href="#ch1">设备</a><a href="#ch2">探头</a><a href="#ch3">参数</a><a href="#ch4">试块</a><a href="#ch5">选型</a><a href="#exam">测验</a></nav></div>
+<div class="sidebar">
+<a href="#hero">封面</a>
+<a href="#ch1">一、UT 设备</a>
+<a href="#ch1-1" class="sub">1.1 探伤仪原理</a>
+<a href="#ch1-2" class="sub">1.2 便携 A 扫 / 水浸 C 扫</a>
+<a href="#ch2">二、探头</a>
+<a href="#ch2-1" class="sub">2.1 结构与压电效应</a>
+<a href="#ch2-2" class="sub">2.2 探头类型</a>
+<a href="#ch3">三、探头参数</a>
+<a href="#ch3-1" class="sub">3.1 频率/晶片</a>
+<a href="#ch3-2" class="sub">3.2 K 值</a>
+<a href="#ch4">四、试块</a>
+<a href="#ch5">五、销售选型</a>
+<a href="#exam">📝 测验</a>
+</div>
+<div class="main">
+
+<div class="section" id="hero" style="padding:0;overflow:hidden"><div class="hero">
+<span class="tag">扫盲课 · 第三阶段 · 第 12 课（懂手段②）</span>
+<h1>UT 设备与探头</h1>
+<p>探头选错了，再贵的仪器也白搭。这一课讲清"客户拿来一个工件，到底配什么探头、什么试块"——这是销售的核心动作。</p>
+</div></div>
+
+<div class="section" id="ch1">
+<h2>一、UT 设备（仪器）</h2>
+
+<h3 id="ch1-1">1.1 探伤仪是怎么工作的</h3>
+<div class="analogy">探伤仪就像一个"会说话、会听回声"的 bats（蝙蝠）。它<strong>发射电路</strong>给晶片一个高压脉冲 → 晶片振动发声音（电→声）→ 声波进工件遇到缺陷/底面反射回来 → 晶片收到变成电信号（声→电）→ 仪器放大、数字化、显示成波形。</div>
+<table>
+<tr><th>步骤</th><th>做什么</th><th>关键参数</th></tr>
+<tr><td><strong>同步电路</strong></td><td>全机节拍器，定脉冲重复频率 PRF</td><td>典型 100~1000 Hz</td></tr>
+<tr><td><strong>发射电路</strong></td><td>产生高压窄脉冲激励晶片</td><td>决定声脉冲强度</td></tr>
+<tr><td><strong>接收放大</strong></td><td>回波电压只有 mV 甚至 μV 级，要放 60~100 dB</td><td>动态范围 ≥26 dB（基本）</td></tr>
+<tr><td><strong>检波 + A/D + DSP</strong></td><td>整流→数字化→峰值保持/闸门报警/波形存储</td><td>A/D 位数决定动态范围</td></tr>
+</table>
+<div class="ndt"><strong>A/D 位数 = 仪器档次的重要指标</strong>：8 位（≈48dB，淘汰）、10 位（≈60dB，中端）、<strong>12 位（≈72dB，主流）</strong>、14~16 位（≈84~96dB，高端）。位数越高，强回波（始脉冲）和弱回波（底面附近小缺陷）能同时看清，不"溢出"。</div>
+
+<h3 id="ch1-2">1.2 两类主力设备（你卖的）</h3>
+<table>
+<tr><th>设备类型</th><th>干什么</th><th>典型产品</th><th>客户场景</th></tr>
+<tr><td><strong>便携 A 扫探伤仪</strong></td><td>手持现场，显示 A 型波形（心电图样），人工手持探头扫查</td><td>北极星辰等便携式数字探伤仪</td><td>焊缝现场检测、管道测厚、锻件抽查、在役巡检</td></tr>
+<tr><td><strong>水浸 C 扫系统</strong></td><td>工件浸水槽，探头 X-Y 自动扫查，输出彩色"俯拍地图"</td><td><strong>北极星辰 BSN-C 系列</strong>水浸 C 扫</td><td>复合材料分层、涡轮叶片壁厚、管材/板材自动化、精密零件</td></tr>
+</table>
+<div class="key"><strong>★ 一句话分清两种设备</strong>：<br>
+• <strong>便携 A 扫</strong> = "现场应急、人拿着扫、看波形数波高"——灵活、便宜、适合现场；<br>
+• <strong>水浸 C 扫</strong> = "实验室自动化、扫出彩色地图、能成像存档"——稳定、精密、适合形状规则件和复材。</div>
+<div class="sale"><strong>客户对话</strong>：客户："我就查一根焊缝管道，用得着水浸 C 扫吗？"<br>
+"焊缝现场检测<strong>便携 A 扫就够</strong>了，人拿斜探头沿着焊缝走，快又灵活。水浸 C 扫的强项是<strong>复合材料分层、涡轮叶片壁厚这种要成像、要存档、要自动化的</strong>，您这管道没必要上 C 扫。但要是您那批是<strong>碳纤维复材件</strong>查脱粘分层，那就非水浸 C 扫不可了。"</div>
+</div>
+
+<div class="section" id="ch2">
+<h2>二、探头（UT 的"枪头"，最关键）</h2>
+
+<h3 id="ch2-1">2.1 探头结构与压电效应</h3>
+<div class="analogy">探头就是 UT 的"枪头"——仪器是枪身，探头决定打什么弹、打多准。<strong>压电效应</strong>是核心：给压电材料加电压它会振（电→声，发射），压它一下会产生电压（声→电，接收）。<strong>同一块晶片既能发射又能接收</strong>，这是脉冲反射法的基础。</div>
+<table>
+<tr><th>部件</th><th>材料</th><th>作用</th></tr>
+<tr><td><strong>晶片</strong></td><td>PZT 锆钛酸铅（压电陶瓷）</td><td>核心元件。厚度决定频率（f ≈ c_片/2×厚度），大小决定声场</td></tr>
+<tr><td><strong>阻尼块</strong></td><td>环氧+钨粉</td><td>吸收背面声波、减少余振 → <strong>脉冲变窄、盲区变小</strong>（代价：灵敏度略降）</td></tr>
+<tr><td><strong>匹配层</strong></td><td>Z 介于晶片(~30)和工件(46)之间</td><td>降低界面反射损失，提高声能传输效率</td></tr>
+<tr><td><strong>保护膜</strong></td><td>氧化铝、硬质合金</td><td>耐磨保护晶片。<strong>越薄越灵敏但越不耐磨</strong>——权衡</td></tr>
+</table>
+<div class="warn"><strong>★ 一句话记住探头四件套</strong>：<strong>晶片发声音，阻尼清余振，匹配层传得进，保护膜防磨损</strong>。客户拆探头时能背出这四个零件，立刻显专业。</div>
+
+<h3 id="ch2-2">2.2 探头类型（按工况选——销售必须背熟）</h3>
+<table>
+<tr><th>探头类型</th><th>波型/原理</th><th>主要用途</th><th>典型工件</th></tr>
+<tr><td><strong>直探头</strong></td><td>纵波，垂直入射</td><td>锻件/钢板内部缺陷、<strong>测厚</strong>、查分层</td><td>大锻件（转子、曲轴）、钢板、轴类</td></tr>
+<tr><td><strong>斜探头</strong></td><td>横波（斜楔折射）</td><td><strong>焊缝检测（最主）</strong>、管材、螺栓</td><td>对接焊缝、管节点焊缝</td></tr>
+<tr><td><strong>双晶探头（T-R）</strong></td><td>一发一收两晶片，声束在工件内"交汇"成焦点区</td><td><strong>测薄壁（可测 1mm 以下）</strong>、近表面缺陷</td><td>薄壁管道测厚、带氧化皮管</td></tr>
+<tr><td><strong>聚焦探头</strong></td><td>透镜或曲面晶片让声束聚焦</td><td>特定深度小缺陷、<strong>水浸 C 扫标配</strong></td><td>管材、复材水浸、精密件</td></tr>
+<tr><td><strong>表面波探头</strong></td><td>斜楔角=第二临界角，产生表面波</td><td>表面开口裂纹</td><td>工件表面、焊趾裂纹</td></tr>
+<tr><td><strong>爬波探头</strong></td><td>入射角≈第一临界角，近表面纵波</td><td>皮下 1~9mm 近表面缺陷</td><td>堆焊层、近表面检</td></tr>
+<tr><td><strong>水浸探头</strong></td><td>工件浸水，探头不直接接触</td><td>可聚焦、可自动化、不磨损探头</td><td>管材、复材 C 扫、精密件</td></tr>
+<tr><td><strong>测厚探头</strong></td><td>双晶接触式，高频 5~10MHz</td><td>配测厚仪专用</td><td>管道、压力容器壁厚</td></tr>
+</table>
+<div class="key"><strong>★ 三大主力（必须秒答）</strong>：<br>
+• <strong>直探头（纵波）</strong> → 锻件/钢板/测厚/分层<br>
+• <strong>斜探头（横波，带 K 值）</strong> → 焊缝<br>
+• <strong>双晶探头（一发一收）</strong> → 薄壁测厚 + 近表面</div>
+<div class="analogy"><strong>为什么双晶能测薄壁</strong>：单探头自发自收时，发射脉冲（几百伏）会"塞住"接收前级，造成近区盲区（3~5mm 起测）。双晶的<strong>接收晶片不参与发射</strong>，没有发射脉冲干扰，<strong>能测 1mm 以下的薄壁</strong>。这就是测厚仪几乎都用双晶的原因。</div>
+<div class="sale"><strong>客户对话</strong>：客户："我这管子带氧化皮，测厚总是不准。"<br>
+"单晶直探头对<strong>氧化皮、凹凸面</strong>很敏感，耦合不好就不准。换<strong>双晶测厚探头</strong>：它两片晶片一发一收，焦点区灵敏度高，对表面状态不敏感，<strong>带氧化皮的管子也能稳定测</strong>。配我们便携探伤仪的测厚模式就行。"</div>
+</div>
+
+<div class="section" id="ch3">
+<h2>三、探头参数怎么选（落到销售动作）</h2>
+
+<h3 id="ch3-1">3.1 频率与晶片尺寸</h3>
+<table>
+<tr><th>参数</th><th>选大的</th><th>选小的</th></tr>
+<tr><td><strong>频率 f</strong></td><td>高频 5~10MHz：细晶/薄件/小缺陷，分辨率高</td><td>低频 0.5~2MHz：粗晶/铸件/厚件/衰减大，穿透深</td></tr>
+<tr><td><strong>晶片尺寸 D</strong></td><td>大晶片：近场长、指向性好 → 厚大锻件</td><td>小晶片：近场短、盲区小 → 薄件、需小盲区</td></tr>
+</table>
+<div class="ndt"><strong>★ 频率经验口诀</strong>：<br>
+• <strong>焊缝通用</strong>：2~5 MHz<br>
+• <strong>奥氏体焊缝（粗晶）</strong>：降到 1~2 MHz（减草状回波）<br>
+• <strong>细晶锻钢</strong>：5~10 MHz<br>
+• <strong>铸件（粗晶衰减大）</strong>：0.5~2 MHz<br>
+• <strong>测厚</strong>：5~10 MHz 双晶</div>
+
+<h3 id="ch3-2">3.2 K 值（斜探头的折射角，焊缝核心参数）</h3>
+<div class="key"><strong>K = tanβ（β 是横波在钢里的折射角）</strong>。K 值决定声束斜进工件的角度，直接影响能扫到哪种走向的缺陷。</div>
+<table>
+<tr><th>K 值</th><th>折射角 β</th><th>适合什么</th></tr>
+<tr><td><strong>K1</strong></td><td>45°</td><td><strong>厚壁焊缝</strong>，厚度方向取向缺陷（未熔合、未焊透），声程短衰减小</td></tr>
+<tr><td>K1.5</td><td>56°</td><td>厚壁焊缝常用</td></tr>
+<tr><td><strong>K2</strong></td><td>63°</td><td><strong>中等厚度焊缝（10~40mm）</strong>，综合检出率好，最常用</td></tr>
+<tr><td><strong>K2.5</strong></td><td>68°</td><td>薄壁焊缝、垂直取向裂纹</td></tr>
+<tr><td><strong>K3</strong></td><td>72°</td><td>薄壁焊缝、垂直裂纹</td></tr>
+</table>
+<div class="tip"><strong>★ 焊缝 K 值速记</strong>：<strong>厚壁选 K1~K1.5，中壁选 K2 或 K2.5，薄壁选 K2.5~K3</strong>。重要焊缝常用两种 K 值互补检测，提高不同取向缺陷的检出率。有机玻璃→钢 K 值范围对应入射角 27.6°~57.7°。</div>
+<div class="sale"><strong>客户对话</strong>：客户："我这是 20mm 厚的对接焊缝，配什么 K 值？"<br>
+"20mm 是典型的中等厚度，<strong>配 K2（63°）斜探头最合适</strong>，综合检出率最好。要是焊缝质量等级高，建议<strong>再加一个 K1 或 K2.5 互补</strong>，把不同走向的未熔合、裂纹都能扫到。频率配 4MHz 或 5MHz，晶片 9×9 或 13×13。"</div>
+</div>
+
+<div class="section" id="ch4">
+<h2>四、试块——UT 的"度量衡"（没有试块=检测不可信）</h2>
+<div class="analogy">试块就是 UT 的"砝码和尺子"。仪器显示的波高、深度、K 值，全靠试块校准。<strong>没有试块校准的 UT 检测，结果不可信，客户也不能认</strong>。</div>
+<table>
+<tr><th>试块</th><th>含什么反射体</th><th>干什么用</th></tr>
+<tr><td><strong>CSK-IA（IIW1 国内版）</strong></td><td>R100/R50 圆弧、φ50 孔、φ1.5 横孔、刻度槽</td><td>测斜探头<strong>入射点、K 值</strong>，校水平/深度基线，校验仪器线性</td></tr>
+<tr><td><strong>CSK-IIA（横孔试块）</strong></td><td>不同深度的 φ2×40 长横孔</td><td><strong>制作 DAC 曲线</strong>（距离-波幅曲线），设定焊缝检测灵敏度</td></tr>
+<tr><td><strong>CSK-IIIA（槽型试块）</strong></td><td>矩形槽</td><td>评定焊缝表面附近缺陷</td></tr>
+<tr><td>RB 系列（日本 JIS）</td><td>横孔（RB-1/2/3）</td><td>同 CSK-IIA，日标体系</td></tr>
+</table>
+<div class="warn"><strong>★ 销售铁律</strong>：每次检测前必须<strong>用试块复核入射点和 K 值</strong>（探头磨损会变）。K 值漂移 → 定位全错。客户买仪器时<strong>试块是必备配件，不能省</strong>。便携现场常用 CSK-IA（小巧），做 DAC 必备 CSK-IIA。</div>
+<div class="ndt"><strong>★ 校准的本质</strong>：调仪器的"声速"（定横轴比例）和"探头零点"（消除斜楔/保护膜/耦合层的声程偏移），让屏幕读数 = 工件实际位置。校准用的是 CSK-IA 上已知声程的 R100 圆弧。</div>
+<div class="sale"><strong>客户对话</strong>：客户："你们仪器这么贵，试块能不能送一个就行？"<br>
+"试块是 UT 的<strong>度量衡，缺一不可</strong>。<strong>CSK-IA 是校 K 值和入射点的</strong>（每次检测前必用），<strong>CSK-IIA 是做 DAC 曲线、定灵敏度的</strong>（焊缝检测必用）。少一个，您这焊缝检测的灵敏度和定量就没法定，出报告都没底气。建议两块都配齐，这是标准配置。"</div>
+</div>
+
+<div class="section" id="ch5">
+<h2>五、销售核心：客户拿来工件怎么配探头</h2>
+<div class="key"><strong>★ 三步配探头法（销售动作）</strong>：<br>
+<strong>第一步：问工件</strong>——什么材料？多厚？什么形状？查什么缺陷（内/表/焊缝）？<br>
+<strong>第二步：定波型+探头类型</strong>——内部/测厚→直探头或双晶；焊缝→斜探头；复材/精密件→水浸聚焦。<br>
+<strong>第三步：定参数</strong>——频率（看材料和厚度）、晶片尺寸（看厚度）、K 值（看焊缝厚度）。最后配试块。</div>
+<table>
+<tr><th>客户场景</th><th>配什么</th></tr>
+<tr><td>20mm 对接焊缝，碳钢</td><td>K2 斜探头，4~5MHz，9×9 或 13×13，配 CSK-IA + CSK-IIA</td></tr>
+<tr><td>100mm 厚大锻件，查内部夹杂</td><td>直探头，2~5MHz，φ20~φ30 大晶片（指向性好）</td></tr>
+<tr><td>薄壁管（3mm）测厚，带氧化皮</td><td>双晶测厚探头，7~10MHz</td></tr>
+<tr><td>奥氏体不锈钢焊缝</td><td>斜探头，<strong>降到 1~2MHz</strong>（减草状回波），K2</td></tr>
+<tr><td>碳纤维复合材料查分层</td><td><strong>水浸 C 扫 + 聚焦探头</strong>（BSN-C 系列），5~10MHz</td></tr>
+<tr><td>焊趾表面裂纹</td><td>表面波探头</td></tr>
+<tr><td>涡轮叶片测壁厚（精密、要成像）</td><td>水浸聚焦 C 扫，高频</td></tr>
+</table>
+<div class="tip"><strong>★ 销售心法</strong>：客户说"我要测 XX"，别急着报型号。先问<strong>材料、厚度、缺陷类型、是否要存档成像</strong>。这四问答完，配什么探头、要不要上 C 扫，自然就清楚了——这才是顾问式销售。</div>
+</div>
+
+<div class="section" id="exam">
+<h2>📝 随堂测验（6 题）</h2>
+<div class="quiz-intro">UT 设备与探头。客户拿来工件配什么——这一课的核心。</div>
+
+<div class="quiz-question" data-correct="C">
+<div class="q-text"><span class="q-num">1</span>焊缝 UT 检测最常用的探头是？</div>
+<div class="quiz-option" data-k="A">A. 直探头（纵波）</div>
+<div class="quiz-option" data-k="B">B. 双晶探头</div>
+<div class="quiz-option" data-k="C">C. 斜探头（横波，带 K 值）</div>
+<div class="quiz-option" data-k="D">D. 表面波探头</div>
+<div class="quiz-explain">✅ 选 C。焊缝有余高，直探头放不上；斜探头声束斜着进，从两侧扫查能覆盖焊缝和 HAZ 整个截面，是焊缝 UT 的标准做法。直探头用于锻件/钢板/测厚。</div>
+</div>
+
+<div class="quiz-question" data-correct="A">
+<div class="q-text"><span class="q-num">2</span>双晶探头（T-R）为什么能测 1mm 以下的薄壁？</div>
+<div class="quiz-option" data-k="A">A. 接收晶片不参与发射，没有发射脉冲干扰，消除了近区盲区</div>
+<div class="quiz-option" data-k="B">B. 双晶频率更高</div>
+<div class="quiz-option" data-k="C">C. 双晶晶片更大</div>
+<div class="quiz-option" data-k="D">D. 双晶用了特殊耦合剂</div>
+<div class="quiz-explain">✅ 选 A。单探头自发自收时发射脉冲（几百伏）会"塞住"接收前级，造成 3~5mm 近区盲区。双晶接收晶片不参与发射，没有发射脉冲干扰，所以能测薄壁和近表面。这就是测厚仪几乎都用双晶的原因。</div>
+</div>
+
+<div class="quiz-question" data-correct="B">
+<div class="q-text"><span class="q-num">3</span>20mm 厚的碳钢对接焊缝，配什么 K 值斜探头最合适？</div>
+<div class="quiz-option" data-k="A">A. K1（45°）</div>
+<div class="quiz-option" data-k="B">B. K2（63°）</div>
+<div class="quiz-option" data-k="C">C. K3（72°）</div>
+<div class="quiz-option" data-k="D">D. 不用 K 值</div>
+<div class="quiz-explain">✅ 选 B。20mm 属中等厚度焊缝，<strong>K2（63°）综合检出率最好，最常用</strong>。厚壁选 K1~K1.5（声程短衰减小），薄壁选 K2.5~K3。重要焊缝常用两种 K 值互补检测。</div>
+</div>
+
+<div class="quiz-question" data-correct="D">
+<div class="q-text"><span class="q-num">4</span>CSK-IIA 试块（φ2 横孔）的主要用途是？</div>
+<div class="quiz-option" data-k="A">A. 测斜探头入射点</div>
+<div class="quiz-option" data-k="B">B. 校验仪器线性</div>
+<div class="quiz-option" data-k="C">C. 测 K 值</div>
+<div class="quiz-option" data-k="D">D. 制作 DAC 曲线、设定焊缝检测灵敏度</div>
+<div class="quiz-explain">✅ 选 D。CSK-IIA 含不同深度的 φ2×40 长横孔，是<strong>做 DAC 距离-波幅曲线、定灵敏度</strong>用的。测入射点/K 值/校线性是 CSK-IA（IIW1）的活。两者都是焊缝 UT 必备。</div>
+</div>
+
+<div class="quiz-question" data-correct="A">
+<div class="q-text"><span class="q-num">5</span>水浸 C 扫描系统（如 BSN-C 系列）最适合检测什么？</div>
+<div class="quiz-option" data-k="A">A. 复合材料分层、涡轮叶片壁厚、需要成像存档的精密件</div>
+<div class="quiz-option" data-k="B">B. 长输管道现场焊缝巡检</div>
+<div class="quiz-option" data-k="C">C. 高温在役管道测厚</div>
+<div class="quiz-option" data-k="D">D. 铸件粗晶内部大面积筛查</div>
+<div class="quiz-explain">✅ 选 A。水浸 C 扫的强项是<strong>可聚焦、可自动化、耦合稳定、能成像存档</strong>，适合复材分层、叶片壁厚、管材板材自动化。现场焊缝巡检用便携 A 扫；高温在役用 EMAT 或高温耦合剂；粗晶铸件衰减大需低频接触法。</div>
+</div>
+
+<div class="quiz-question" data-correct="C">
+<div class="q-text"><span class="q-num">6</span>【销售场景】客户拿来一根带氧化皮的薄壁管道要测厚，老测不准，你应该推荐？</div>
+<div class="quiz-option" data-k="A">A. 换更高频的单晶直探头</div>
+<div class="quiz-option" data-k="B">B. 上水浸 C 扫系统</div>
+<div class="quiz-option" data-k="C">C. 双晶测厚探头（5~10MHz），对表面状态不敏感，焦点区灵敏度高</div>
+<div class="quiz-option" data-k="D">D. 表面波探头</div>
+<div class="quiz-explain">✅ 选 C。带氧化皮的薄壁管，单晶直探头耦合差、近区盲区大。<strong>双晶测厚探头一发一收，焦点区灵敏度高，对表面状态不敏感</strong>，是这种工况的标准方案。C 扫太重没必要；表面波探头是查表面裂纹的不是测厚的。</div>
+</div>
+
+<div id="quiz-result"><div>你的得分</div><div class="score">0</div><div id="result-text"></div><br><button class="btn ghost" onclick="resetQuiz()">重新作答</button></div>
+<div style="text-align:center;margin-top:14px"><button class="btn" onclick="submitQuiz()">交卷</button></div>
+</div>
+
+</div>
+<div style="text-align:center;margin:24px 0;padding:14px;background:#eaf2f8;border-radius:8px"><a href="index.html" style="display:inline-block;background:#1a5276;color:#fff;padding:10px 28px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px">🏠 返回总目录</a></div>
+<script>
+document.querySelectorAll('.quiz-question').forEach(function(q){var correct=q.dataset.correct;q.querySelectorAll('.quiz-option').forEach(function(opt){opt.addEventListener('click',function(){if(q.classList.contains('locked'))return;q.querySelectorAll('.quiz-option').forEach(function(o){o.classList.remove('correct','wrong');var m=o.querySelector('.mark');if(m)m.remove();});var k=opt.dataset.k;if(k===correct){opt.classList.add('correct');opt.insertAdjacentHTML('beforeend','<span class="mark">✓</span>');}else{opt.classList.add('wrong');opt.insertAdjacentHTML('beforeend','<span class="mark">✗</span>');q.querySelectorAll('.quiz-option').forEach(function(o){if(o.dataset.k===correct){o.classList.add('correct');}});}q.querySelector('.quiz-explain').classList.add('show');q.classList.add('locked');});});});
+function submitQuiz(){var qs=document.querySelectorAll('.quiz-question');var a=0,s=0;qs.forEach(function(q){if(q.classList.contains('locked')){a++;if(q.querySelector('.quiz-option.correct'))s++;}});var r=document.getElementById('quiz-result');r.style.display='block';r.querySelector('.score').textContent=s+' / '+qs.length;var p=s/qs.length,m='';if(p===1)m='满分！探头选型打通了。';else if(p>=.75)m='不错！错题看解析，重点复习 K 值和试块。';else if(p>=.5)m='及格，重看探头类型和选型表。';else m='重看一遍再测，探头是销售核心。';document.getElementById('result-text').textContent=m+'（已答'+a+'/'+qs.length+'）';r.scrollIntoView({behavior:'smooth',block:'center'});}
+function resetQuiz(){document.querySelectorAll('.quiz-question').forEach(function(q){q.classList.remove('locked');q.querySelectorAll('.quiz-option').forEach(function(o){o.classList.remove('correct','wrong');var m=o.querySelector('.mark');if(m)m.remove();});q.querySelector('.quiz-explain').classList.remove('show');});document.getElementById('quiz-result').style.display='none';}
+</script>
+</body></html>

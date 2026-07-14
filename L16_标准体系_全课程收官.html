@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第16课 · 标准体系 + 课程收官</title>
+<style>
+:root{--primary:#1a5276;--primary-light:#2980b9;--accent:#e67e22;--bg:#f4f6f7;--card:#fff;--text:#2c3e50;--text-light:#7f8c8d;--border:#d5dbdb;--success:#27ae60;--danger:#e74c3c;--warning:#f39c12;--info:#3498db;--shadow:0 2px 8px rgba(0,0,0,.08)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.85;font-size:15.5px;scroll-behavior:smooth}
+.topbar{position:fixed;top:0;left:0;right:0;height:52px;background:var(--primary);color:#fff;display:flex;align-items:center;padding:0 20px;z-index:1000;box-shadow:0 4px 20px rgba(0,0,0,.12)}
+.topbar h1{font-size:16px;font-weight:600}.topbar .crumb{font-size:12px;opacity:.75;margin-left:8px}
+.topbar nav{margin-left:auto;display:flex;gap:4px;overflow-x:auto}
+.topbar nav a{color:#cfd8dc;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:4px;white-space:nowrap}
+.sidebar{position:fixed;top:52px;left:0;bottom:0;width:230px;background:#fff;border-right:1px solid var(--border);overflow-y:auto;padding:14px 0;z-index:900}
+.sidebar a{display:block;padding:8px 18px;color:var(--text-light);text-decoration:none;font-size:12.5px;border-left:3px solid transparent}
+.sidebar a:hover{background:var(--bg);color:var(--primary)}
+.sidebar a.sub{padding-left:30px;font-size:11.5px}
+.main{margin-left:230px;margin-top:52px;padding:26px 32px;max-width:1000px}
+.section{background:var(--card);border-radius:10px;padding:24px 28px;margin-bottom:20px;box-shadow:var(--shadow)}
+.section h2{color:var(--primary);font-size:21px;border-bottom:2px solid var(--primary-light);padding-bottom:8px;margin-bottom:14px}
+.section h3{color:var(--primary);font-size:16.5px;margin:18px 0 8px;padding-left:10px;border-left:4px solid var(--accent)}
+.section p{margin:8px 0}.section ul,.section ol{margin:8px 0 8px 24px}.section li{margin:4px 0}.section strong{color:var(--primary)}
+.tip{background:#eafaf1;border-left:4px solid var(--success);padding:11px 15px;border-radius:6px;margin:12px 0}.tip::before{content:"💡 记住";display:block;font-weight:700;color:var(--success);font-size:12.5px;margin-bottom:3px}
+.warn{background:#fef9e7;border-left:4px solid var(--warning);padding:11px 15px;border-radius:6px;margin:12px 0}.warn::before{content:"⚠️ 注意";display:block;font-weight:700;color:var(--warning);font-size:12.5px;margin-bottom:3px}
+.key{background:#eaf2f8;border-left:4px solid var(--primary-light);padding:11px 15px;border-radius:6px;margin:12px 0}.key::before{content:"🔑 核心";display:block;font-weight:700;color:var(--primary);font-size:12.5px;margin-bottom:3px}
+.sale{background:#fdf2e9;border-left:4px solid var(--accent);padding:11px 15px;border-radius:6px;margin:12px 0}.sale::before{content:"💬 客户对话";display:block;font-weight:700;color:var(--accent);font-size:12.5px;margin-bottom:3px}
+.ndt{background:#eef5fb;border-left:4px solid var(--info);padding:11px 15px;border-radius:6px;margin:12px 0}.ndt::before{content:"🔬 检测要点";display:block;font-weight:700;color:var(--info);font-size:12.5px;margin-bottom:3px}
+.analogy{background:linear-gradient(135deg,#fdf2e9,#fef9e7);border:1px dashed var(--accent);border-radius:8px;padding:12px 15px;margin:12px 0}.analogy::before{content:"🎯 打个比方";display:block;font-weight:700;color:var(--accent);font-size:12.5px;margin-bottom:4px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+th,td{border:1px solid var(--border);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--primary);color:#fff}tr:nth-child(even){background:#f8f9fa}
+td strong{color:var(--primary)}
+.quiz-intro{background:#eaf2f8;border-radius:8px;padding:12px 16px;margin:14px 0;color:var(--primary)}
+.quiz-question{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;margin:12px 0}
+.quiz-question .q-text{font-weight:600;margin-bottom:8px}
+.quiz-question .q-num{display:inline-block;background:var(--primary);color:#fff;width:24px;height:24px;border-radius:50%;text-align:center;line-height:24px;font-size:12px;margin-right:6px}
+.quiz-option{display:block;padding:9px 12px;margin:5px 0;border:2px solid var(--border);border-radius:6px;cursor:pointer}
+.quiz-option:hover{border-color:var(--primary-light);background:#eaf2f8}
+.quiz-option.correct{border-color:var(--success);background:#eafaf1}
+.quiz-option.wrong{border-color:var(--danger);background:#fdedec}
+.quiz-option .mark{float:right;font-weight:700}
+.quiz-explain{margin-top:8px;padding:9px;background:#f8f9fa;border-radius:4px;font-size:12.5px;display:none}
+.quiz-explain.show{display:block}
+#quiz-result{display:none;text-align:center;padding:28px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin:14px 0}
+#quiz-result .score{font-size:44px;font-weight:700;margin:8px 0}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:9px 24px;border-radius:6px;border:none;cursor:pointer;font-size:14px;font-weight:600}
+.btn:hover{background:var(--accent-light)}
+.btn.ghost{background:transparent;color:var(--primary);border:2px solid var(--primary)}
+.hero{text-align:center;padding:38px 28px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin-bottom:20px}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);padding:3px 12px;border-radius:12px;font-size:11.5px;margin-bottom:8px}
+.hero h1{font-size:26px;margin-bottom:8px}.hero p{font-size:14px;opacity:.92}
+.milestone{background:linear-gradient(135deg,#fff4e6,#fef9e7,#eafaf1);border:2px solid var(--accent);border-radius:14px;padding:28px 32px;margin:22px 0;box-shadow:0 6px 20px rgba(230,126,34,.15);text-align:center;position:relative;overflow:hidden}
+.milestone::before{content:"🎉";position:absolute;font-size:120px;opacity:.08;top:-10px;right:10px;line-height:1}
+.milestone .ms-tag{display:inline-block;background:var(--accent);color:#fff;padding:4px 16px;border-radius:14px;font-size:12px;font-weight:700;margin-bottom:10px;letter-spacing:1px}
+.milestone h2{color:var(--accent);font-size:24px;border:none;padding:0;margin-bottom:14px;text-align:center}
+.milestone h3{color:var(--primary);font-size:17px;margin:14px 0 6px;border:none;padding:0;text-align:center}
+.milestone p{margin:8px 0;text-align:center}
+.milestone .stage-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:14px 0}
+.milestone .stage{background:#fff;border-radius:8px;padding:10px 14px;flex:1;min-width:200px;box-shadow:0 2px 6px rgba(0,0,0,.06);text-align:left}
+.milestone .stage .s-num{display:inline-block;width:26px;height:26px;border-radius:50%;background:var(--primary);color:#fff;text-align:center;line-height:26px;font-size:13px;font-weight:700;margin-right:6px}
+.milestone .stage .s-title{font-weight:700;color:var(--primary)}
+.milestone .stage .s-desc{font-size:13px;color:var(--text);margin-top:4px}
+.milestone .checklist{text-align:left;background:rgba(255,255,255,.7);border-radius:8px;padding:14px 18px;margin:14px auto;max-width:680px}
+.milestone .checklist li{margin:6px 0;list-style:none}
+.milestone .checklist li::before{content:"✅ ";margin-right:4px}
+.flow{background:#fff;border-radius:10px;padding:18px 20px;margin:14px 0;box-shadow:var(--shadow)}
+.flow .flow-step{display:flex;align-items:flex-start;margin:10px 0;padding:10px 12px;border-left:4px solid var(--primary-light);background:#f8fbfd;border-radius:0 6px 6px 0}
+.flow .flow-step .step-no{display:inline-block;min-width:30px;height:30px;background:var(--primary);color:#fff;border-radius:50%;text-align:center;line-height:30px;font-weight:700;font-size:14px;margin-right:12px;flex-shrink:0}
+.flow .flow-step .step-body strong{color:var(--primary)}
+@media(max-width:900px){.sidebar{transform:translateX(-100%)}.main{margin-left:0;padding:14px}.topbar nav{display:none}.milestone .stage{min-width:100%}}
+</style></head><body>
+<div class="topbar"><h1>🔬 NDT 扫盲课</h1><span class="crumb">第 16 课 · 标准体系 + 课程收官</span><nav><a href="#hero">封面</a><a href="#ch1">标准代号</a><a href="#ch2">核心标准</a><a href="#ch3">国际标准</a><a href="#ch4">图纸要求</a><a href="#ch5">选择逻辑</a><a href="#milestone">收官</a><a href="#exam">测验</a></nav></div>
+<div class="sidebar">
+<a href="#hero">封面</a>
+<a href="#ch1">一、中国标准代号</a>
+<a href="#ch2">二、核心标准</a>
+<a href="#ch2-1" class="sub">2.1 NB/T 47013</a>
+<a href="#ch2-2" class="sub">2.2 GB/T 11345</a>
+<a href="#ch3">三、国际标准</a>
+<a href="#ch4">四、图纸检测要求</a>
+<a href="#ch5">五、选择逻辑</a>
+<a href="#ch6">六、人员资格</a>
+<a href="#milestone">★ 课程收官</a>
+<a href="#exam">📝 测验</a>
+</div>
+<div class="main">
+
+<div class="section" id="hero" style="padding:0;overflow:hidden"><div class="hero">
+<span class="tag">扫盲课 · 第三阶段 · 第 16 课（最后一课 · 全课程收官）</span>
+<h1>标准体系 + 课程收官</h1>
+<p>客户委托单上写的"NB/T 47013.3 做 20% UT，Ⅱ级合格"——这一课之后你看得懂。学完这课，整个 18 课扫盲之旅就通关了。</p>
+</div></div>
+
+<div class="section" id="ch1">
+<h2>一、中国 NDT 标准体系——那些字母数字是什么</h2>
+
+<div class="analogy">标准编号就像<strong>快递单号</strong>——前面那串字母告诉你"这是哪家发的、归哪个行业"，后面的数字是"编号"和"年份"。看懂前缀，就知道这份标准管什么领域。</div>
+
+<table>
+<tr><th>代号</th><th>含义</th><th>典型例子</th><th>谁会用</th></tr>
+<tr><td><strong>GB / GB/T</strong></td><td>国家标准（强制 / 推荐）</td><td>GB/T 11345 焊缝 UT</td><td>全国通用，被合同引用就强制</td></tr>
+<tr><td><strong>NB/T</strong></td><td>能源行业标准</td><td><strong>NB/T 47013 承压设备 NDT</strong></td><td><strong>压力容器/锅炉客户（石化）必引</strong></td></tr>
+<tr><td><strong>DL/T</strong></td><td>电力行业标准</td><td>DL/T 303 电网绝缘子 UT</td><td>电力行业（火电/电网）</td></tr>
+<tr><td><strong>GJB</strong></td><td>国家军用标准</td><td><strong>GJB 1580A 变形金属 UT</strong></td><td><strong>军工/航空客户必引</strong></td></tr>
+<tr><td><strong>JB/T</strong></td><td>机械行业标准</td><td>JB/T 8468 锻钢件 UT</td><td>机械制造业</td></tr>
+<tr><td><strong>HB / QJ</strong></td><td>航空 / 航天行业标准</td><td>HB 系列</td><td>航空、航天领域</td></tr>
+<tr><td><strong>TB/T</strong></td><td>铁道行业标准</td><td>TB/T 2344 钢轨</td><td>铁路行业</td></tr>
+<tr class="bad-row"><td><strong>TSG</strong></td><td>特种设备安全技术规范</td><td>TSG 21 压力容器规程</td><td><strong>法律强制！特种设备必守</strong></td></tr>
+</table>
+
+<div class="warn"><strong>★ TSG 的特殊性</strong>：GB/T 是推荐（被合同引用才强制），但 <strong>TSG 是特种设备安全技术规范，属于法律强制</strong>——压力容器、管道、电梯、起重这些特种设备，必须按 TSG 来。中国的特种设备由市场监管总局监管，有独立法规体系：<br>
+特种设备安全法（法律）→ 安全监察条例（行政法规）→ <strong>TSG 安全技术规范</strong> → 相关标准（NB/T、GB/T 等）。</div>
+</div>
+
+<div class="section" id="ch2">
+<h2>二、四个必须认识的核心标准（销售高频）</h2>
+
+<h3 id="ch2-1">2.1 ★ NB/T 47013-2015《承压设备无损检测》（最重要！）</h3>
+<div class="key"><strong>这是石化/压力容器行业的"圣经"，引用率最高，必须熟悉。</strong>适用范围：压力容器、锅炉、储罐、管道等承压设备的制造和在用检测。</div>
+<p>它<strong>按方法分册</strong>，每册管一种检测方法：</p>
+<table>
+<tr><th>分册</th><th>内容</th></tr>
+<tr><td>NB/T 47013.2</td><td>射线检测 RT</td></tr>
+<tr><td><strong>NB/T 47013.3</strong></td><td><strong>超声检测 UT</strong>（你最常碰到）</td></tr>
+<tr><td>NB/T 47013.4</td><td>磁粉检测 MT</td></tr>
+<tr><td>NB/T 47013.5</td><td>渗透检测 PT</td></tr>
+<tr><td>NB/T 47013.6</td><td>涡流检测 ET</td></tr>
+<tr><td>NB/T 47013.7</td><td>承压设备用板材/锻件/螺栓/钢管 UT 方法和质量分级</td></tr>
+<tr><td>NB/T 47013.8</td><td>承压设备焊接接头 UT</td></tr>
+<tr><td>NB/T 47013.9</td><td>在用承压设备 UT</td></tr>
+</table>
+<div class="ndt"><strong>★ 关键条款</strong>：承压设备本体焊缝<strong>不允许存在裂纹、未熔合、未焊透</strong>（这三类一律不合格）；检测分 A/B/C 级（A 最低、C 最高）；按检测比例：<strong>A 类焊缝 100%、B/C 类焊缝 20% 以上</strong>。</div>
+
+<h3 id="ch2-2">2.2 ★ GB/T 11345-2013《焊缝无损检测 超声检测》</h3>
+<div class="key"><strong>这是焊缝 UT 的通用标准</strong>——非承压设备焊缝（钢结构、建筑、桥梁等）用它。配套试块是 RB-Ia/IIa/IIIa（DAC 曲线试块）。检测等级 A/B/C，验收等级 1/2/3 级。</div>
+
+<h3>2.3 GB/T 7233.2 与 GJB 1580A</h3>
+<table>
+<tr><th>标准</th><th>管什么</th><th>谁用</th></tr>
+<tr><td><strong>GB/T 7233.2</strong></td><td>铸钢件 UT 方法和质量分级（评级 I–V 级，I 最高）</td><td>铸钢件客户</td></tr>
+<tr><td><strong>GJB 1580A</strong></td><td>变形金属超声检验方法（国军标，等级 AAA/AA/A/B，AAA 最严）</td><td><strong>军工/航空锻件客户必引</strong></td></tr>
+<tr><td>DL/T 303</td><td>电网在役支柱瓷绝缘子及瓷套 UT（爬波法）</td><td>电力行业</td></tr>
+</table>
+
+<div class="sale"><strong>场景 1 · 听懂客户引用的标准</strong><br>
+客户："我们这反应釜，按 NB/T 47013.3 做 20% UT，Ⅱ级合格。"<br>
+你（心里翻译）："这是<strong>承压设备</strong>（反应釜=压力容器）、<strong>超声检测</strong>（47013.3 分册）、<strong>抽检 20%</strong>（不是全检）、合格线是<strong>Ⅱ级</strong>。那我需要准备对应的试块、按 47013.3 的检测等级做工艺，合格评定按 Ⅱ级卡线。"（嘴上）"好的，47013.3 第 3 分册，20% 抽检 UT Ⅱ级合格，我们按这个标准给您出工艺和报告。"</div>
+</div>
+
+<div class="section" id="ch3">
+<h2>三、国际/国外标准——涉外项目会遇到</h2>
+
+<table>
+<tr><th>标准</th><th>全称/性质</th><th>典型内容</th><th>谁用</th></tr>
+<tr><td><strong>ASME</strong></td><td>美国锅炉压力容器规范</td><td>Section V（NDT 方法）/ Section VIII（压力容器建造）/ Section XI（核电在役）</td><td>涉外/美资项目，国际工程引用最多</td></tr>
+<tr><td><strong>EN / ISO</strong></td><td>欧洲/国际标准</td><td>EN ISO 17640 焊缝 UT / 17636 焊缝 RT / 3452 PT / 9934 MT / 15548 ET 设备</td><td>欧洲、国际项目</td></tr>
+<tr><td><strong>ASTM</strong></td><td>美国材料试验学会</td><td>ASTM E 系列（NDT 方法标准）</td><td>国际材料项目引用</td></tr>
+<tr><td><strong>AWS D1.1</strong></td><td>美国钢结构焊接规范</td><td>钢结构焊缝检测</td><td>高端建筑/桥梁项目</td></tr>
+</table>
+<div class="tip"><strong>★ 标准"不等同"原则</strong>：不同标准的等级<strong>不能直接画等号</strong>——NB/T 的 Ⅰ/Ⅱ/Ⅲ 级、GB/T 的 1/2/3 级、ASME 的评定等级，<strong>不是一一对应</strong>。客户换标准时要重新对照，不能想当然。</div>
+</div>
+
+<div class="section" id="ch4">
+<h2>四、图纸上的检测要求——接单的前提</h2>
+
+<div class="analogy">客户给你的检测要求，往往写在<strong>图纸的技术要求栏</strong>或委托单上，看起来像一句"暗号"。这一节教你看懂这句暗号。</div>
+
+<div class="key"><strong>★ 检测要求三要素（看懂这三样就能接单）</strong>：<br>
+① <strong>检测方法</strong>：UT / RT / MT / PT / ET？<br>
+② <strong>检测比例</strong>：100%（全检）还是 20%（抽检）？<br>
+③ <strong>验收等级</strong>：Ⅰ/Ⅱ/Ⅲ 级（或 1/2/3 级）合格？</div>
+
+<h3>4.1 图纸技术要求栏常见写法</h3>
+<table>
+<tr><th>图纸上的写法</th><th>翻译</th></tr>
+<tr><td>"所有焊缝按 NB/T 47013 进行 20% UT 检测，Ⅱ级合格"</td><td>承压设备标准、超声、抽检 20%、Ⅱ级卡线</td></tr>
+<tr><td>"A/B 类焊缝 100% RT 检测，Ⅱ级合格"</td><td>射线拍片、A/B 类焊缝全检、Ⅱ级卡线</td></tr>
+<tr><td>"全部表面 MT 检测，Ⅰ级合格"</td><td>磁粉查表面、全检、Ⅰ级（最严）合格</td></tr>
+<tr><td>"所有焊缝按 GB/T 11345 标准，B 级检验"</td><td>焊缝 UT 通用标准、B 级检测等级</td></tr>
+</table>
+
+<h3>4.2 检测委托单解读四步法</h3>
+<div class="ndt"><strong>接到委托单，按这四步走</strong>：<br>
+<strong>① 什么工件？</strong>→ 判断工件类型（焊缝 / 板材 / 铸件 / 锻件 / 管材）<br>
+<strong>② 什么材料多厚？</strong>→ 查声速、选探头（频率、K 值）<br>
+<strong>③ 什么标准什么等级？</strong>→ 选试块、做 DAC 曲线、知道合格线<br>
+<strong>④ 有没有特殊要求？</strong>→ 比如 PWHT（焊后热处理）后检测、高温在役、表面受限等</div>
+
+<table>
+<tr><th>委托单项</th><th>例子</th><th>你拿来干嘛</th></tr>
+<tr><td>工件名称</td><td>"反应釜筒体纵焊缝"</td><td>知道测什么</td></tr>
+<tr><td>材料牌号</td><td>"Q345R"</td><td>查声速，判断 UT 特性</td></tr>
+<tr><td>板厚/规格</td><td>"板厚 24mm"</td><td>选探头 K 值和频率</td></tr>
+<tr><td>焊缝形式</td><td>"V 形坡口对接"</td><td>判断未熔合可能位置</td></tr>
+<tr><td>焊接方法</td><td>"埋弧焊 SAW"</td><td>判断可能缺陷类型</td></tr>
+<tr><td>检测标准</td><td>"NB/T 47013"</td><td>按什么规程操作</td></tr>
+<tr><td>检测比例</td><td>"100% UT"</td><td>知道工作量</td></tr>
+<tr><td>验收等级</td><td>"Ⅱ级合格"</td><td>知道合格线</td></tr>
+</table>
+
+<div class="sale"><strong>场景 2 · 客户发来图纸</strong><br>
+客户（发来一张图纸）："你看看，我们这焊缝要怎么测？"<br>
+你（看技术要求栏："对接焊缝按 GB/T 11345 B 级检验，20% UT，Ⅱ级合格"）："看明白了——<strong>焊缝 UT，通用标准 11345，B 级检测等级，抽检 20%，Ⅱ级合格</strong>。我先确认下材料和板厚好定探头：这是什么材料、多厚？……好，Q345R、24mm，那用 <strong>5MHz、K2.5 斜探头 + RB-Ⅱa 试块</strong>做 DAC 曲线，按 B 级工艺扫查，缺陷按 Ⅱ级评定。这个我们出工艺和报告没问题。"</div>
+</div>
+
+<div class="section" id="ch5">
+<h2>五、标准选择逻辑——客户问"按什么标准"你怎么答</h2>
+
+<div class="key"><strong>★ 一句话逻辑：先看工件归哪个行业，再选该行业的标准</strong>。</div>
+
+<table>
+<tr><th>客户行业/工件</th><th>引用标准</th></tr>
+<tr><td><strong>压力容器/锅炉/储罐</strong></td><td><strong>NB/T 47013</strong></td></tr>
+<tr><td>钢结构/建筑焊缝（非承压）</td><td>GB/T 11345</td></tr>
+<tr><td>铸钢件</td><td>GB/T 7233.2</td></tr>
+<tr><td><strong>锻件（军工/航空）</strong></td><td><strong>GJB 1580A</strong></td></tr>
+<tr><td>电力/电网绝缘子</td><td>DL/T 303</td></tr>
+<tr><td>铁路/钢轨</td><td>TB/T</td></tr>
+<tr><td>船舶</td><td>CCS / ABS 船级社规范</td></tr>
+<tr><td>核电</td><td>RCC-M / HAF / ASME</td></tr>
+<tr><td>涉外/外资项目</td><td>ASME / EN ISO</td></tr>
+</table>
+<div class="ndt"><strong>选完行业，再看方法</strong>：UT 用对应标准的 UT 分册，RT 用 RT 分册，依此类推。然后看<strong>合格等级由设计/合同规定</strong>（常见 Ⅱ级或 Ⅲ级合格），<strong>检测比例由焊缝类别/容器等级决定</strong>（100% 或抽检）。</div>
+</div>
+
+<div class="section" id="ch6">
+<h2>六、人员资格认证——谁有资格出报告</h2>
+
+<div class="warn"><strong>★ 特种设备必须持证</strong>：检测人员必须持有<strong>特种设备 NDT 人员证</strong>（UT/RT/MT/PT/ET 各方法分开考），检测机构也要取得<strong>特种设备检验检测机构核准证</strong>——这是<strong>法律要求</strong>，不是可选项。</div>
+
+<table>
+<tr><th>级别</th><th>能力</th><th>能干什么</th></tr>
+<tr><td><strong>Ⅰ级</strong></td><td>初级</td><td>按书面工艺操作、记录，<strong>不能独立出具报告</strong></td></tr>
+<tr><td><strong>Ⅱ级</strong></td><td>中级</td><td>按标准独立编制工艺、操作、评定、<strong>出具报告</strong>（一线主力）</td></tr>
+<tr><td><strong>Ⅲ级</strong></td><td>高级</td><td>审核报告、仲裁、培训考核Ⅰ/Ⅱ级、<strong>对技术负总责</strong></td></tr>
+</table>
+<div class="tip"><strong>★ 人员资格也是销售资源</strong>：你介绍自家检测服务时，"我们有 Ⅲ 级人员把关、Ⅱ 级人员操作，特种设备持证"——这就是让客户放心的硬实力。</div>
+</div>
+
+<div class="milestone" id="milestone">
+<div class="ms-tag">★ 全课程收官 ★</div>
+<h2>恭喜，扫盲课通关了！</h2>
+<p>走到这里，你已经走完了 <strong>3 个阶段、18 节课</strong>的完整旅程。从"钢是什么"到"怎么出检测报告"，你完成了从<strong>零基础</strong>到<strong>能跟客户专业对话</strong>的跨越。</p>
+
+<div class="stage-row">
+<div class="stage"><span class="s-num">1</span><span class="s-title">第一阶段 · 懂对象</span><div class="s-desc">第 1–6 课：材料、牌号、成型、焊接、工件、图纸——客户拿来的工件是什么、怎么造的，你不卡壳。</div></div>
+<div class="stage"><span class="s-num">2</span><span class="s-title">第二阶段 · 懂靶标</span><div class="s-desc">第 7–9 课：钢材/铸件/焊缝/在役/有色/复材缺陷——客户要查的毛病长什么样、怎么来的，你心里有数。</div></div>
+<div class="stage"><span class="s-num">3</span><span class="s-title">第三阶段 · 懂手段</span><div class="s-desc">第 10–16 课：NDT 总论、UT 物理、设备探头、方法评定、其他方法、标准体系——怎么测、设备怎么选、方案怎么出、标准怎么用。</div></div>
+</div>
+
+<h3>现在你应该能做到</h3>
+<div class="checklist">
+<ul>
+<li>客户说材料/牌号/工艺（Q345R、锻件、埋弧焊），你不卡壳</li>
+<li>客户说缺陷名称（分层、白点、未熔合、疲劳裂纹），你知道长啥样、怎么来的</li>
+<li>客户拿焊缝图纸来，你看得懂检测要求、配得出 UT 方案（探头/试块/等级）</li>
+<li>能专业介绍自家 UT 设备（A 扫便携、水浸 C 扫、PAUT/TOFD）</li>
+<li>能在 UT/RT/MT/PT/ET 之间做方法选型，知道"焊缝为什么组合拳"</li>
+<li>听得懂客户引用的标准（NB/T 47013、GB/T 11345、GJB 1580A、ASME）</li>
+<li>看懂委托单三要素：方法、比例、验收等级</li>
+</ul>
+</div>
+
+<h3>客户拿工件来的完整应对流程（背下来！）</h3>
+<div class="flow" style="background:rgba(255,255,255,.85)">
+<div class="flow-step"><span class="step-no">1</span><div class="step-body"><strong>问材料与牌号</strong>：什么材料？（Q345R / 304 / 铝合金 / 复材…）→ 查声速，判断 UT 难易（奥氏体/铸件粗晶难检）。</div></div>
+<div class="flow-step"><span class="step-no">2</span><div class="step-body"><strong>问工件与尺寸</strong>：什么工件、多厚？（焊缝 / 板材 / 锻件 / 管材；板厚决定探头 K 值和频率）。</div></div>
+<div class="flow-step"><span class="step-no">3</span><div class="step-body"><strong>问缺陷靶标</strong>：要查什么缺陷？（分层 / 白点 / 裂纹 / 气孔 / 在役疲劳…）→ 决定方法选型（面状→UT，体积型→RT，表面→MT/PT）。</div></div>
+<div class="flow-step"><span class="step-no">4</span><div class="step-body"><strong>问标准与等级</strong>：按什么标准、什么等级？（NB/T 47013 / GB/T 11345；Ⅱ级合格 / 100% 还是 20%）。</div></div>
+<div class="flow-step"><span class="step-no">5</span><div class="step-body"><strong>选方法配探头</strong>：综合以上四步 → 定方法（UT/RT/MT/PT/ET 或组合）→ 选探头/试块 → 定检测等级和工艺。</div></div>
+<div class="flow-step"><span class="step-no">6</span><div class="step-body"><strong>报方案与价格</strong>：出检测工艺、说明合格线、报价——<strong>一个专业、不漏项的检测方案就这么落地了</strong>。</div></div>
+</div>
+
+<p style="margin-top:18px;font-size:15px;color:var(--text)"><strong>这六步，就是这套扫盲课从第 1 课到第 16 课，所有知识的最终汇聚点。</strong>你不再是"卖仪器的"，而是<strong>能听懂客户、能给出方案、能专业对话的 NDT 销售工程师</strong>。后面还有第 17、18 课（实战演练+方法补充），但<strong>认知框架到这里就搭完了</strong>。继续加油！</p>
+</div>
+
+<div class="section" id="exam">
+<h2>📝 随堂测验（6 题，最后一题是课程总测验）</h2>
+<div class="quiz-intro">标准体系 + 图纸要求 + 全课程认知。最后一题考整体——看看你这 18 课学下来融会贯通了没。</div>
+
+<div class="quiz-question" data-correct="B">
+<div class="q-text"><span class="q-num">1</span>"NB/T 47013.3"中的".3"代表什么？</div>
+<div class="quiz-option" data-k="A">A. 第 3 版本</div>
+<div class="quiz-option" data-k="B">B. 第 3 分册——超声检测 UT</div>
+<div class="quiz-option" data-k="C">C. Ⅲ级合格</div>
+<div class="quiz-option" data-k="D">D. 2013 年发布</div>
+<div class="quiz-explain">✅ 选 B。NB/T 47013<strong>按方法分册</strong>：.2 是 RT、<strong>.3 是 UT</strong>、.4 是 MT、.5 是 PT、.6 是 ET。所以"47013.3 做 UT"= 承压设备标准的超声检测分册。这是压力容器客户最常引用的。</div>
+</div>
+
+<div class="quiz-question" data-correct="C">
+<div class="q-text"><span class="q-num">2</span>下列哪一组对应关系<strong>正确</strong>？</div>
+<div class="quiz-option" data-k="A">A. GB/T 11345 → 铸钢件 UT</div>
+<div class="quiz-option" data-k="B">B. GJB 1580A → 压力容器 NDT</div>
+<div class="quiz-option" data-k="C">C. NB/T 47013 → 承压设备 NDT；GB/T 11345 → 焊缝 UT 通用</div>
+<div class="quiz-option" data-k="D">D. ASME → 中国国家标准</div>
+<div class="quiz-explain">✅ 选 C。<strong>NB/T 47013 是承压设备（压力容器/锅炉）NDT 圣经</strong>，<strong>GB/T 11345 是焊缝 UT 通用标准</strong>（钢结构、建筑焊缝）。A 错：铸钢件 UT 是 GB/T 7233.2；B 错：GJB 1580A 是军工/航空锻件变形金属 UT；D 错：ASME 是美国锅炉压力容器规范。</div>
+</div>
+
+<div class="quiz-question" data-correct="A">
+<div class="q-text"><span class="q-num">3</span>看懂图纸上的检测要求，最关键是抓住哪三要素？</div>
+<div class="quiz-option" data-k="A">A. 检测方法（UT/RT/MT/PT）+ 检测比例（100%/20%）+ 验收等级（Ⅰ/Ⅱ/Ⅲ级）</div>
+<div class="quiz-option" data-k="B">B. 工件名称 + 材料 + 重量</div>
+<div class="quiz-option" data-k="C">C. 图号 + 比例 + 设计者</div>
+<div class="quiz-option" data-k="D">D. 焊缝形式 + 坡口角度 + 焊脚尺寸</div>
+<div class="quiz-explain">✅ 选 A。<strong>方法、比例、验收等级</strong>是接单的三要素。例如"100% UT Ⅱ级合格"= 全检、超声、Ⅱ级卡线。B/C/D 是图纸的其他信息，但<strong>不是检测要求的核心</strong>。</div>
+</div>
+
+<div class="quiz-question" data-correct="D">
+<div class="q-text"><span class="q-num">4</span>关于 NDT 人员资格（Ⅰ/Ⅱ/Ⅲ级），下列说法正确的是？</div>
+<div class="quiz-option" data-k="A">A. Ⅰ级人员可以独立出具检测报告</div>
+<div class="quiz-option" data-k="B">B. 级别越高越会操作仪器，Ⅲ级只操作不审核</div>
+<div class="quiz-option" data-k="C">C. 特种设备检测不需要人员持证</div>
+<div class="quiz-option" data-k="D">D. Ⅱ级可独立编制工艺并出具报告；Ⅲ级负责审核、仲裁、培训考核（特种设备必须持证）</div>
+<div class="quiz-explain">✅ 选 D。<strong>Ⅰ级</strong>只能按工艺操作记录、不能独立出报告；<strong>Ⅱ级</strong>是一线主力，能独立编制工艺、评定、出报告；<strong>Ⅲ级</strong>负责审核、仲裁、培训考核Ⅰ/Ⅱ级。特种设备<strong>必须持证</strong>（法律强制），机构和人员都要资质。</div>
+</div>
+
+<div class="quiz-question" data-correct="B">
+<div class="q-text"><span class="q-num">5</span>客户说"按 ASME Section V 做 UT"，这属于什么情况？</div>
+<div class="quiz-option" data-k="A">A. 中国国家标准，国内常规项目</div>
+<div class="quiz-option" data-k="B">B. 美国锅炉压力容器规范的 NDT 方法标准，涉外/美资项目常用</div>
+<div class="quiz-option" data-k="C">C. 欧洲标准</div>
+<div class="quiz-option" data-k="D">D. 中国军用标准</div>
+<div class="quiz-explain">✅ 选 B。<strong>ASME 是美国机械工程师学会的锅炉压力容器规范</strong>，Section V 是 NDT 方法标准（Section VIII 是压力容器建造规则）。涉外项目、美资客户、国际工程引用最多。它和中国的 NB/T 47013、欧洲的 EN ISO 是平行的不同体系，<strong>等级不能直接等同</strong>。</div>
+</div>
+
+<div class="quiz-question" data-correct="D">
+<div class="q-text"><span class="q-num">6</span>【课程总测验】客户拿一个 Q345R 压力容器筒体焊缝（板厚 24mm，V 形坡口对接，埋弧焊）来找你，要求按 NB/T 47013 做 UT。综合 18 课所学，最专业的应对是？</div>
+<div class="quiz-option" data-k="A">A. "这是钢结构，按 GB/T 11345 做，用直探头测分层就行"</div>
+<div class="quiz-option" data-k="B">B. "Q345R 是奥氏体不锈钢，UT 测不了，建议用 RT"</div>
+<div class="quiz-option" data-k="C">C. "只做 UT 就够了，表面不用管"</div>
+<div class="quiz-option" data-k="D">D. "压力容器焊缝用 NB/T 47013.3 分册；24mm Q345R 细晶低合金钢，选 5MHz、K2.5 斜探头查内部裂纹/未熔合；建议表面再补 MT；要确认检测比例和验收等级（常见 Ⅱ级）再出工艺"</div>
+<div class="quiz-explain">✅ 选 D。这是<strong>整套课程的综合应用</strong>：<br>
+• <strong>懂对象</strong>：Q345R 是低合金压力容器钢（不是奥氏体不锈钢，B 错），细晶 UT 正常；24mm 板厚选 K2.5 合适。<br>
+• <strong>懂靶标</strong>：埋弧焊对接焊缝要查裂纹、未熔合、未焊透、气孔夹渣。<br>
+• <strong>懂手段</strong>：焊缝 UT 用横波斜探头（A 错：不是钢结构/直探头/分层）；面状缺陷 UT 强。<br>
+• <strong>懂标准</strong>：压力容器用 NB/T 47013.3；承压设备焊缝<strong>表面也得查（MT）</strong>，C 错（不能只做 UT）。<br>
+• <strong>流程</strong>：问材料厚度 → 选探头 → 定等级比例 → 出工艺。这就是一个专业、不漏项的方案。恭喜你，扫盲课真正通关了！</div>
+</div>
+
+<div id="quiz-result"><div>你的得分</div><div class="score">0</div><div id="result-text"></div><br><button class="btn ghost" onclick="resetQuiz()">重新作答</button></div>
+<div style="text-align:center;margin-top:14px"><button class="btn" onclick="submitQuiz()">交卷</button></div>
+</div>
+
+</div>
+<div style="text-align:center;margin:24px 0;padding:14px;background:#eaf2f8;border-radius:8px"><a href="index.html" style="display:inline-block;background:#1a5276;color:#fff;padding:10px 28px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px">🏠 返回总目录</a></div>
+<script>
+document.querySelectorAll('.quiz-question').forEach(function(q){var correct=q.dataset.correct;q.querySelectorAll('.quiz-option').forEach(function(opt){opt.addEventListener('click',function(){if(q.classList.contains('locked'))return;q.querySelectorAll('.quiz-option').forEach(function(o){o.classList.remove('correct','wrong');var m=o.querySelector('.mark');if(m)m.remove();});var k=opt.dataset.k;if(k===correct){opt.classList.add('correct');opt.insertAdjacentHTML('beforeend','<span class="mark">✓</span>');}else{opt.classList.add('wrong');opt.insertAdjacentHTML('beforeend','<span class="mark">✗</span>');q.querySelectorAll('.quiz-option').forEach(function(o){if(o.dataset.k===correct){o.classList.add('correct');}});}q.querySelector('.quiz-explain').classList.add('show');q.classList.add('locked');});});});
+function submitQuiz(){var qs=document.querySelectorAll('.quiz-question');var a=0,s=0;qs.forEach(function(q){if(q.classList.contains('locked')){a++;if(q.querySelector('.quiz-option.correct'))s++;}});var r=document.getElementById('quiz-result');r.style.display='block';r.querySelector('.score').textContent=s+' / '+qs.length;var p=s/qs.length,m='';if(p===1)m='满分！整套扫盲课你真正通关了，恭喜毕业！';else if(p>=.75)m='很好！最后一题如果对了，说明你融会贯通了。';else if(p>=.5)m='重看核心标准 NB/T 47013 和 GB/T 11345，再测一次。';else m='建议回看第 15、16 课，标准体系需要多过几遍。';document.getElementById('result-text').textContent=m+'（已答'+a+'/'+qs.length+'）';r.scrollIntoView({behavior:'smooth',block:'center'});}
+function resetQuiz(){document.querySelectorAll('.quiz-question').forEach(function(q){q.classList.remove('locked');q.querySelectorAll('.quiz-option').forEach(function(o){o.classList.remove('correct','wrong');var m=o.querySelector('.mark');if(m)m.remove();});q.querySelector('.quiz-explain').classList.remove('show');});document.getElementById('quiz-result').style.display='none';}
+</script>
+</body></html>

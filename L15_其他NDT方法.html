@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第15课 · 其他 NDT 方法（RT/MT/PT/ET）</title>
+<style>
+:root{--primary:#1a5276;--primary-light:#2980b9;--accent:#e67e22;--bg:#f4f6f7;--card:#fff;--text:#2c3e50;--text-light:#7f8c8d;--border:#d5dbdb;--success:#27ae60;--danger:#e74c3c;--warning:#f39c12;--info:#3498db;--shadow:0 2px 8px rgba(0,0,0,.08)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.85;font-size:15.5px;scroll-behavior:smooth}
+.topbar{position:fixed;top:0;left:0;right:0;height:52px;background:var(--primary);color:#fff;display:flex;align-items:center;padding:0 20px;z-index:1000;box-shadow:0 4px 20px rgba(0,0,0,.12)}
+.topbar h1{font-size:16px;font-weight:600}.topbar .crumb{font-size:12px;opacity:.75;margin-left:8px}
+.topbar nav{margin-left:auto;display:flex;gap:4px;overflow-x:auto}
+.topbar nav a{color:#cfd8dc;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:4px;white-space:nowrap}
+.sidebar{position:fixed;top:52px;left:0;bottom:0;width:230px;background:#fff;border-right:1px solid var(--border);overflow-y:auto;padding:14px 0;z-index:900}
+.sidebar a{display:block;padding:8px 18px;color:var(--text-light);text-decoration:none;font-size:12.5px;border-left:3px solid transparent}
+.sidebar a:hover{background:var(--bg);color:var(--primary)}
+.sidebar a.sub{padding-left:30px;font-size:11.5px}
+.main{margin-left:230px;margin-top:52px;padding:26px 32px;max-width:1000px}
+.section{background:var(--card);border-radius:10px;padding:24px 28px;margin-bottom:20px;box-shadow:var(--shadow)}
+.section h2{color:var(--primary);font-size:21px;border-bottom:2px solid var(--primary-light);padding-bottom:8px;margin-bottom:14px}
+.section h3{color:var(--primary);font-size:16.5px;margin:18px 0 8px;padding-left:10px;border-left:4px solid var(--accent)}
+.section p{margin:8px 0}.section ul,.section ol{margin:8px 0 8px 24px}.section li{margin:4px 0}.section strong{color:var(--primary)}
+.tip{background:#eafaf1;border-left:4px solid var(--success);padding:11px 15px;border-radius:6px;margin:12px 0}.tip::before{content:"💡 记住";display:block;font-weight:700;color:var(--success);font-size:12.5px;margin-bottom:3px}
+.warn{background:#fef9e7;border-left:4px solid var(--warning);padding:11px 15px;border-radius:6px;margin:12px 0}.warn::before{content:"⚠️ 注意";display:block;font-weight:700;color:var(--warning);font-size:12.5px;margin-bottom:3px}
+.key{background:#eaf2f8;border-left:4px solid var(--primary-light);padding:11px 15px;border-radius:6px;margin:12px 0}.key::before{content:"🔑 核心";display:block;font-weight:700;color:var(--primary);font-size:12.5px;margin-bottom:3px}
+.sale{background:#fdf2e9;border-left:4px solid var(--accent);padding:11px 15px;border-radius:6px;margin:12px 0}.sale::before{content:"💬 客户对话";display:block;font-weight:700;color:var(--accent);font-size:12.5px;margin-bottom:3px}
+.ndt{background:#eef5fb;border-left:4px solid var(--info);padding:11px 15px;border-radius:6px;margin:12px 0}.ndt::before{content:"🔬 检测要点";display:block;font-weight:700;color:var(--info);font-size:12.5px;margin-bottom:3px}
+.analogy{background:linear-gradient(135deg,#fdf2e9,#fef9e7);border:1px dashed var(--accent);border-radius:8px;padding:12px 15px;margin:12px 0}.analogy::before{content:"🎯 打个比方";display:block;font-weight:700;color:var(--accent);font-size:12.5px;margin-bottom:4px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+th,td{border:1px solid var(--border);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--primary);color:#fff}tr:nth-child(even){background:#f8f9fa}
+td strong{color:var(--primary)}
+.quiz-intro{background:#eaf2f8;border-radius:8px;padding:12px 16px;margin:14px 0;color:var(--primary)}
+.quiz-question{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;margin:12px 0}
+.quiz-question .q-text{font-weight:600;margin-bottom:8px}
+.quiz-question .q-num{display:inline-block;background:var(--primary);color:#fff;width:24px;height:24px;border-radius:50%;text-align:center;line-height:24px;font-size:12px;margin-right:6px}
+.quiz-option{display:block;padding:9px 12px;margin:5px 0;border:2px solid var(--border);border-radius:6px;cursor:pointer}
+.quiz-option:hover{border-color:var(--primary-light);background:#eaf2f8}
+.quiz-option.correct{border-color:var(--success);background:#eafaf1}
+.quiz-option.wrong{border-color:var(--danger);background:#fdedec}
+.quiz-option .mark{float:right;font-weight:700}
+.quiz-explain{margin-top:8px;padding:9px;background:#f8f9fa;border-radius:4px;font-size:12.5px;display:none}
+.quiz-explain.show{display:block}
+#quiz-result{display:none;text-align:center;padding:28px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin:14px 0}
+#quiz-result .score{font-size:44px;font-weight:700;margin:8px 0}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:9px 24px;border-radius:6px;border:none;cursor:pointer;font-size:14px;font-weight:600}
+.btn:hover{background:var(--accent-light)}
+.btn.ghost{background:transparent;color:var(--primary);border:2px solid var(--primary)}
+.hero{text-align:center;padding:38px 28px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin-bottom:20px}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);padding:3px 12px;border-radius:12px;font-size:11.5px;margin-bottom:8px}
+.hero h1{font-size:26px;margin-bottom:8px}.hero p{font-size:14px;opacity:.92}
+@media(max-width:900px){.sidebar{transform:translateX(-100%)}.main{margin-left:0;padding:14px}.topbar nav{display:none}}
+</style></head><body>
+<div class="topbar"><h1>🔬 NDT 扫盲课</h1><span class="crumb">第 15 课 · 其他 NDT 方法</span><nav><a href="#hero">封面</a><a href="#ch1">RT</a><a href="#ch2">MT</a><a href="#ch3">PT</a><a href="#ch4">ET</a><a href="#ch6">选型</a><a href="#exam">测验</a></nav></div>
+<div class="sidebar">
+<a href="#hero">封面</a>
+<a href="#ch1">一、RT 射线检测</a>
+<a href="#ch1-1" class="sub">1.1 原理与成像</a>
+<a href="#ch1-2" class="sub">1.2 UT vs RT</a>
+<a href="#ch2">二、MT 磁粉检测</a>
+<a href="#ch3">三、PT 渗透检测</a>
+<a href="#ch4">四、ET 涡流检测</a>
+<a href="#ch5">五、其他方法速览</a>
+<a href="#ch6">六、五大方法选型</a>
+<a href="#exam">📝 测验</a>
+</div>
+<div class="main">
+
+<div class="section" id="hero" style="padding:0;overflow:hidden"><div class="hero">
+<span class="tag">扫盲课 · 第三阶段 · 第 15 课（懂手段③·方法选型）</span>
+<h1>其他 NDT 方法：RT / MT / PT / ET</h1>
+<p>UT 是你的本行，但客户问"为啥不拍 X 光""表面裂纹能不能用超声"时，你得知道 UT 之外还有谁、各管什么。这一课就是方法选型的"兵器谱"。</p>
+</div></div>
+
+<div class="section" id="ch1">
+<h2>一、RT 射线检测——"给工件拍 X 光片"</h2>
+
+<h3 id="ch1-1">1.1 原理：穿透照相</h3>
+<div class="analogy">RT 就是<strong>给工件拍 X 光片</strong>——就像医院拍胸片。射线（X 或 γ）穿透工件打在胶片上，<strong>穿得多的地方底片黑，穿得少的地方底片白</strong>。缺陷处（比如气孔=空气）"挡路"的材料少了，射线透过去多，<strong>底片上就出一个黑影</strong>。</div>
+<table>
+<tr><th>射线源</th><th>怎么产生</th><th>穿透力（钢）</th><th>特点</th></tr>
+<tr><td><strong>X 射线</strong></td><td>X 射线机：高速电子打钨靶（160–450 kV）</td><td>一般 &lt;100mm</td><td>可关机、可控，现场常用</td></tr>
+<tr><td><strong>γ 射线</strong></td><td>放射源衰变（Ir-192 / Co-60 / Se-75）</td><td>可达 200mm</td><td>穿透深、不用电，但<strong>有源、有辐射风险</strong></td></tr>
+</table>
+<div class="ndt"><strong>成像方式</strong>：胶片照相法（传统主流，有永久底片）/ DR 数字成像（实时，不用暗室）/ CR 计算机射线照相 / <strong>工业 CT</strong>（三维重建，最贵最清楚）。</div>
+<div class="tip"><strong>透照布置（射线怎么照）</strong>：单壁单影（最常用）/ 双壁单影（小径管）/ 双壁双影（小径管环缝椭圆成像）/ 全景曝光（源放中心，球罐管道整圈一次拍）。还有个<strong>像质计 IQI</strong>（贴在工件上的金属丝/孔），底片上能看清第几根丝，就代表这次拍片灵不灵。</div>
+
+<h3 id="ch1-2">1.2 RT 强在哪、弱在哪（必背）</h3>
+<div class="key"><strong>★ RT 的强项 = 体积型缺陷</strong>（气孔、密集气孔、夹渣、未焊透、咬边）——这些缺陷"少了一块材料"，射线透过去多，底片出黑影，<strong>又直观又准</strong>。<br>
+<strong>★ RT 的弱项 = 面状缺陷</strong>（裂纹、未熔合）——只有当<strong>裂纹平面和射线方向接近平行</strong>时才拍得到；方向不对，<strong>RT 可能完全漏检</strong>！</div>
+<div class="warn"><strong>辐射 + 成本</strong>：RT 有辐射危害（要屏蔽/距离/时间三原则防护、人员持证），胶片+药水+暗室+废物处理成本高，速度也比 UT 慢。而且 RT 是<strong>二维投影</strong>，<strong>给不出缺陷的深度</strong>（要双曝光或工业 CT 才行）。<strong>RT 只检内部</strong>——表面缺陷它不管，得 MT/PT 上。</div>
+
+<div class="ndt"><strong>★ UT vs RT 一句话</strong>：<strong>UT 对面状缺陷（裂纹/未熔合）灵敏，RT 对体积型缺陷（气孔/夹渣）灵敏</strong>。所以重要焊缝常常 <strong>UT + RT 都做</strong>，互相补漏。铸件粗晶 UT 难做，<strong>RT 反而是铸件首选</strong>（查气孔、疏松特别清楚）。</div>
+
+<table>
+<tr><th>对比项</th><th>UT（超声）</th><th>RT（射线）</th></tr>
+<tr><td>最擅长的缺陷</td><td><strong>面状（裂纹/未熔合/分层）</strong></td><td><strong>体积型（气孔/夹渣）</strong></td></tr>
+<tr><td>裂纹检出</td><td>强（方向合适就灵）</td><td><strong>弱（方向不平行会漏检）</strong></td></tr>
+<tr><td>缺陷深度</td><td><strong>能给出</strong>（时间×声速）</td><td>给不出（二维投影）</td></tr>
+<tr><td>速度/成本</td><td>快、便宜</td><td>慢、贵</td></tr>
+<tr class="bad-row"><td>辐射</td><td>无</td><td><strong>有，要防护</strong></td></tr>
+<tr><td>记录</td><td>波形/数据/B-C 扫描图</td><td><strong>永久底片，最直观</strong></td></tr>
+<tr><td>铸件</td><td>粗晶难做</td><td><strong>效果好（首选）</strong></td></tr>
+</table>
+
+<div class="sale"><strong>场景 1 · "为啥不直接拍片？"</strong><br>
+客户："我们这焊缝，直接拍 X 光不就行了，干嘛用超声？"<br>
+你："X 光拍片对<strong>气孔、夹渣</strong>这类体积型缺陷特别清楚，底片也直观，这是它的强项。但<strong>裂纹、未熔合</strong>这种面状缺陷，只有裂纹方向正好跟射线平行才拍得到，方向不对可能漏检——而<strong>超声对裂纹最灵敏</strong>。再有，X 光有辐射、成本高、给不出缺陷深度。所以重要焊缝一般是 <strong>UT 查裂纹 + RT 查气孔夹渣</strong>，组合拳最稳。您这焊缝最担心哪种缺陷？"</div>
+</div>
+
+<div class="section" id="ch2">
+<h2>二、MT 磁粉检测——"撒铁粉看表面裂纹"</h2>
+
+<div class="analogy">MT 就像中学物理课<strong>撒铁粉看磁铁磁力线</strong>。把铁磁性工件磁化，表面或近表面有缺陷（裂纹）的地方，磁力线会被"切断"并<strong>漏出工件表面形成漏磁场</strong>，这时候撒上去的磁粉（铁粉）就被吸住，<strong>堆出一道看得见的缺陷痕迹</strong>。</div>
+<div class="key"><strong>★ MT 三要素</strong>：① <strong>磁化</strong>（产生磁场）② <strong>缺陷切断磁力线</strong>（产生漏磁场）③ <strong>磁粉</strong>（被吸附显示）。缺一个都不行。</div>
+
+<h3>2.1 两个硬条件</h3>
+<div class="warn"><strong>① 材料必须是铁磁性的</strong>：<br>
+✅ 碳钢、低合金钢、铁素体/马氏体不锈钢 —— <strong>能做 MT</strong><br>
+❌ <strong>奥氏体不锈钢（304/316）、铝、铜、钛、复合材料 —— 不能做 MT</strong>（不导磁，磁粉吸不住）<br><br>
+<strong>② 缺陷必须切断磁力线</strong>：缺陷方向跟磁场<strong>垂直</strong>时最灵敏；<strong>平行</strong>时几乎没漏磁场，<strong>可能漏检</strong>。所以 MT 至少要<strong>两个方向</strong>（周向 + 纵向）磁化，确保各方向裂纹都能抓到。</div>
+
+<h3>2.2 磁化方法 + 试片</h3>
+<table>
+<tr><th>磁化方法</th><th>怎么磁化</th><th>适合查什么</th></tr>
+<tr><td><strong>通电法（周向）</strong></td><td>电流直接过工件</td><td>纵向缺陷（沿轴向）</td></tr>
+<tr><td><strong>线圈法（纵向）</strong></td><td>工件放进线圈</td><td>横向缺陷（垂直轴向）</td></tr>
+<tr><td><strong>磁轭法（丫法）</strong></td><td>电磁轭跨在工件上，局部磁化</td><td><strong>大型工件、焊缝局部检测（最常用便携）</strong></td></tr>
+<tr><td>中心导体法</td><td>导体穿入管/孔感应磁化</td><td>管材内壁、空心件</td></tr>
+</table>
+<div class="tip"><strong>试片（质量指示器）</strong>：A 型试片贴在工件上，检验这次磁化够不够、方向对不对。<strong>试片显示清楚了，才说明磁化有效</strong>，否则测了白测。检测完重要件还要<strong>退磁</strong>（剩磁会影响仪表、吸附铁屑、干扰焊接）。</div>
+
+<div class="ndt"><strong>MT 能测多深</strong>：表面 + <strong>近表面</strong>（一般几 mm 内）。比 PT 多一个"近表面"能力，这是铁磁材料优先用 MT 的原因。典型应用：焊缝表面焊趾裂纹、锻件/铸件表面裂纹、淬火/磨削裂纹、疲劳裂纹、螺栓螺纹裂纹。</div>
+</div>
+
+<div class="section" id="ch3">
+<h2>三、PT 渗透检测——"红墨水渗进裂缝"</h2>
+
+<div class="analogy">PT 就像<strong>水泼在水泥地上，裂缝会把水吸进去变深色</strong>。把红色渗透液涂在工件表面，渗透液靠<strong>毛细现象</strong>钻进表面开口的缺陷里；洗掉表面多余的渗透液；再喷一层白色显像剂，把缺陷里的渗透液"吸"出来——<strong>白底上显出一道红痕</strong>，缺陷就现形了。</div>
+<div class="key"><strong>★ PT 的硬条件</strong>：缺陷必须<strong>开口到表面</strong>。闭口缺陷、近表面缺陷都测不到。表面必须清洁（油污/涂层会堵住开口）。</div>
+
+<h3>3.1 两种类型</h3>
+<table>
+<tr><th>类型</th><th>怎么看</th><th>特点</th></tr>
+<tr><td><strong>着色渗透</strong></td><td>红渗透液 + 白显像剂，<strong>白光下看</strong></td><td>不用紫外线，现场方便，最常用</td></tr>
+<tr><td><strong>荧光渗透</strong></td><td>荧光渗透液，<strong>紫外线下看</strong></td><td><strong>灵敏度最高</strong>，航空标准要求</td></tr>
+</table>
+<div class="ndt"><strong>PT 操作七步</strong>：预清洗 → 渗透（停留 5–30 分钟）→ 去除 → 干燥 → 显像（停留 5–30 分钟）→ 检验 → 后清洗。步骤多、耗时，这是 PT 的缺点。</div>
+
+<h3>3.2 MT vs PT（铁磁材料先选 MT）</h3>
+<table>
+<tr><th>维度</th><th>MT 磁粉</th><th>PT 渗透</th></tr>
+<tr><td>材料</td><td><strong>只能铁磁</strong></td><td><strong>任何材料</strong>（金属/非金属/复材）</td></tr>
+<tr><td>缺陷深度</td><td>表面 + 近表面</td><td><strong>仅表面开口</strong></td></tr>
+<tr><td>速度</td><td>快</td><td>慢</td></tr>
+<tr><td>设备</td><td>磁化设备</td><td>简单（喷罐就行）</td></tr>
+<tr><td>怎么选</td><td><strong>铁磁材料首选 MT</strong></td><td>非铁磁材料（不锈钢/铝/铜）只能 PT</td></tr>
+</table>
+<div class="tip"><strong>★ 一句话决策</strong>：铁磁材料（碳钢/低合金钢）优先 MT（还能测近表面）；非铁磁材料（奥氏体不锈钢、铝、铜、钛、复材）只能用 PT。</div>
+</div>
+
+<div class="section" id="ch4">
+<h2>四、ET 涡流检测——"电磁感应查表面"</h2>
+
+<div class="analogy">ET 有点像<strong>电磁炉</strong>：通交流电的检测线圈靠近导电工件，靠<strong>电磁感应</strong>在工件表面感应出一圈圈<strong>涡流</strong>（环形电流）。缺陷处涡流被搅乱 → 反磁场变化 → 线圈阻抗变化 → 仪器显示信号。<strong>核心是电磁感应 + 阻抗分析</strong>。</div>
+<div class="warn"><strong>★ ET 两个硬条件</strong>：<br>
+① 材料必须<strong>导电</strong>（钢/铝/铜/钛/镍、碳纤维导电；<strong>玻璃纤维/塑料/陶瓷不导电，测不了</strong>）<br>
+② 只测<strong>表面 + 近表面</strong>——因为有<strong>趋肤效应</strong>：交流电集中在表面，频率越高检测越浅。</div>
+
+<div class="ndt"><strong>趋肤效应</strong>：频率越高 → 检测越浅但表面灵敏度越高；频率越低 → 可测更深但灵敏度降低。<strong>一般 ET 测 0.1–5mm 深度</strong>。要测更深的缺陷，得上 UT。</div>
+
+<h3>4.1 阻抗平面 + 探头</h3>
+<div class="ndt"><strong>阻抗平面图</strong>：涡流信号表现为<strong>相位角 + 幅度</strong>。不同缺陷和干扰（提离、边缘、材质变化）有不同相位特征，靠<strong>相位分析区分缺陷和干扰</strong>——这是 ET 信号解释的难点。<br>
+<strong>探头类型</strong>：穿过式（管子从线圈穿过，自动化）/ 放置式（表面检测）/ <strong>内插式（换热管在役检测，王牌应用）</strong> / 阵列探头 ECA（大面积快速扫查）。</div>
+
+<div class="key"><strong>★ ET 的王牌应用 = 管材在役检测</strong>。换热管/冷凝管内插涡流探头，是<strong>核电、石化换热器的标准检测方法</strong>——管壁薄（1–3mm）刚好在涡流检测范围内，一根根管子穿过去，效率极高，查腐蚀和裂纹。</div>
+
+<table>
+<tr><th>维度</th><th>ET 涡流</th><th>UT 超声</th><th>MT/PT</th></tr>
+<tr><td>材料</td><td>导电</td><td>任何（声学）</td><td>MT 铁磁 / PT 任何</td></tr>
+<tr><td>深度</td><td>表面 + 近表面（浅）</td><td><strong>内部 + 表面</strong></td><td>MT 表面+近表面 / PT 表面开口</td></tr>
+<tr><td>速度</td><td><strong>最快</strong></td><td>快</td><td>中 / 慢</td></tr>
+<tr><td>接触</td><td><strong>非接触</strong></td><td>需耦合剂</td><td>MT 非接触 / PT 接触</td></tr>
+<tr><td>管材在役</td><td><strong>最强</strong></td><td>中</td><td>弱</td></tr>
+<tr><td>高温工件</td><td><strong>能（不接触）</strong></td><td>要高温耦合</td><td>难</td></tr>
+</table>
+</div>
+
+<div class="section" id="ch5">
+<h2>五、其他方法扫一眼（了解即可）</h2>
+<p>客户偶尔会问，知道它们存在和大致原理就行，不必深究。</p>
+<table>
+<tr><th>方法</th><th>一句话原理</th><th>典型应用</th></tr>
+<tr><td><strong>AE 声发射</strong></td><td><strong>被动"听"</strong>裂纹扩展时发出的声音（其他 NDT 都是主动发射）</td><td>压力容器水压试验时监测、在役裂纹扩展监测</td></tr>
+<tr><td><strong>红外热成像 IRT</strong></td><td>测表面温度差，缺陷处热传导不同 → 温度异常</td><td>复材分层筛查、保温层下腐蚀、电气热故障</td></tr>
+<tr><td><strong>漏磁 MFL</strong></td><td>磁化铁磁件，缺陷处漏磁场被霍尔传感器测到</td><td><strong>储罐底板腐蚀、管道内检测（智能猪）</strong></td></tr>
+<tr><td><strong>VT 目视</strong></td><td>眼睛/内窥镜/放大镜直接看——<strong>所有检测的第一步</strong></td><td>焊缝外观（咬边/错边）、内壁内窥镜</td></tr>
+</table>
+<div class="warn"><strong>AE 特别注意</strong>：声发射只能发现<strong>正在活动</strong>的缺陷（正在扩展的裂纹），静态缺陷测不到，而且<strong>必须加载（加压/加载荷）</strong>才能激发——这跟其他所有 NDT 都不一样。</div>
+</div>
+
+<div class="section" id="ch6">
+<h2>六、五大方法选型——为什么焊缝要"组合拳"</h2>
+
+<div class="key"><strong>★ 最核心的一句话</strong>：<strong>UT 查内部，MT/PT 查表面，RT 查体积型缺陷，ET 查管材/导电件表面</strong>。没有任何一种方法是万能的，<strong>焊缝检测标准流程 = UT/RT 查内部 + MT/PT 查表面</strong>。</div>
+
+<div class="analogy">为什么焊缝要"组合拳"？打个比方——UT 像雷达，能看穿皮肤查内脏（内部裂纹），但<strong>皮肤表面的口子它看不清</strong>（焊趾裂纹在 UT 盲区）；MT/PT 像手电筒照皮肤，专查表面开口。一个管里一个管外，<strong>必须配合才不漏</strong>。</div>
+
+<table>
+<tr><th>场景</th><th>推荐方法</th><th>为什么</th></tr>
+<tr><td>铁磁材料表面裂纹</td><td><strong>MT</strong>（首选）</td><td>还能测近表面，速度快</td></tr>
+<tr><td>非铁磁材料（不锈钢/铝）表面开口</td><td><strong>PT</strong></td><td>MT 测不了，PT 任何材料都行</td></tr>
+<tr><td>导电材料表面快速扫查</td><td><strong>ET</strong></td><td>非接触、最快、可自动化</td></tr>
+<tr><td>换热管/冷凝管在役检测</td><td><strong>ET</strong></td><td>管壁薄，内插涡流效率最高</td></tr>
+<tr><td>工件内部裂纹/未熔合</td><td><strong>UT</strong></td><td>对面状缺陷最灵敏</td></tr>
+<tr><td>焊缝气孔/夹渣（要底片存档）</td><td><strong>RT</strong></td><td>对体积型缺陷灵敏，底片直观</td></tr>
+<tr><td>铸件气孔/疏松</td><td><strong>RT</strong></td><td>铸件粗晶 UT 难做，RT 首选</td></tr>
+<tr><td>重要焊缝全面检测</td><td><strong>UT + RT + MT/PT</strong></td><td>里外都查，组合拳最稳</td></tr>
+</table>
+
+<div class="sale"><strong>场景 2 · "不锈钢焊缝表面裂纹能不能用超声/磁粉？"</strong><br>
+客户："我们这 304 不锈钢焊缝，表面有裂纹嫌疑，用你们超声测一下？或者磁粉？"<br>
+你："分两说：第一，<strong>超声 UT 对表面开口裂纹不敏感</strong>，尤其是焊缝余高那一圈（焊趾裂纹正好在 UT 盲区），不建议单靠 UT 查表面。第二，<strong>304 是奥氏体不锈钢，不导磁，磁粉 MT 用不了</strong>。所以您这种场合<strong>首推渗透 PT</strong>——任何材料的表面开口缺陷都能测；如果量大要快速扫，<strong>涡流 ET</strong> 也行（304 导电）。"</div>
+
+<div class="sale"><strong>场景 3 · "焊缝表面为什么不能只做 UT？"</strong><br>
+客户："我们焊缝全做 UT 了，表面应该也覆盖了吧？"<br>
+你："UT 对面积型<strong>内部</strong>缺陷很灵，但<strong>表面和近表面有盲区</strong>——焊缝余高区域的焊趾裂纹，UT 很可能漏检。所以焊缝检测标准流程是<strong>内部 UT/RT + 表面 MT/PT</strong>。铁磁材料焊缝用 MT，不锈钢焊缝用 PT。这样里外都不漏，才能出合格的检测报告。"</div>
+
+<div class="tip"><strong>★ 销售心法</strong>：客户问"能不能测"时，先在脑子里过三关——<strong>① 什么材料？（决定 MT/ET 能不能用）② 查表面还是内部？（决定 MT/PT 还是 UT/RT）③ 查什么缺陷？（面状→UT，体积型→RT）</strong>。过完这三关，五大方法里选哪个就清楚了。</div>
+</div>
+
+<div class="section" id="exam">
+<h2>📝 随堂测验（6 题）</h2>
+<div class="quiz-intro">RT / MT / PT / ET 四大方法 + 选型逻辑。这五题决定你能不能在客户面前做方法选型。</div>
+
+<div class="quiz-question" data-correct="C">
+<div class="q-text"><span class="q-num">1</span>RT 射线检测底片上，气孔通常呈现为什么？</div>
+<div class="quiz-option" data-k="A">A. 亮白色的点</div>
+<div class="quiz-option" data-k="B">B. 一条亮线</div>
+<div class="quiz-option" data-k="C">C. 圆形/椭圆形的暗点（黑影）</div>
+<div class="quiz-option" data-k="D">D. 彩色条纹</div>
+<div class="quiz-explain">✅ 选 C。气孔=空气，<strong>挡路的材料少了，射线透过去多，胶片曝光多，底片更黑</strong>，所以是暗点（黑影）。注意钨夹杂相反——钨密度比钢大、吸收射线多，底片反而是<strong>亮影</strong>。这是 RT 查体积型缺陷的强项。</div>
+</div>
+
+<div class="quiz-question" data-correct="B">
+<div class="q-text"><span class="q-num">2</span>为什么说 RT 对裂纹不如 UT 灵敏？</div>
+<div class="quiz-option" data-k="A">A. RT 分辨率太低</div>
+<div class="quiz-option" data-k="B">B. 只有裂纹平面与射线方向接近平行时才拍得到，方向不对会漏检</div>
+<div class="quiz-option" data-k="C">C. RT 看不到金属</div>
+<div class="quiz-option" data-k="D">D. 裂纹不吸收射线</div>
+<div class="quiz-explain">✅ 选 B。裂纹是<strong>面状缺陷</strong>，只有当裂纹平面与射线方向接近平行、射线"切着"裂纹薄面穿过时，才会产生足够的厚差显影；方向不对（比如垂直），<strong>RT 可能完全漏检</strong>。而 UT 声束垂直打在裂纹面上反射极强，所以查裂纹 UT 优先。</div>
+</div>
+
+<div class="quiz-question" data-correct="A">
+<div class="q-text"><span class="q-num">3</span>下列哪种材料<strong>不能</strong>用磁粉检测 MT？</div>
+<div class="quiz-option" data-k="A">A. 304 奥氏体不锈钢</div>
+<div class="quiz-option" data-k="B">B. Q235 碳钢</div>
+<div class="quiz-option" data-k="C">C. 40Cr 调质钢</div>
+<div class="quiz-option" data-k="D">D. Q345R 压力容器钢</div>
+<div class="quiz-explain">✅ 选 A。MT 的硬条件是<strong>材料必须铁磁性</strong>。碳钢、低合金钢（Q235/40Cr/Q345R）都是铁磁性的，能做 MT。<strong>304/316 奥氏体不锈钢不导磁</strong>（磁粉吸不住），铝/铜/钛/复材也不行，这些场合只能改用 PT（任何材料）或 ET（导电材料）。</div>
+</div>
+
+<div class="quiz-question" data-correct="D">
+<div class="q-text"><span class="q-num">4</span>渗透检测 PT 能检出哪种缺陷？</div>
+<div class="quiz-option" data-k="A">A. 工件内部的夹杂</div>
+<div class="quiz-option" data-k="B">B. 表面以下 5mm 的裂纹</div>
+<div class="quiz-option" data-k="C">C. 闭口的近表面缺陷</div>
+<div class="quiz-option" data-k="D">D. 开口到表面的缺陷（表面开口裂纹）</div>
+<div class="quiz-explain">✅ 选 D。PT 靠<strong>毛细现象</strong>让渗透液钻进缺陷，<strong>缺陷必须开口到表面</strong>才能渗进去。内部缺陷、近表面缺陷、闭口缺陷都测不到。要测近表面得用 MT（铁磁材料），要测内部得用 UT/RT。</div>
+</div>
+
+<div class="quiz-question" data-correct="B">
+<div class="q-text"><span class="q-num">5</span>涡流检测 ET 最典型、最强的应用场景是？</div>
+<div class="quiz-option" data-k="A">A. 厚钢板内部分层</div>
+<div class="quiz-option" data-k="B">B. 换热管/冷凝管的在役检测（内插探头穿管）</div>
+<div class="quiz-option" data-k="C">C. 焊缝底片存档</div>
+<div class="quiz-option" data-k="D">D. 铸件疏松照相</div>
+<div class="quiz-explain">✅ 选 B。换热管/冷凝管壁薄（1–3mm），正好在涡流趋肤深度范围内，<strong>内插涡流探头一根根穿过去，效率极高</strong>，是核电、石化换热器的标准检测方法。A 是 UT 的活，C 是 RT 的活，D 是 RT 的活。</div>
+</div>
+
+<div class="quiz-question" data-correct="C">
+<div class="q-text"><span class="q-num">6</span>【销售场景】客户："我们 316 不锈钢焊缝，怀疑表面有裂纹，用什么方法？"</div>
+<div class="quiz-option" data-k="A">A. "用磁粉 MT，最灵敏"</div>
+<div class="quiz-option" data-k="B">B. "用超声 UT 查表面"</div>
+<div class="quiz-option" data-k="C">C. "用渗透 PT（316 不导磁不能 MT；UT 对表面开口不敏感）"</div>
+<div class="quiz-option" data-k="D">D. "用射线 RT 拍片"</div>
+<div class="quiz-explain">✅ 选 C。316 是奥氏体不锈钢<strong>不导磁，MT 用不了</strong>；UT 对表面开口裂纹不敏感（焊趾还在盲区）；RT 对表面裂纹方向性敏感、还只检内部。<strong>渗透 PT 任何材料都能测表面开口缺陷，是不锈钢焊缝表面的首选</strong>。量大要快速扫也可以用 ET（316 导电）。</div>
+</div>
+
+<div id="quiz-result"><div>你的得分</div><div class="score">0</div><div id="result-text"></div><br><button class="btn ghost" onclick="resetQuiz()">重新作答</button></div>
+<div style="text-align:center;margin-top:14px"><button class="btn" onclick="submitQuiz()">交卷</button></div>
+</div>
+
+</div>
+<div style="text-align:center;margin:24px 0;padding:14px;background:#eaf2f8;border-radius:8px"><a href="index.html" style="display:inline-block;background:#1a5276;color:#fff;padding:10px 28px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px">🏠 返回总目录</a></div>
+<script>
+document.querySelectorAll('.quiz-question').forEach(function(q){var correct=q.dataset.correct;q.querySelectorAll('.quiz-option').forEach(function(opt){opt.addEventListener('click',function(){if(q.classList.contains('locked'))return;q.querySelectorAll('.quiz-option').forEach(function(o){o.classList.remove('correct','wrong');var m=o.querySelector('.mark');if(m)m.remove();});var k=opt.dataset.k;if(k===correct){opt.classList.add('correct');opt.insertAdjacentHTML('beforeend','<span class="mark">✓</span>');}else{opt.classList.add('wrong');opt.insertAdjacentHTML('beforeend','<span class="mark">✗</span>');q.querySelectorAll('.quiz-option').forEach(function(o){if(o.dataset.k===correct){o.classList.add('correct');}});}q.querySelector('.quiz-explain').classList.add('show');q.classList.add('locked');});});});
+function submitQuiz(){var qs=document.querySelectorAll('.quiz-question');var a=0,s=0;qs.forEach(function(q){if(q.classList.contains('locked')){a++;if(q.querySelector('.quiz-option.correct'))s++;}});var r=document.getElementById('quiz-result');r.style.display='block';r.querySelector('.score').textContent=s+' / '+qs.length;var p=s/qs.length,m='';if(p===1)m='满分！方法选型你已经拿下了。';else if(p>=.75)m='不错！错题看看解析，重点是材料限制和里外分工。';else if(p>=.5)m='再过一遍：MT/PT/ET 各自的材料和深度限制。';else m='重看五大方法对比表再测。';document.getElementById('result-text').textContent=m+'（已答'+a+'/'+qs.length+'）';r.scrollIntoView({behavior:'smooth',block:'center'});}
+function resetQuiz(){document.querySelectorAll('.quiz-question').forEach(function(q){q.classList.remove('locked');q.querySelectorAll('.quiz-option').forEach(function(o){o.classList.remove('correct','wrong');var m=o.querySelector('.mark');if(m)m.remove();});q.querySelector('.quiz-explain').classList.remove('show');});document.getElementById('quiz-result').style.display='none';}
+</script>
+</body></html>

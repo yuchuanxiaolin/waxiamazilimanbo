@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第06课 · 典型工件 + 图纸术语 + 机加工热处理（第一阶段收官）</title>
+<style>
+:root{--primary:#1a5276;--primary-light:#2980b9;--accent:#e67e22;--bg:#f4f6f7;--card:#fff;--text:#2c3e50;--text-light:#7f8c8d;--border:#d5dbdb;--success:#27ae60;--danger:#e74c3c;--warning:#f39c12;--info:#3498db;--shadow:0 2px 8px rgba(0,0,0,.08)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Microsoft YaHei","Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.85;font-size:15.5px;scroll-behavior:smooth}
+.topbar{position:fixed;top:0;left:0;right:0;height:52px;background:var(--primary);color:#fff;display:flex;align-items:center;padding:0 20px;z-index:1000;box-shadow:0 4px 20px rgba(0,0,0,.12)}
+.topbar h1{font-size:16px;font-weight:600;white-space:nowrap}.topbar .crumb{font-size:12px;opacity:.75;margin-left:8px}
+.topbar nav{margin-left:auto;display:flex;gap:4px;overflow-x:auto}
+.topbar nav a{color:#cfd8dc;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:4px;white-space:nowrap}
+.topbar nav a:hover{background:rgba(255,255,255,.15);color:#fff}
+.sidebar{position:fixed;top:52px;left:0;bottom:0;width:240px;background:#fff;border-right:1px solid var(--border);overflow-y:auto;padding:14px 0;z-index:900}
+.sidebar a{display:block;padding:8px 20px;color:var(--text-light);text-decoration:none;font-size:13px;border-left:3px solid transparent;transition:.2s}
+.sidebar a:hover{background:var(--bg);color:var(--primary);border-left-color:var(--primary-light)}
+.sidebar a.active{background:#eaf2f8;color:var(--primary);border-left-color:var(--primary);font-weight:600}
+.sidebar a.sub{padding-left:34px;font-size:12px}
+.sidebar .group-label{padding:12px 20px 4px;font-size:11px;color:var(--accent);font-weight:700;letter-spacing:1px}
+.main{margin-left:240px;margin-top:52px;padding:28px 36px;max-width:1000px}
+.section{background:var(--card);border-radius:10px;padding:26px 30px;margin-bottom:22px;box-shadow:var(--shadow)}
+.section h2{color:var(--primary);font-size:22px;border-bottom:2px solid var(--primary-light);padding-bottom:10px;margin-bottom:16px}
+.section h3{color:var(--primary);font-size:17px;margin:22px 0 10px;padding-left:10px;border-left:4px solid var(--accent)}
+.section h4{color:var(--text);font-size:15.5px;margin:16px 0 6px}
+.section p{margin:9px 0}.section ul,.section ol{margin:9px 0 9px 26px}.section li{margin:5px 0}
+.section strong{color:var(--primary)}
+.tip{background:#eafaf1;border-left:4px solid var(--success);padding:12px 16px;border-radius:6px;margin:14px 0}.tip::before{content:"💡 记住";display:block;font-weight:700;color:var(--success);font-size:13px;margin-bottom:4px}
+.warn{background:#fef9e7;border-left:4px solid var(--warning);padding:12px 16px;border-radius:6px;margin:14px 0}.warn::before{content:"⚠️ 注意";display:block;font-weight:700;color:var(--warning);font-size:13px;margin-bottom:4px}
+.key{background:#eaf2f8;border-left:4px solid var(--primary-light);padding:12px 16px;border-radius:6px;margin:14px 0}.key::before{content:"🔑 核心";display:block;font-weight:700;color:var(--primary);font-size:13px;margin-bottom:4px}
+.sale{background:#fdf2e9;border-left:4px solid var(--accent);padding:12px 16px;border-radius:6px;margin:14px 0}.sale::before{content:"💬 客户对话";display:block;font-weight:700;color:var(--accent);font-size:13px;margin-bottom:4px}
+.ndt{background:#eef5fb;border-left:4px solid var(--info);padding:12px 16px;border-radius:6px;margin:14px 0}.ndt::before{content:"🔬 对检测的意义";display:block;font-weight:700;color:var(--info);font-size:13px;margin-bottom:4px}
+.analogy{background:linear-gradient(135deg,#fdf2e9,#fef9e7);border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;margin:14px 0}.analogy::before{content:"🎯 打个比方";display:block;font-weight:700;color:var(--accent);font-size:13px;margin-bottom:6px}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13.5px}
+th,td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--primary);color:#fff;font-weight:600}
+tr:nth-child(even){background:#f8f9fa}tr:hover{background:#eaf2f8}
+td strong{color:var(--primary)}
+.quick-card{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:14px 0}
+.quick-item{background:#fff;border:2px solid var(--border);border-radius:8px;padding:14px;text-align:center}
+.quick-item:hover{border-color:var(--primary-light);transform:translateY(-2px)}
+.quick-item .icon{font-size:28px;margin-bottom:4px}.quick-item .title{font-weight:700;color:var(--primary);font-size:14px}.quick-item .desc{font-size:12px;color:var(--text-light);margin-top:4px}
+.quiz-intro{background:#eaf2f8;border-radius:8px;padding:14px 18px;margin:16px 0;color:var(--primary)}
+.quiz-question{background:#fff;border:1px solid var(--border);border-radius:8px;padding:16px;margin:14px 0}
+.quiz-question .q-text{font-weight:600;margin-bottom:10px}
+.quiz-question .q-num{display:inline-block;background:var(--primary);color:#fff;width:26px;height:26px;border-radius:50%;text-align:center;line-height:26px;font-size:13px;margin-right:8px}
+.quiz-option{display:block;padding:10px 14px;margin:6px 0;border:2px solid var(--border);border-radius:6px;cursor:pointer;transition:.2s}
+.quiz-option:hover{border-color:var(--primary-light);background:#eaf2f8}
+.quiz-option.correct{border-color:var(--success);background:#eafaf1}
+.quiz-option.wrong{border-color:var(--danger);background:#fdedec}
+.quiz-option .mark{float:right;font-weight:700}
+.quiz-explain{margin-top:10px;padding:10px;background:#f8f9fa;border-radius:4px;font-size:13px;display:none}
+.quiz-explain.show{display:block}
+#quiz-result{display:none;text-align:center;padding:32px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin:16px 0}
+#quiz-result .score{font-size:48px;font-weight:700;margin:10px 0}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:10px 28px;border-radius:6px;border:none;cursor:pointer;font-size:15px;font-weight:600}
+.btn:hover{background:var(--accent-light);transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--primary);border:2px solid var(--primary)}
+.hero{text-align:center;padding:44px 32px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin-bottom:22px}
+.hero .course-tag{display:inline-block;background:rgba(255,255,255,.2);padding:4px 14px;border-radius:14px;font-size:12px;margin-bottom:10px}
+.hero h1{font-size:28px;margin-bottom:10px}.hero p{font-size:15px;opacity:.92;margin:6px 0}
+.hero .meta{margin-top:16px;font-size:13px;opacity:.8}.hero .meta span{margin:0 10px}
+.milestone{background:linear-gradient(135deg,#27ae60,#2ecc71);color:#fff;border-radius:10px;padding:24px;margin:20px 0;text-align:center}
+.milestone h2{color:#fff;border:none;margin-bottom:10px}
+@media(max-width:900px){.sidebar{transform:translateX(-100%)}.main{margin-left:0;padding:16px}.topbar nav{display:none}}
+</style>
+</head>
+<body>
+<div class="topbar"><h1>🔬 NDT 扫盲课</h1><span class="crumb">第 6 课 · 工件+图纸（第一阶段收官）</span><nav><a href="#hero">封面</a><a href="#ch1">工件</a><a href="#ch2">图纸</a><a href="#ch3">机加工热处理</a><a href="#milestone">阶段总结</a><a href="#exam">测验</a></nav></div>
+<div class="sidebar">
+<a href="#hero">封面</a>
+<div class="group-label">典型工件与行业</div>
+<a href="#ch1">一、典型工件速查</a>
+<a href="#ch1-1" class="sub">1.1 压力容器/管道</a>
+<a href="#ch1-2" class="sub">1.2 电力/航空/钢结构</a>
+<a href="#ch1-3" class="sub">1.3 行业×缺陷总表</a>
+<div class="group-label">图纸与术语</div>
+<a href="#ch2">二、图纸术语基础</a>
+<a href="#ch2-1" class="sub">2.1 看懂图纸</a>
+<a href="#ch2-2" class="sub">2.2 焊接符号</a>
+<a href="#ch2-3" class="sub">2.3 委托单解读</a>
+<div class="group-label">机加工与热处理</div>
+<a href="#ch3">三、机加工与热处理</a>
+<a href="#ch3-1" class="sub">3.1 淬火裂纹</a>
+<a href="#milestone">第一阶段收官</a>
+<a href="#exam">📝 测验</a>
+</div>
+<div class="main">
+
+<div class="section" id="hero" style="padding:0;overflow:hidden">
+<div class="hero">
+<span class="course-tag">扫盲课 · 第一阶段 · 第 6 课（收官）</span>
+<h1>典型工件 + 图纸术语 + 机加工热处理</h1>
+<p>客户说"我是做压力容器的""这是锻件""图纸标 UT Ⅱ级"——你要听得懂、看得懂。学完这课，第一阶段完成。</p>
+<div class="meta"><span>⏱ 约 55 分钟</span><span>📚 对应 B4/B5/B6</span><span>🎓 阶段收官</span></div>
+</div>
+</div>
+
+<div class="section">
+<h2>📍 这节课解决什么</h2>
+<p>前三类课（材料→工艺→焊接）让你懂了"工件是什么、怎么造的、有什么缺陷"。这节课补上两块：</p>
+<div class="quick-card">
+<div class="quick-item"><div class="icon">🏭</div><div class="title">认识典型工件</div><div class="desc">客户来自什么行业、工件长啥样、查什么</div></div>
+<div class="quick-item"><div class="icon">📐</div><div class="title">看懂图纸委托单</div><div class="desc">焊接符号、NDT 要求标注、读委托单四步法</div></div>
+<div class="quick-item"><div class="icon">🔥</div><div class="title">机加工+热处理</div><div class="desc">淬火裂纹（常见 UT 对象）、PWHT</div></div>
+</div>
+</div>
+
+<div class="section" id="ch1">
+<h2>一、典型工件与行业应用（速查）</h2>
+<p>客户报行业，你脑子里要有画面。下面是 NDT 的主要行业和工件。</p>
+
+<h3 id="ch1-1">1.1 压力容器与管道（石化核心）</h3>
+<table>
+<tr><th>工件</th><th>是啥</th><th>常见材料</th><th>查什么</th><th>标准</th></tr>
+<tr><td><strong>压力容器</strong></td><td>化工厂/炼油厂里存高压气体液体的罐子</td><td>Q345R/Q245R</td><td>纵/环焊缝（裂纹、未熔合、气孔）</td><td><strong>NB/T 47013</strong></td></tr>
+<tr><td><strong>锅炉</strong></td><td>产生蒸汽的（电厂、工业锅炉）</td><td>20G/15CrMoG</td><td>焊缝、管接头</td><td>NB/T 47013</td></tr>
+<tr><td><strong>管道</strong></td><td>输送流体的管子</td><td>20/无缝管/合金管</td><td>焊缝（对接环焊缝）</td><td>GB/T 11345/50369</td></tr>
+</table>
+<div class="key"><strong>压力容器主要受压元件</strong>（NB/T 47013 检测对象）：筒体、封头、管板、接管、法兰、人孔。这些都要 NDT。</div>
+
+<h3 id="ch1-2">1.2 电力 / 航空 / 钢结构 / 其他</h3>
+<table>
+<tr><th>行业</th><th>典型工件</th><th>查什么</th><th>方法</th></tr>
+<tr><td><strong>火电</strong></td><td>锅炉管、汽轮机转子（大锻件）、叶片</td><td>焊缝、白点、裂纹</td><td>UT/RT/MT</td></tr>
+<tr><td><strong>电网</strong></td><td><strong>支柱瓷绝缘子</strong>（变电站那种大瓷柱）</td><td>瓷体内部裂纹</td><td>UT（爬波/专用探头）</td></tr>
+<tr><td><strong>风电</strong></td><td>叶片（复材）、塔筒（钢）、主轴（锻）、根部法兰</td><td>分层、焊缝、白点</td><td>UT（叶片 C 扫/塔筒 A 扫）</td></tr>
+<tr><td><strong>航空</strong></td><td>发动机叶片（高温合金）、起落架（高强钢）、机身（铝/复材）</td><td>缩孔、裂纹、分层</td><td>UT/RT/ET</td></tr>
+<tr><td><strong>钢结构</strong></td><td>桥梁、体育馆骨架、高楼钢梁（H 型钢/箱形）</td><td>T 形/对接焊缝</td><td>UT/MT</td></tr>
+<tr><td><strong>螺栓紧固件</strong></td><td>高强度螺栓（风电、桥梁、压力容器）</td><td>裂纹（最危险）、夹渣</td><td>UT（纵波/相控阵）</td></tr>
+<tr><td><strong>铁路/钢轨</strong></td><td>钢轨、车轴、车轮</td><td>轨头核伤、轨腰裂纹</td><td>UT（专用探伤车）</td></tr>
+</table>
+<div class="ndt"><strong>几个值得记住的点</strong>：<br>
+• <strong>支柱瓷绝缘子 UT</strong>——你们行业有专门的仪器和标准（DL/T 303），是变电站刚需<br>
+• <strong>风电叶片（玻璃钢）分层检测</strong>——水浸/喷水 C 扫强项，是复材检测的大客户<br>
+• <strong>螺栓 UT</strong>——高强螺栓裂纹检测，纵波直探头从端面探，是常见检测业务</div>
+
+<h3 id="ch1-3">1.3 行业 × 工件 × 缺陷 × 方法 速查</h3>
+<div class="key">
+<table>
+<tr><th>行业</th><th>工件</th><th>主要缺陷</th><th>主要方法</th><th>我们能做？</th></tr>
+<tr><td>石化</td><td>压力容器焊缝</td><td>裂纹/未熔合/气孔</td><td>UT/RT</td><td>✅ A 扫焊缝</td></tr>
+<tr><td>管道</td><td>长输管线环焊缝</td><td>焊缝缺陷</td><td>UT/RT</td><td>✅ A 扫焊缝（短段）</td></tr>
+<tr><td>电力</td><td>汽轮机大锻件</td><td>白点/夹杂/裂纹</td><td>UT</td><td>✅ A 扫锻件</td></tr>
+<tr><td>航空</td><td>叶片/锻件</td><td>缩孔/裂纹</td><td>UT/RT</td><td>✅</td></tr>
+<tr><td>风电</td><td>叶片（复材）</td><td>分层/脱粘</td><td>UT C 扫</td><td>✅ <strong>水浸 C 扫强项</strong></td></tr>
+<tr><td>新能源</td><td>水冷板</td><td>钎着率/虚焊</td><td>UT C 扫</td><td>✅ <strong>核心市场</strong></td></tr>
+<tr><td>钢结构</td><td>桥梁/建筑焊缝</td><td>焊缝缺陷</td><td>UT/MT</td><td>✅ A 扫焊缝</td></tr>
+</table>
+</div>
+</div>
+
+<div class="section" id="ch2">
+<h2>二、图纸术语基础——看懂客户的图纸和委托单</h2>
+<p>客户拿图纸/委托单来找你，你能看懂吗？这节让你能读懂 NDT 检测要求。</p>
+
+<h3 id="ch2-1">2.1 机械制图基础（最少要知道）</h3>
+<table>
+<tr><th>概念</th><th>是啥</th><th>为什么对 NDT 重要</th></tr>
+<tr><td><strong>剖视图</strong></td><td>把工件"切开"看内部截面</td><td>NDT 委托单常画剖视，标出要检的焊缝/区域</td></tr>
+<tr><td><strong>比例</strong></td><td>图纸尺寸和实际的比例</td><td>别把 1:2 图纸尺寸当实际尺寸</td></tr>
+<tr><td><strong>尺寸公差</strong></td><td>允许的尺寸偏差范围</td><td>UT 测厚结果要对照公差判断是否合格</td></tr>
+<tr><td><strong>表面粗糙度 Ra</strong></td><td>表面光滑程度（数字越小越光）</td><td>UT 探伤要求表面 Ra ≤ 6.3μm，太粗耦合不好</td></tr>
+</table>
+<div class="warn"><strong>UT 对表面粗糙度的要求</strong>：UT 探伤要求表面打磨到一定粗糙度（一般 Ra ≤ 6.3μm）。表面太粗，探头贴合不严，耦合不好，信号会失真。这是现场 UT 的基本功。</div>
+
+<h3 id="ch2-2">2.2 ★ 焊接符号（对 NDT 重要！）</h3>
+<div class="analogy">图纸上的焊缝用<strong>焊接符号</strong>标注。NDT 工程师要能看懂焊缝类型、尺寸，才能知道检什么。</div>
+<table>
+<tr><th>符号要素</th><th>含义</th></tr>
+<tr><td><strong>基准线</strong></td><td>一条横线，符号画在上面/下面</td></tr>
+<tr><td><strong>箭头线</strong></td><td>指向焊缝位置</td></tr>
+<tr><td><strong>基本符号</strong></td><td>表示焊缝形式：‖（I 形对接）、V（V 形）、△（角焊）、∪（U 形）</td></tr>
+<tr><td><strong>补充符号</strong></td><td>现场焊旗、周围焊圆圈、底部平</td></tr>
+<tr><td><strong>尺寸</strong></td><td>焊脚尺寸（角焊）、坡口角度、根部间隙</td></tr>
+</table>
+<div class="key"><strong>检测要求怎么标</strong>：图纸上焊缝附近常标 <strong>"UT 100% Ⅱ级"</strong> 这种。意思：<br>
+• <strong>UT</strong> = 用超声检测<br>
+• <strong>100%</strong> = 全检（不是抽检）<br>
+• <strong>Ⅱ级</strong> = 按 GB/T 11345，合格级别是 Ⅱ 级及以上</div>
+
+<h3 id="ch2-3">2.3 ★ 检测委托单解读（销售必读）</h3>
+<div class="analogy"><strong>检测委托单 = 客户给你的检测任务书</strong>。能不能接、怎么报价、怎么出方案，全看委托单读得懂不懂。</div>
+<table>
+<tr><th>必须看懂的项</th><th>是啥</th><th>为什么重要</th></tr>
+<tr><td><strong>工件名称 + 图号</strong></td><td>什么工件、哪张图</td><td>知道检什么</td></tr>
+<tr><td><strong>材料牌号</strong></td><td>Q345R / 304 / 3003 铝等</td><td>决定声速、频率、能不能测</td></tr>
+<tr><td><strong>板厚 / 尺寸</strong></td><td>多厚、多大</td><td>决定探头 K 值、方法、扫查面</td></tr>
+<tr><td><strong>焊接方法</strong></td><td>埋弧焊/氩弧焊/...</td><td>预判缺陷类型</td></tr>
+<tr><td><strong>检测标准</strong></td><td>NB/T 47013 / GB/T 11345</td><td>按什么标准评</td></tr>
+<tr><td><strong>检测比例</strong></td><td>100% / 20% / 局部</td><td>全检还是抽检</td></tr>
+<tr><td><strong>合格级别</strong></td><td>Ⅰ/Ⅱ/Ⅲ 级</td><td>按什么级别验收</td></tr>
+<tr><td><strong>检测时机</strong></td><td>焊后 / PWHT 后 / 表面处理</td><td>什么时候检（注意延迟裂纹）</td></tr>
+</table>
+<div class="key"><strong>读委托单四步法</strong>：<br>
+① <strong>这是什么工件</strong>（材料 + 厚度 + 焊接方法）<br>
+② <strong>检什么缺陷</strong>（裂纹？气孔？分层？）<br>
+③ <strong>怎么检</strong>（方法、比例、扫查面）<br>
+④ <strong>怎么评</strong>（标准、级别）<br>
+四步想清楚，方案就出来了。</div>
+<div class="sale"><strong>客户对话</strong>：客户发来委托单，标"Q345R，板厚 20mm，埋弧焊，按 NB/T 47013.3 做 UT 100% Ⅱ级，焊后 48 小时"。<br>
+你读完心里：压力容器（Q345R），中板（20mm），埋弧焊（厚板焊缝），全检 UT，Ⅱ 级合格，焊后等 48 小时（注意延迟裂纹）。方案：用 5MHz K2 斜探头，从焊缝两侧扫查，覆盖焊缝+HAZ，按 GB/T 11345 Ⅱ 级评。这单我们能做。</div>
+</div>
+
+<div class="section" id="ch3">
+<h2>三、机加工与热处理（快速带过）</h2>
+<p>机加工本身不产生内部缺陷，但<strong>热处理（尤其淬火）产生的淬火裂纹是常见 UT 对象</strong>。</p>
+
+<h3>3.1 机加工（了解）</h3>
+<table>
+<tr><th>方法</th><th>是啥</th><th>做啥件</th></tr>
+<tr><td>车削</td><td>工件转，刀走（车床）</td><td>轴、圆件、螺纹</td></tr>
+<tr><td>铣削</td><td>刀转，工件走（铣床/加工中心）</td><td>平面、槽、复杂形状</td></tr>
+<tr><td>磨削</td><td>砂轮磨（磨床）</td><td>高精度表面、量具</td></tr>
+<tr><td>钻/镗</td><td>钻孔/扩孔</td><td>孔类</td></tr>
+</table>
+<div class="tip">机加工<strong>不改变材料内部组织</strong>，只切外形。所以机加工件本身没有内部缺陷（除非加工前的热处理或锻造铸造成型的缺陷）。</div>
+
+<h3 id="ch3-1">3.2 ★ 淬火裂纹（常见 UT 对象）</h3>
+<div class="analogy"><strong>淬火 = 把钢加热到高温（奥氏体），快速冷却（水/油），得到硬而脆的马氏体</strong>。淬火让钢变硬，但冷却太快会产生巨大内应力，把钢<strong>从内部或表面撕出裂纹</strong>——这就是淬火裂纹。</div>
+<div class="ndt"><strong>★ 淬火裂纹的特征</strong>：<br>
+• 多在<strong>截面突变处</strong>（尖角、孔边、台阶）——应力集中<br>
+• 常在<strong>表面或近表面</strong>，也可能内部<br>
+• <strong>表面开口</strong>用 MT/PT 查；<strong>内部</strong>用 UT 查<br>
+• 常见工件：淬火齿轮、轴承、弹簧、模具、工具钢件</div>
+<div class="warn"><strong>淬火裂纹 vs 焊接冷裂纹</strong>：都是"冷裂纹"，但来源不同。<strong>淬火裂纹</strong>来自热处理冷却；<strong>焊接冷裂纹</strong>来自焊接 HAZ 冷却 + 氢。两者都是内应力撕裂，但检测时机和位置不同。</div>
+
+<h3>3.3 焊后热处理（PWHT）—— 焊缝检测绕不开</h3>
+<div class="analogy"><strong>PWHT = 焊后把焊缝再加热到某一温度保温，缓冷</strong>。目的：消除焊接残余应力 + 让淬硬组织回火变韧 + 让氢扩散出来。</div>
+<div class="ndt"><strong>PWHT 对检测的影响</strong>（重要）：<br>
+• PWHT 能让<strong>延迟裂纹充分形成</strong> → 所以 PWHT 后检测时机好<br>
+• 但 PWHT 可能产生<strong>再热裂纹（SR 裂纹）</strong> → 所以 PWHT 后要<strong>重新检测</strong><br>
+• 客户说"做过 PWHT 了"，你心里要响铃：可能要重新检，查再热裂纹</div>
+</div>
+
+<div class="milestone" id="milestone">
+<h2>🎉 第一阶段（懂对象）完成！</h2>
+<p>学完前 6 课，你已经具备完整的"懂工件"能力：</p>
+<p style="font-size:16px;margin-top:10px"><strong>材料（组织/牌号）→ 工艺（铸/轧/锻/焊）→ 工件（容器/管道/叶片/水冷板）→ 图纸（符号/委托单）→ 缺陷预判（白点/分层/裂纹/钎着率）</strong></p>
+<p style="margin-top:14px;opacity:.9">客户拿工件来，你能听懂他说什么、知道检什么、配得出方法。这就是"懂对象"。</p>
+<p style="margin-top:14px"><strong>下一阶段（懂靶标·缺陷）</strong>：第 7-9 课深入各类缺陷——钢材/铸件/焊缝/在役缺陷的详细特征和检测要点。</p>
+</div>
+
+<div class="section" id="exam">
+<h2>📝 随堂测验（8 题）</h2>
+<div class="quiz-intro">这 8 题考工件、图纸、热处理的基础认知。做完整再看解析。</div>
+
+<div class="quiz-question" data-correct="B">
+<div class="q-text"><span class="q-num">1</span>压力容器焊缝检测最常用的标准是？</div>
+<div class="quiz-option" data-k="A">A. GB/T 11345</div>
+<div class="quiz-option" data-k="B">B. NB/T 47013（承压设备无损检测）</div>
+<div class="quiz-option" data-k="C">C. GB/T 3323</div>
+<div class="quiz-option" data-k="D">D. ASME</div>
+<div class="quiz-explain">✅ 选 B。<strong>NB/T 47013</strong>是承压设备（压力容器/锅炉/管道）无损检测的权威国标，涵盖 UT/RT/MT/PT/ET 全套。GB/T 11345 是焊缝 UT 专用标准（NB/T 47013 会引用它）。压力容器客户必引 NB/T 47013。</div>
+</div>
+
+<div class="quiz-question" data-correct="C">
+<div class="q-text"><span class="q-num">2</span>委托单上标"UT 100% Ⅱ级"，意思是？</div>
+<div class="quiz-option" data-k="A">A. 检测仪器准确度 100%，Ⅱ级精度</div>
+<div class="quiz-option" data-k="B">B. 检测人员 Ⅱ 级资格，全检</div>
+<div class="quiz-option" data-k="C">C. 超声全检（不是抽检），合格级别 Ⅱ 级及以上</div>
+<div class="quiz-option" data-k="D">D. 工件 100% 是 Ⅱ 级钢</div>
+<div class="quiz-explain">✅ 选 C。"UT 100% Ⅱ级"：① UT = 超声检测 ② 100% = 全检（非抽检）③ Ⅱ级 = 按 GB/T 11345 评定，合格级别是 Ⅱ 级及以上（Ⅰ级最好）。这是委托单最常见的标注，必须看懂。</div>
+</div>
+
+<div class="quiz-question" data-correct="A">
+<div class="q-text"><span class="q-num">3</span>淬火裂纹最常见的位置是？</div>
+<div class="quiz-option" data-k="A">A. 截面突变处（尖角、孔边、台阶）——应力集中</div>
+<div class="quiz-option" data-k="B">B. 工件正中心</div>
+<div class="quiz-option" data-k="C">C. 表面光滑处</div>
+<div class="quiz-option" data-k="D">D. 随机分布</div>
+<div class="quiz-explain">✅ 选 A。淬火裂纹来自冷却内应力，<strong>应力集中在截面突变处</strong>（尖角、孔边、台阶、壁厚突变），所以裂纹多在这些位置。UT/MT 查淬火件时，重点扫这些区域。</div>
+</div>
+
+<div class="quiz-question" data-correct="D">
+<div class="q-text"><span class="q-num">4</span>客户说"焊缝做过 PWHT 了"，你心里应该想到？</div>
+<div class="quiz-option" data-k="A">A. 检测可以省了</div>
+<div class="quiz-option" data-k="B">B. PWHT 后焊缝肯定没问题</div>
+<div class="quiz-option" data-k="C">C. 只能做 RT 不能做 UT 了</div>
+<div class="quiz-option" data-k="D">D. PWHT 可能产生再热裂纹，要重新检测；但延迟裂纹也已充分形成，检测时机反而是好的</div>
+<div class="quiz-explain">✅ 选 D。PWHT（焊后热处理）影响检测：① 可能产生<strong>再热裂纹（SR 裂纹）</strong>，所以<strong>要重新检</strong>；② 但 PWHT 让延迟裂纹充分形成，所以<strong>检测时机反而好</strong>。A/B 太天真；C 完全错。</div>
+</div>
+
+<div class="quiz-question" data-correct="B">
+<div class="q-text"><span class="q-num">5</span>UT 探伤对工件表面有什么要求？</div>
+<div class="quiz-option" data-k="A">A. 必须抛光镜面</div>
+<div class="quiz-option" data-k="B">B. 表面粗糙度 Ra ≤ 6.3μm，太粗耦合不好</div>
+<div class="quiz-option" data-k="C">C. 表面越粗越好</div>
+<div class="quiz-option" data-k="D">D. 没要求</div>
+<div class="quiz-explain">✅ 选 B。UT 探伤要求表面打磨到 Ra ≤ 6.3μm（一般）。表面太粗，探头贴合不严，耦合剂填不平，信号失真。这是现场 UT 基本功。但也不必抛光镜面（A 过度）。</div>
+</div>
+
+<div class="quiz-question" data-correct="A">
+<div class="q-text"><span class="q-num">6</span>风电叶片（玻璃钢复合材料）分层检测，我们用什么设备合适？</div>
+<div class="quiz-option" data-k="A">A. 水浸 C 扫 / 喷水 C 扫（复材分层是强项）</div>
+<div class="quiz-option" data-k="B">B. 只能 RT</div>
+<div class="quiz-option" data-k="C">C. 磁粉 MT</div>
+<div class="quiz-option" data-k="D">D. 涡流 ET</div>
+<div class="quiz-explain">✅ 选 A。风电叶片是玻璃钢（复材），分层检测是<strong>水浸/喷水 C 扫的强项</strong>。C 错（MT 只能铁磁材料，玻璃钢不行）；D 错（ET 只能导电表面，玻璃钢不行）；B 太绝对（RT 能做但 C 扫更合适大面积扫查）。</div>
+</div>
+
+<div class="quiz-question" data-correct="C">
+<div class="q-text"><span class="q-num">7</span>读检测委托单的四步法顺序是？</div>
+<div class="quiz-option" data-k="A">A. 怎么评 → 检什么 → 怎么检 → 什么工件</div>
+<div class="quiz-option" data-k="B">B. 怎么检 → 怎么评 → 什么工件 → 检什么</div>
+<div class="quiz-option" data-k="C">C. 什么工件（材料/厚度/焊法）→ 检什么缺陷 → 怎么检（方法/比例）→ 怎么评（标准/级别）</div>
+<div class="quiz-option" data-k="D">D. 随便看</div>
+<div class="quiz-explain">✅ 选 C。<strong>四步法</strong>：① 什么工件（材料+厚度+焊接方法）→ ② 检什么缺陷（裂纹/气孔/分层）→ ③ 怎么检（方法+比例+扫查面）→ ④ 怎么评（标准+级别）。四步想清，方案就出来了。</div>
+</div>
+
+<div class="quiz-question" data-correct="D">
+<div class="q-text"><span class="q-num">8</span>【销售场景】客户说"我是做钢结构的，T 形焊缝"，你的方案思路？</div>
+<div class="quiz-option" data-k="A">A. 直接报价，不管细节</div>
+<div class="quiz-option" data-k="B">B. 建议换对接焊缝</div>
+<div class="quiz-option" data-k="C">C. 只能 RT</div>
+<div class="quiz-option" data-k="D">D. 问板厚/材料/验收标准，配 K 值斜探头 UT + 表面 MT，按 GB/T 11345 评</div>
+<div class="quiz-explain">✅ 选 D。钢结构 T 形焊缝是常见场景。专业做法：先问清板厚（决定 K 值）、材料（选频率）、验收标准（评级）；配<strong>斜探头 UT 查内部 + MT 查表面</strong>，按 GB/T 11345 评。钢结构常引 GB 50205 或 GB/T 11345。</div>
+</div>
+
+<div id="quiz-result">
+<div>你的得分</div>
+<div class="score">0</div>
+<div id="result-text"></div>
+<br>
+<button class="btn ghost" onclick="resetQuiz()">重新作答</button>
+</div>
+
+<div style="text-align:center;margin-top:18px">
+<button class="btn" onclick="submitQuiz()">交卷查看成绩</button>
+</div>
+</div>
+
+<div style="display:flex;justify-content:space-between;align-items:center;margin:24px 0;padding:18px 24px;background:#fff;border-radius:10px;box-shadow:var(--shadow)">
+<a href="#hero" style="text-decoration:none"><span style="font-size:13px;color:#7f8c8d">↑ 本课开头</span></a>
+<div style="text-align:center"><div style="font-size:13px;color:#7f8c8d">下一阶段</div><div style="font-weight:600;color:#1a5276;font-size:15px">第二阶段 · 缺陷认知（第7-9课）→</div></div>
+<span></span>
+</div>
+
+</div>
+
+<div style="text-align:center;margin:24px 0;padding:14px;background:#eaf2f8;border-radius:8px"><a href="index.html" style="display:inline-block;background:#1a5276;color:#fff;padding:10px 28px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px">🏠 返回总目录</a></div>
+<script>
+document.querySelectorAll('.quiz-question').forEach(function(q){
+  var correct=q.dataset.correct;
+  q.querySelectorAll('.quiz-option').forEach(function(opt){
+    opt.addEventListener('click',function(){
+      if(q.classList.contains('locked'))return;
+      q.querySelectorAll('.quiz-option').forEach(function(o){o.classList.remove('correct','wrong');var m=o.querySelector('.mark');if(m)m.remove();});
+      var k=opt.dataset.k;
+      if(k===correct){opt.classList.add('correct');opt.insertAdjacentHTML('beforeend','<span class="mark">✓</span>');}
+      else{opt.classList.add('wrong');opt.insertAdjacentHTML('beforeend','<span class="mark">✗</span>');q.querySelectorAll('.quiz-option').forEach(function(o){if(o.dataset.k===correct){o.classList.add('correct');}});}
+      q.querySelector('.quiz-explain').classList.add('show');q.classList.add('locked');
+    });
+  });
+});
+function submitQuiz(){
+  var qs=document.querySelectorAll('.quiz-question');var answered=0,score=0;
+  qs.forEach(function(q){if(q.classList.contains('locked')){answered++;var sel=q.querySelector('.quiz-option.correct');if(sel)score++;}});
+  var res=document.getElementById('quiz-result');var txt=document.getElementById('result-text');
+  res.style.display='block';res.querySelector('.score').textContent=score+' / '+qs.length;
+  var pct=score/qs.length;var msg='';
+  if(pct===1)msg='满分！第一阶段全部完成，你已经"懂对象"了！';
+  else if(pct>=0.75)msg='不错！工件和图纸都掌握了，错题看解析。';
+  else if(pct>=0.5)msg='有概念了，建议重看"委托单解读"和"淬火裂纹"。';
+  else msg='重看一遍"典型工件"和"图纸术语"再测。';
+  txt.textContent=msg+'（已答 '+answered+'/'+qs.length+' 题）';
+  res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQuiz(){
+  document.querySelectorAll('.quiz-question').forEach(function(q){
+    q.classList.remove('locked');
+    q.querySelectorAll('.quiz-option').forEach(function(o){o.classList.remove('correct','wrong');var m=o.querySelector('.mark');if(m)m.remove();});
+    q.querySelector('.quiz-explain').classList.remove('show');
+  });
+  document.getElementById('quiz-result').style.display='none';
+}
+var sections=[].slice.call(document.querySelectorAll('.section[id]'));
+var sideLinks=[].slice.call(document.querySelectorAll('.sidebar a[href^="#"]'));
+window.addEventListener('scroll',function(){var sc=window.scrollY+120;var cur=sections[0];sections.forEach(function(s){if(s.offsetTop<=sc)cur=s;});sideLinks.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+cur.id);});});
+</script>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第08课 · 焊缝缺陷专题深化</title>
+<style>
+:root{--primary:#1a5276;--primary-light:#2980b9;--accent:#e67e22;--bg:#f4f6f7;--card:#fff;--text:#2c3e50;--text-light:#7f8c8d;--border:#d5dbdb;--success:#27ae60;--danger:#e74c3c;--warning:#f39c12;--info:#3498db;--shadow:0 2px 8px rgba(0,0,0,.08)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.85;font-size:15.5px;scroll-behavior:smooth}
+.topbar{position:fixed;top:0;left:0;right:0;height:52px;background:var(--primary);color:#fff;display:flex;align-items:center;padding:0 20px;z-index:1000;box-shadow:0 4px 20px rgba(0,0,0,.12)}
+.topbar h1{font-size:16px;font-weight:600}.topbar .crumb{font-size:12px;opacity:.75;margin-left:8px}
+.topbar nav{margin-left:auto;display:flex;gap:4px;overflow-x:auto}
+.topbar nav a{color:#cfd8dc;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:4px;white-space:nowrap}
+.sidebar{position:fixed;top:52px;left:0;bottom:0;width:230px;background:#fff;border-right:1px solid var(--border);overflow-y:auto;padding:14px 0;z-index:900}
+.sidebar a{display:block;padding:8px 18px;color:var(--text-light);text-decoration:none;font-size:12.5px;border-left:3px solid transparent}
+.sidebar a:hover{background:var(--bg);color:var(--primary)}
+.sidebar a.sub{padding-left:30px;font-size:11.5px}
+.main{margin-left:230px;margin-top:52px;padding:26px 32px;max-width:1000px}
+.section{background:var(--card);border-radius:10px;padding:24px 28px;margin-bottom:20px;box-shadow:var(--shadow)}
+.section h2{color:var(--primary);font-size:21px;border-bottom:2px solid var(--primary-light);padding-bottom:8px;margin-bottom:14px}
+.section h3{color:var(--primary);font-size:16.5px;margin:18px 0 8px;padding-left:10px;border-left:4px solid var(--accent)}
+.section p{margin:8px 0}.section ul,.section ol{margin:8px 0 8px 24px}.section li{margin:4px 0}.section strong{color:var(--primary)}
+.tip{background:#eafaf1;border-left:4px solid var(--success);padding:11px 15px;border-radius:6px;margin:12px 0}.tip::before{content:"💡 记住";display:block;font-weight:700;color:var(--success);font-size:12.5px;margin-bottom:3px}
+.warn{background:#fef9e7;border-left:4px solid var(--warning);padding:11px 15px;border-radius:6px;margin:12px 0}.warn::before{content:"⚠️ 注意";display:block;font-weight:700;color:var(--warning);font-size:12.5px;margin-bottom:3px}
+.key{background:#eaf2f8;border-left:4px solid var(--primary-light);padding:11px 15px;border-radius:6px;margin:12px 0}.key::before{content:"🔑 核心";display:block;font-weight:700;color:var(--primary);font-size:12.5px;margin-bottom:3px}
+.sale{background:#fdf2e9;border-left:4px solid var(--accent);padding:11px 15px;border-radius:6px;margin:12px 0}.sale::before{content:"💬 客户对话";display:block;font-weight:700;color:var(--accent);font-size:12.5px;margin-bottom:3px}
+.ndt{background:#eef5fb;border-left:4px solid var(--info);padding:11px 15px;border-radius:6px;margin:12px 0}.ndt::before{content:"🔬 检测要点";display:block;font-weight:700;color:var(--info);font-size:12.5px;margin-bottom:3px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+th,td{border:1px solid var(--border);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--primary);color:#fff}tr:nth-child(even){background:#f8f9fa}
+td strong{color:var(--primary)}
+.bad-row{background:#fdedec !important}
+.quiz-intro{background:#eaf2f8;border-radius:8px;padding:12px 16px;margin:14px 0;color:var(--primary)}
+.quiz-question{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;margin:12px 0}
+.quiz-question .q-text{font-weight:600;margin-bottom:8px}
+.quiz-question .q-num{display:inline-block;background:var(--primary);color:#fff;width:24px;height:24px;border-radius:50%;text-align:center;line-height:24px;font-size:12px;margin-right:6px}
+.quiz-option{display:block;padding:9px 12px;margin:5px 0;border:2px solid var(--border);border-radius:6px;cursor:pointer}
+.quiz-option:hover{border-color:var(--primary-light);background:#eaf2f8}
+.quiz-option.correct{border-color:var(--success);background:#eafaf1}
+.quiz-option.wrong{border-color:var(--danger);background:#fdedec}
+.quiz-option .mark{float:right;font-weight:700}
+.quiz-explain{margin-top:8px;padding:9px;background:#f8f9fa;border-radius:4px;font-size:12.5px;display:none}
+.quiz-explain.show{display:block}
+#quiz-result{display:none;text-align:center;padding:28px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin:14px 0}
+#quiz-result .score{font-size:44px;font-weight:700;margin:8px 0}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:9px 24px;border-radius:6px;border:none;cursor:pointer;font-size:14px;font-weight:600}
+.btn:hover{background:var(--accent-light)}
+.btn.ghost{background:transparent;color:var(--primary);border:2px solid var(--primary)}
+.hero{text-align:center;padding:38px 28px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin-bottom:20px}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);padding:3px 12px;border-radius:12px;font-size:11.5px;margin-bottom:8px}
+.hero h1{font-size:26px;margin-bottom:8px}.hero p{font-size:14px;opacity:.92}
+@media(max-width:900px){.sidebar{transform:translateX(-100%)}.main{margin-left:0;padding:14px}.topbar nav{display:none}}
+</style></head><body>
+<div class="topbar"><h1>🔬 NDT 扫盲课</h1><span class="crumb">第 8 课 · 焊缝缺陷深化</span><nav><a href="#hero">封面</a><a href="#ch1">面状缺陷</a><a href="#ch2">体积缺陷</a><a href="#ch3">表面几何</a><a href="#ch4">速查表</a><a href="#exam">测验</a></nav></div>
+<div class="sidebar">
+<a href="#hero">封面</a>
+<a href="#ch1">一、面状缺陷深化</a>
+<a href="#ch1-1" class="sub">1.1 裂纹四类</a>
+<a href="#ch1-2" class="sub">1.2 未熔合三种</a>
+<a href="#ch2">二、体积型缺陷</a>
+<a href="#ch2-1" class="sub">2.1 气孔/夹渣</a>
+<a href="#ch3">三、表面+几何</a>
+<a href="#ch4">四、速查表+对话</a>
+<a href="#exam">📝 测验</a>
+</div>
+<div class="main">
+
+<div class="section" id="hero" style="padding:0;overflow:hidden"><div class="hero">
+<span class="tag">扫盲课 · 第二阶段 · 第 8 课（懂靶标②）</span>
+<h1>焊缝缺陷专题深化</h1>
+<p>第 5 课讲了焊缝缺陷概览。本课深入每种缺陷的形态、成因、UT 表现，配速查表——销售必备弹药库。</p>
+</div></div>
+
+<div class="section" id="ch1">
+<h2>一、面状缺陷深化（最危险，UT 重点）</h2>
+
+<h3 id="ch1-1">1.1 裂纹四类（焊缝头号敌人）</h3>
+<table>
+<tr><th>类型</th><th>产生时机</th><th>位置</th><th>成因（三个因素）</th><th>特征</th></tr>
+<tr class="bad-row"><td><strong>① 热裂纹</strong></td><td>焊接时（高温）</td><td>焊缝中心/弧坑</td><td>低熔点共晶体+收缩应力</td><td>沿晶、氧化发黑、曲折</td></tr>
+<tr class="bad-row"><td><strong>② 冷裂纹（延迟）</strong></td><td>焊后（室温附近）</td><td><strong>HAZ</strong></td><td><strong>氢+淬硬组织+拉应力</strong></td><td>穿晶、断面干净、平直</td></tr>
+<tr class="bad-row"><td><strong>③ 再热裂纹（SR）</strong></td><td>PWHT 时</td><td>HAZ 粗晶区</td><td>某些低合金钢敏感</td><td>沿晶</td></tr>
+<tr class="bad-row"><td><strong>④ 层状撕裂</strong></td><td>焊接时/焊后</td><td>母材厚板</td><td>母材分层+Z 向拉应力</td><td>台阶状、平行板面</td></tr>
+</table>
+<div class="key"><strong>冷裂纹三要素（必背）</strong>：① 氢（焊材受潮、油污）② 淬硬组织（低合金高强钢、厚件冷却快）③ 拉应力（焊接残余应力）。三者在 HAZ 凑齐 → 氢致裂纹。这就是为什么焊后要等 24–48 小时检测（延迟检测）。</div>
+
+<h3 id="ch1-2">1.2 未熔合三种位置</h3>
+<table>
+<tr><th>类型</th><th>位置</th><th>成因</th><th>UT 特点</th></tr>
+<tr><td><strong>侧壁未熔合</strong></td><td>焊缝与母材坡口侧壁</td><td>电流小/速度快/坡口角小</td><td>方向性强，斜探头反射</td></tr>
+<tr><td><strong>层间未熔合</strong></td><td>多道焊层与层之间</td><td>清渣不净/层间温度低</td><td>水平面状回波</td></tr>
+<tr><td><strong>根部未熔合</strong></td><td>焊缝根部边缘</td><td>电流小/间隙小</td><td>根部位置回波</td></tr>
+</table>
+<div class="ndt"><strong>★ UT 查未熔合的核心价值</strong>：未熔合方向性强，<strong>RT 射线方向不平行时容易漏</strong>。UT 用斜探头从合适角度，声束垂直时反射强。<strong>"UT 能查出 RT 漏掉的未熔合"是 UT 的核心卖点。</strong></div>
+
+<h3>1.3 未焊透（根部没焊到）</h3>
+<div class="key"><strong>未熔合 vs 未焊透区别</strong>：未熔合是<strong>边缘没熔上</strong>（侧壁/层间/根部边缘），未焊透是<strong>根部正中间整厚度没焊到</strong>。都是面状缺陷，都危险。</div>
+</div>
+
+<div class="section" id="ch2">
+<h2>二、体积型缺陷（RT 强项，UT 也能查）</h2>
+
+<h3 id="ch2-1">2.1 气孔 vs 夹渣</h3>
+<table>
+<tr><th>缺陷</th><th>形态</th><th>RT 底片</th><th>UT 波形</th><th>成因</th></tr>
+<tr><td><strong>气孔</strong></td><td>圆/椭圆气泡</td><td><strong>圆滑、边缘清晰</strong>黑点</td><td>单个或密集小回波</td><td>焊材受潮、保护气不足、油污</td></tr>
+<tr><td><strong>夹渣</strong></td><td>不规则渣块</td><td><strong>不规则、边缘模糊</strong>暗块</td><td>杂乱回波</td><td>清渣不净、焊剂卷入</td></tr>
+<tr><td>钨夹杂</td><td>亮点（TIG）</td><td>白色亮点（高密度）</td><td>强回波</td><td>铇极熔化掉进焊缝</td></tr>
+</table>
+<div class="tip"><strong>气孔常见对策</strong>（客户问"为什么老有气孔"）：① 焊材烘干 ② 保护气体足/挡风 ③ 清理母材油污铁锈 ④ 控制空气湿度。</div>
+</div>
+
+<div class="section" id="ch3">
+<h2>三、表面缺陷 + 几何缺陷</h2>
+<table>
+<tr><th>缺陷</th><th>是啥</th><th>危害</th><th>查法</th></tr>
+<tr><td><strong>咬边</strong></td><td>焊缝边缘母材被熔一道沟</td><td>应力集中→疲劳源</td><td>VT/MT/PT</td></tr>
+<tr><td><strong>焊瘤</strong></td><td>焊缝金属溢出堆成瘤</td><td>外观+应力</td><td>VT</td></tr>
+<tr><td><strong>飞溅</strong></td><td>金属颗粒粘在表面</td><td>一般无害</td><td>VT</td></tr>
+<tr><td><strong>烧穿</strong></td><td>焊缝根部烧个洞</td><td>泄漏</td><td>VT/RT</td></tr>
+<tr><td><strong>错边</strong></td><td>两板没对齐</td><td>几何应力集中</td><td>VT/量具</td></tr>
+<tr><td><strong>棱角度</strong></td><td>焊缝角变形</td><td>应力集中</td><td>VT/量具</td></tr>
+</table>
+<div class="warn"><strong>表面缺陷 UT 测不好</strong>——UT 对表面开口缺陷不敏感（近场盲区）。所以焊缝表面必须配合 MT/PT。这就是焊缝检测"组合拳"的根本原因。</div>
+</div>
+
+<div class="section" id="ch4">
+<h2>四、★ 焊缝缺陷速查表（销售必记）</h2>
+<div class="key">
+<table>
+<tr><th>缺陷</th><th>类别</th><th>危险度</th><th>UT 强项</th><th>RT 强项</th><th>验收</th></tr>
+<tr class="bad-row"><td>裂纹（冷/热/SR）</td><td>面状</td><td><strong>最危险</strong></td><td>✅</td><td>方向平行才行</td><td><strong>一律判废</strong></td></tr>
+<tr class="bad-row"><td>未熔合</td><td>面状</td><td>很危险</td><td><strong>✅✅（UT 强项）</strong></td><td>易漏</td><td>按大小判</td></tr>
+<tr class="bad-row"><td>未焊透</td><td>面状</td><td>危险</td><td>✅</td><td>✅</td><td>按大小判</td></tr>
+<tr><td>气孔</td><td>体积</td><td>中等</td><td>单个易漏</td><td><strong>✅✅</strong></td><td>按数量大小</td></tr>
+<tr><td>夹渣</td><td>体积</td><td>中等</td><td>✅</td><td><strong>✅✅</strong></td><td>按大小长度</td></tr>
+<tr><td>咬边/焊瘤/错边</td><td>表面/几何</td><td>较轻</td><td>❌</td><td>❌</td><td>VT/MT/PT</td></tr>
+</table>
+</div>
+<div class="sale"><strong>高频客户对话</strong>
+<p><strong>① "发现一条裂纹怎么办？"</strong> 裂纹一律判废，必须返修。返修后重新检测，冷裂纹要注意延迟。</p>
+<p><strong>② "未熔合 vs 未焊透？"</strong> 未熔合是边缘没熔上（方向性强，UT 查比 RT 强），未焊透是根部没焊到（UT/RT 都能查）。</p>
+<p><strong>③ "为什么老有气孔？"</strong> 焊材受潮、保护气不足、母材有油污铁锈、湿度大。</p>
+<p><strong>④ "PWHT 后要重检吗？"</strong> 要。PWHT 可能产生再热裂纹，要重新 UT/MT。</p>
+</div>
+</div>
+
+<div class="section" id="exam">
+<h2>📝 随堂测验（6 题）</h2>
+<div class="quiz-intro">焊缝缺陷深化——销售核心知识。</div>
+
+<div class="quiz-question" data-correct="C">
+<div class="q-text"><span class="q-num">1</span>冷裂纹（延迟裂纹）三要素是？</div>
+<div class="quiz-option" data-k="A">A. 高温+高压+腐蚀</div>
+<div class="quiz-option" data-k="B">B. 电流+电压+速度</div>
+<div class="quiz-option" data-k="C">C. 氢+淬硬组织+拉应力</div>
+<div class="quiz-option" data-k="D">D. 焊材+保护气+坡口</div>
+<div class="quiz-explain">✅ 选 C。冷裂纹三要素：<strong>氢</strong>（焊材受潮/油污）+ <strong>淬硬组织</strong>（低合金高强钢冷却快）+ <strong>拉应力</strong>（焊接残余应力）。三者在 HAZ 凑齐 → 氢致裂纹，多在焊后几小时到几天出现（延迟）。</div>
+</div>
+
+<div class="quiz-question" data-correct="B">
+<div class="q-text"><span class="q-num">2</span>UT 查未熔合比 RT 强，根本原因是？</div>
+<div class="quiz-option" data-k="A">A. UT 仪器便宜</div>
+<div class="quiz-option" data-k="B">B. 未熔合方向性强，RT 射线不平行时漏检；UT 声束垂直时反射强</div>
+<div class="quiz-option" data-k="C">C. RT 不能测焊缝</div>
+<div class="quiz-option" data-k="D">D. 未熔合只在表面</div>
+<div class="quiz-explain">✅ 选 B。未熔合是<strong>面状缺陷</strong>，有方向性。RT 射线必须平行未熔合面才能拍出，方向不对漏检。UT 斜探头从合适角度扫，声束垂直时反射极强。这是 UT 相对 RT 的核心优势。</div>
+</div>
+
+<div class="quiz-question" data-correct="A">
+<div class="q-text"><span class="q-num">3</span>层状撕裂的根源是？</div>
+<div class="quiz-option" data-k="A">A. 母材厚板里有分层，焊接 Z 向拉应力下被撕开</div>
+<div class="quiz-option" data-k="B">B. 焊接电流太大</div>
+<div class="quiz-option" data-k="C">C. 焊材受潮</div>
+<div class="quiz-option" data-k="D">D. 坡口角度不对</div>
+<div class="quiz-explain">✅ 选 A。层状撕裂源于<strong>母材厚板里的分层</strong>（第 3 课讲过），在焊接 Z 向（厚度方向）拉应力下被一层层撕开。预防办法：用<strong>抗层状撕裂钢（Z 向钢）</strong>，经 UT 保证母材无分层。</div>
+</div>
+
+<div class="quiz-question" data-correct="C">
+<div class="q-text"><span class="q-num">4</span>气孔和夹渣在 RT 底片上怎么区分？</div>
+<div class="quiz-option" data-k="A">A. 气孔大，夹渣小</div>
+<div class="quiz-option" data-k="B">B. 气孔白色，夹渣黑色</div>
+<div class="quiz-option" data-k="C">C. 气孔圆滑边缘清晰，夹渣不规则边缘模糊</div>
+<div class="quiz-option" data-k="D">D. 完全一样</div>
+<div class="quiz-explain">✅ 选 C。<strong>气孔</strong>是气体，底片<strong>圆滑、边缘清晰</strong>；<strong>夹渣</strong>是固体杂质，底片<strong>不规则、边缘模糊、黑度不均</strong>。这是看 RT 底片的基本功。</div>
+</div>
+
+<div class="quiz-question" data-correct="D">
+<div class="q-text"><span class="q-num">5</span>咬边这种表面缺陷，为什么不能只靠 UT？</div>
+<div class="quiz-option" data-k="A">A. 咬边不算缺陷</div>
+<div class="quiz-option" data-k="B">B. UT 太贵</div>
+<div class="quiz-option" data-k="C">C. UT 会扩大咬边</div>
+<div class="quiz-option" data-k="D">D. UT 对表面开口缺陷不敏感（近场盲区），必须用 VT/MT/PT</div>
+<div class="quiz-explain">✅ 选 D。UT 有<strong>近场盲区</strong>，对表面开口缺陷（咬边、表面裂纹）不敏感。必须用 <strong>MT（铁磁材料）/ PT（非磁材料）</strong>查表面。这就是焊缝检测"组合拳"VT→UT/RT→MT/PT 的原因。</div>
+</div>
+
+<div class="quiz-question" data-correct="A">
+<div class="q-text"><span class="q-num">6</span>【销售场景】客户"焊缝发现裂纹"，你的第一句话？</div>
+<div class="quiz-option" data-k="A">A. "裂纹一律判废，必须返修。返修后重新检测，冷裂纹注意延迟。"</div>
+<div class="quiz-option" data-k="B">B. "多长？短的也许能用"</div>
+<div class="quiz-option" data-k="C">C. "在哪？HAZ 的能用"</div>
+<div class="quiz-option" data-k="D">D. "测量深度再说"</div>
+<div class="quiz-explain">✅ 选 A。<strong>所有标准都规定裂纹一律不合格（判废）</strong>，不管大小位置。专业的第一反应是明确判废 + 指出返修后要重新检测 + 提醒冷裂纹延迟风险。B/C/D 都违反标准。</div>
+</div>
+
+<div id="quiz-result"><div>你的得分</div><div class="score">0</div><div id="result-text"></div><br><button class="btn ghost" onclick="resetQuiz()">重新作答</button></div>
+<div style="text-align:center;margin-top:14px"><button class="btn" onclick="submitQuiz()">交卷</button></div>
+</div>
+
+</div>
+<div style="text-align:center;margin:24px 0;padding:14px;background:#eaf2f8;border-radius:8px"><a href="index.html" style="display:inline-block;background:#1a5276;color:#fff;padding:10px 28px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px">🏠 返回总目录</a></div>
+<script>
+document.querySelectorAll('.quiz-question').forEach(function(q){var correct=q.dataset.correct;q.querySelectorAll('.quiz-option').forEach(function(opt){opt.addEventListener('click',function(){if(q.classList.contains('locked'))return;q.querySelectorAll('.quiz-option').forEach(function(o){o.classList.remove('correct','wrong');var m=o.querySelector('.mark');if(m)m.remove();});var k=opt.dataset.k;if(k===correct){opt.classList.add('correct');opt.insertAdjacentHTML('beforeend','<span class="mark">✓</span>');}else{opt.classList.add('wrong');opt.insertAdjacentHTML('beforeend','<span class="mark">✗</span>');q.querySelectorAll('.quiz-option').forEach(function(o){if(o.dataset.k===correct){o.classList.add('correct');}});}q.querySelector('.quiz-explain').classList.add('show');q.classList.add('locked');});});});
+function submitQuiz(){var qs=document.querySelectorAll('.quiz-question');var a=0,s=0;qs.forEach(function(q){if(q.classList.contains('locked')){a++;if(q.querySelector('.quiz-option.correct'))s++;}});var r=document.getElementById('quiz-result');r.style.display='block';r.querySelector('.score').textContent=s+' / '+qs.length;var p=s/qs.length,m='';if(p===1)m='满分！焊缝缺陷弹药库成型。';else if(p>=.75)m='不错！错题看解析。';else if(p>=.5)m='重看裂纹和未熔合。';else m='重看一遍再测。';document.getElementById('result-text').textContent=m+'（已答'+a+'/'+qs.length+'）';r.scrollIntoView({behavior:'smooth',block:'center'});}
+function resetQuiz(){document.querySelectorAll('.quiz-question').forEach(function(q){q.classList.remove('locked');q.querySelectorAll('.quiz-option').forEach(function(o){o.classList.remove('correct','wrong');var m=o.querySelector('.mark');if(m)m.remove();});q.querySelector('.quiz-explain').classList.remove('show');});document.getElementById('quiz-result').style.display='none';}
+</script>
+</body></html>

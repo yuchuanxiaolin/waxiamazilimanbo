@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第07课 · 钢材与铸件缺陷</title>
+<style>
+:root{--primary:#1a5276;--primary-light:#2980b9;--accent:#e67e22;--bg:#f4f6f7;--card:#fff;--text:#2c3e50;--text-light:#7f8c8d;--border:#d5dbdb;--success:#27ae60;--danger:#e74c3c;--warning:#f39c12;--info:#3498db;--shadow:0 2px 8px rgba(0,0,0,.08)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.85;font-size:15.5px;scroll-behavior:smooth}
+.topbar{position:fixed;top:0;left:0;right:0;height:52px;background:var(--primary);color:#fff;display:flex;align-items:center;padding:0 20px;z-index:1000;box-shadow:0 4px 20px rgba(0,0,0,.12)}
+.topbar h1{font-size:16px;font-weight:600}.topbar .crumb{font-size:12px;opacity:.75;margin-left:8px}
+.topbar nav{margin-left:auto;display:flex;gap:4px;overflow-x:auto}
+.topbar nav a{color:#cfd8dc;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:4px;white-space:nowrap}
+.sidebar{position:fixed;top:52px;left:0;bottom:0;width:230px;background:#fff;border-right:1px solid var(--border);overflow-y:auto;padding:14px 0;z-index:900}
+.sidebar a{display:block;padding:8px 18px;color:var(--text-light);text-decoration:none;font-size:12.5px;border-left:3px solid transparent}
+.sidebar a:hover{background:var(--bg);color:var(--primary)}
+.sidebar a.sub{padding-left:30px;font-size:11.5px}
+.main{margin-left:230px;margin-top:52px;padding:26px 32px;max-width:1000px}
+.section{background:var(--card);border-radius:10px;padding:24px 28px;margin-bottom:20px;box-shadow:var(--shadow)}
+.section h2{color:var(--primary);font-size:21px;border-bottom:2px solid var(--primary-light);padding-bottom:8px;margin-bottom:14px}
+.section h3{color:var(--primary);font-size:16.5px;margin:18px 0 8px;padding-left:10px;border-left:4px solid var(--accent)}
+.section h4{color:var(--text);font-size:15px;margin:14px 0 5px}
+.section p{margin:8px 0}.section ul,.section ol{margin:8px 0 8px 24px}.section li{margin:4px 0}.section strong{color:var(--primary)}
+.tip{background:#eafaf1;border-left:4px solid var(--success);padding:11px 15px;border-radius:6px;margin:12px 0}.tip::before{content:"💡 记住";display:block;font-weight:700;color:var(--success);font-size:12.5px;margin-bottom:3px}
+.warn{background:#fef9e7;border-left:4px solid var(--warning);padding:11px 15px;border-radius:6px;margin:12px 0}.warn::before{content:"⚠️ 注意";display:block;font-weight:700;color:var(--warning);font-size:12.5px;margin-bottom:3px}
+.key{background:#eaf2f8;border-left:4px solid var(--primary-light);padding:11px 15px;border-radius:6px;margin:12px 0}.key::before{content:"🔑 核心";display:block;font-weight:700;color:var(--primary);font-size:12.5px;margin-bottom:3px}
+.sale{background:#fdf2e9;border-left:4px solid var(--accent);padding:11px 15px;border-radius:6px;margin:12px 0}.sale::before{content:"💬 客户对话";display:block;font-weight:700;color:var(--accent);font-size:12.5px;margin-bottom:3px}
+.ndt{background:#eef5fb;border-left:4px solid var(--info);padding:11px 15px;border-radius:6px;margin:12px 0}.ndt::before{content:"🔬 检测要点";display:block;font-weight:700;color:var(--info);font-size:12.5px;margin-bottom:3px}
+.analogy{background:linear-gradient(135deg,#fdf2e9,#fef9e7);border:1px dashed var(--accent);border-radius:8px;padding:12px 15px;margin:12px 0}.analogy::before{content:"🎯 打个比方";display:block;font-weight:700;color:var(--accent);font-size:12.5px;margin-bottom:4px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+th,td{border:1px solid var(--border);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--primary);color:#fff}tr:nth-child(even){background:#f8f9fa}
+td strong{color:var(--primary)}
+.bad-row{background:#fdedec !important}
+.quiz-intro{background:#eaf2f8;border-radius:8px;padding:12px 16px;margin:14px 0;color:var(--primary)}
+.quiz-question{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;margin:12px 0}
+.quiz-question .q-text{font-weight:600;margin-bottom:8px}
+.quiz-question .q-num{display:inline-block;background:var(--primary);color:#fff;width:24px;height:24px;border-radius:50%;text-align:center;line-height:24px;font-size:12px;margin-right:6px}
+.quiz-option{display:block;padding:9px 12px;margin:5px 0;border:2px solid var(--border);border-radius:6px;cursor:pointer}
+.quiz-option:hover{border-color:var(--primary-light);background:#eaf2f8}
+.quiz-option.correct{border-color:var(--success);background:#eafaf1}
+.quiz-option.wrong{border-color:var(--danger);background:#fdedec}
+.quiz-option .mark{float:right;font-weight:700}
+.quiz-explain{margin-top:8px;padding:9px;background:#f8f9fa;border-radius:4px;font-size:12.5px;display:none}
+.quiz-explain.show{display:block}
+#quiz-result{display:none;text-align:center;padding:28px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin:14px 0}
+#quiz-result .score{font-size:44px;font-weight:700;margin:8px 0}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:9px 24px;border-radius:6px;border:none;cursor:pointer;font-size:14px;font-weight:600}
+.btn:hover{background:var(--accent-light)}
+.btn.ghost{background:transparent;color:var(--primary);border:2px solid var(--primary)}
+.hero{text-align:center;padding:38px 28px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin-bottom:20px}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);padding:3px 12px;border-radius:12px;font-size:11.5px;margin-bottom:8px}
+.hero h1{font-size:26px;margin-bottom:8px}.hero p{font-size:14px;opacity:.92}
+@media(max-width:900px){.sidebar{transform:translateX(-100%)}.main{margin-left:0;padding:14px}.topbar nav{display:none}}
+</style></head><body>
+<div class="topbar"><h1>🔬 NDT 扫盲课</h1><span class="crumb">第 7 课 · 钢材与铸件缺陷</span><nav><a href="#hero">封面</a><a href="#ch1">钢材缺陷</a><a href="#ch2">铸件缺陷</a><a href="#ch3">波形速查</a><a href="#exam">测验</a></nav></div>
+<div class="sidebar">
+<a href="#hero">封面</a>
+<a href="#ch1">一、钢材五大缺陷</a>
+<a href="#ch1-1" class="sub">1.1 分层（钢板头号敌人）</a>
+<a href="#ch1-2" class="sub">1.2 白点（锻件杀手）</a>
+<a href="#ch1-3" class="sub">1.3 折叠/夹杂/裂纹</a>
+<a href="#ch2">二、铸件五大缺陷</a>
+<a href="#ch2-1" class="sub">2.1 缩孔/疏松</a>
+<a href="#ch2-2" class="sub">2.2 气孔/夹杂/裂纹</a>
+<a href="#ch2-3" class="sub">2.3 铸件UT难点</a>
+<a href="#ch3">三、UT波形速查</a>
+<a href="#summary">总结</a>
+<a href="#exam">📝 测验</a>
+</div>
+<div class="main">
+
+<div class="section" id="hero" style="padding:0;overflow:hidden"><div class="hero">
+<span class="tag">扫盲课 · 第二阶段 · 第 7 课（懂靶标①）</span>
+<h1>钢材与铸件缺陷</h1>
+<p>第 3 课讲了"工艺产生什么缺陷"，这节课深入每种缺陷的长相、成因、检测要点。</p>
+</div></div>
+
+<div class="section">
+<h2>📍 第二阶段（懂靶标）开始</h2>
+<p>第一阶段你懂了"工件是什么、怎么造的"。第二阶段让你<strong>认识客户要查的缺陷</strong>——长什么样、怎么来的、UT 怎么查。这是回答"能不能测 XX 缺陷"的关键。</p>
+<div class="key">本课聚焦<strong>钢材和铸件缺陷</strong>。焊缝缺陷在第 5 课已讲、第 8 课深入；在役/复材缺陷在第 9 课。</div>
+</div>
+
+<div class="section" id="ch1">
+<h2>一、钢材的五大缺陷</h2>
+<p>钢经过炼钢→浇铸→轧制/锻造→热处理，每一步都可能留下缺陷。下面是五大主要缺陷。</p>
+
+<h3 id="ch1-1">1.1 ★ 分层（夹层）——钢板最危险的缺陷</h3>
+<div class="analogy"><strong>分层 = 钢板内部一层层分开</strong>，像一本书中间几页没粘住。成因第 3 课讲过：连铸坯心部的疏松/气泡/夹杂，轧制时被压扁没焊合。</div>
+<div class="ndt"><strong>★ UT 检测要点</strong>：<br>
+• 分层是<strong>平行板面的大反射面</strong> → <strong>纵波直探头垂直扫查，回波极强极清晰</strong><br>
+• 这是 UT 的"一等一绝活"，中厚板出厂 100% UT 扫分层<br>
+• 标准：GB/T 2970、EN 10160<br>
+• <strong>危害</strong>：Z 向受拉时致命（层状撕裂），压力容器/海洋平台必须用 Z 向钢</div>
+
+<h3 id="ch1-2">1.2 ★ 白点（氢致裂纹）——锻件和厚板的隐形杀手</h3>
+<div class="warn"><strong>白点 = 氢聚集成的圆片状内部微裂纹</strong>，是锻件最可怕的缺陷（第 3 课详讲）。</div>
+<div class="ndt"><strong>UT 检测要点</strong>：<br>
+• 圆片状内部裂纹 → <strong>纵波直探头反射强</strong>（声束垂直圆片时）<br>
+• 锻件 100% 要查白点<br>
+• <strong>检测时机</strong>：必须冷却到室温 + 等够时间（氢扩散完），否则漏检<br>
+• 典型波形：尖锐的强回波，类似小平面反射体</div>
+
+<h3 id="ch1-3">1.3 折叠、非金属夹杂、裂纹、偏析</h3>
+<table>
+<tr><th>缺陷</th><th>是啥</th><th>怎么来的</th><th>检测方法</th></tr>
+<tr><td><strong>折叠</strong></td><td>表面金属被翻卷压入，呈斜线状</td><td>轧制/锻造时表面翻边</td><td>MT/PT/表面 UT</td></tr>
+<tr><td><strong>非金属夹杂</strong></td><td>Al₂O₃、MnS、硅酸盐等杂质</td><td>炼钢脱氧产物、原料带入</td><td>UT（大块）/RT/金相</td></tr>
+<tr><td><strong>裂纹</strong></td><td>冶金/加工/氢致裂纹</td><td>应力+组织+氢</td><td>UT/MT/PT</td></tr>
+<tr><td><strong>偏析</strong></td><td>成分不均匀（碳/硫/磷富集）</td><td>凝固时溶质分配</td><td>化学分析/金相（UT 查不出本身）</td></tr>
+</table>
+<div class="tip"><strong>注意偏析</strong>：偏析本身 UT/RT 查不出（不是孔洞裂纹），但偏析区常伴生疏松、夹杂、裂纹，这些能查。</div>
+
+<h3>1.4 不同钢材制品的缺陷特点</h3>
+<table>
+<tr><th>制品</th><th>主要缺陷</th><th>首选方法</th></tr>
+<tr class="bad-row"><td><strong>钢板（中厚板）</strong></td><td><strong>分层</strong>、夹杂</td><td><strong>UT 直探头（分层绝活）</strong></td></tr>
+<tr><td>钢管（无缝）</td><td>纵向裂纹、折叠</td><td>UT 斜探头（周向）</td></tr>
+<tr><td>钢管（焊管）</td><td>焊缝缺陷</td><td>UT 斜探头 + RT</td></tr>
+<tr><td><strong>锻件</strong></td><td><strong>白点</strong>、夹杂、裂纹</td><td><strong>UT 直探头（白点绝活）</strong></td></tr>
+<tr><td>棒材/型材</td><td>缩孔残余、折叠、夹杂</td><td>UT（端面探缩孔）+ MT（表面）</td></tr>
+</table>
+</div>
+
+<div class="section" id="ch2">
+<h2>二、铸件的五大缺陷</h2>
+<p>铸件 = 液态金属凝固成型。第 3 课讲过五大缺陷的成因，这里聚焦<strong>检测要点</strong>。</p>
+
+<h3 id="ch2-1">2.1 缩孔 / 疏松（体积收缩造成）</h3>
+<div class="analogy">液态变固态收缩，心部补缩不足留下空洞。集中的一大个=缩孔，分散小孔=疏松。</div>
+<div class="ndt"><strong>检测</strong>：<strong>首选 RT</strong>（体积型缺陷，底片黑色团块/海绵状）。UT 能查但铸件粗晶杂波大。重点查：厚大截面中心、冒口根部、热节处。</div>
+
+<h3 id="ch2-2">2.2 气孔、夹杂、裂纹、冷隔</h3>
+<table>
+<tr><th>缺陷</th><th>UT/RT 长相</th><th>检测方法</th></tr>
+<tr><td><strong>气孔</strong></td><td>RT：圆滑黑点；UT：小回波/底波降</td><td>RT（首选）</td></tr>
+<tr><td><strong>夹杂/夹渣</strong></td><td>RT：不规则、边缘模糊暗块</td><td>RT（首选）</td></tr>
+<tr><td><strong>热裂纹</strong></td><td>沿晶、氧化发黑、曲折</td><td>MT/PT（表面）/UT（内部）</td></tr>
+<tr><td><strong>冷裂纹</strong></td><td>穿晶、断面干净、较平直</td><td>UT/MT</td></tr>
+<tr><td><strong>冷隔</strong></td><td>表面圆滑浅沟；RT 一条线</td><td>VT/RT/MT</td></tr>
+</table>
+<div class="tip"><strong>气孔 vs 夹渣的 RT 区别</strong>：气孔<strong>圆滑、边缘清晰</strong>；夹渣<strong>不规则、边缘模糊、黑度不均</strong>。这是看 RT 底片的基本功。</div>
+
+<h3 id="ch2-3">2.3 ★ 铸件 UT 的三大难点（必须懂）</h3>
+<div class="warn"><strong>铸件 UT 为什么难</strong>：<br>
+① <strong>粗大柱状晶</strong> → 草状回波严重，信噪比差<br>
+② <strong>表面粗糙</strong>（铸态表面）→ 耦合不好<br>
+③ <strong>形状复杂</strong>（铸件常不规则）→ 探头贴合难，声束可达性差</div>
+<div class="ndt"><strong>应对策略</strong>：<br>
+• 用<strong>低频（1–2MHz）</strong>减少散射<br>
+• 表面打磨（至少 Ra≤12.5）改善耦合<br>
+• <strong>主战场是 RT + MT/PT，UT 辅助</strong><br>
+• 不同铸件材料：铸钢（低频 UT）、灰铸铁（UT 极难，用 RT+MT）、球铁（声速法测球化率）、铸铝（高频 UT，晶粒细）</div>
+
+<div class="sale"><strong>客户对话</strong>：客户："铸钢阀门 UT 怎么做？"<br>
+"能做，但提醒您：铸钢粗晶杂波大，要用<strong>低频（1–2MHz）</strong>探头，表面要打磨。铸件内部缩孔疏松<strong>首选 RT</strong>，我们建议 <strong>RT + UT 配合</strong>——RT 查体积缺陷，UT 辅助查裂纹。表面用 MT。您这是铸钢还是铸铁？"</div>
+</div>
+
+<div class="section" id="ch3">
+<h2>三、UT 波形特征速查（钢材缺陷）</h2>
+<div class="key">
+<table>
+<tr><th>缺陷</th><th>UT 波形特征</th><th>底波影响</th></tr>
+<tr><td><strong>分层</strong></td><td>板面附近强反射（尖锐、高幅）</td><td>底波可能消失（声波被分层挡住）</td></tr>
+<tr><td><strong>白点</strong></td><td>多个尖锐强回波（圆片状反射）</td><td>底波降低或消失</td></tr>
+<tr><td><strong>夹杂</strong></td><td>方向性回波（片状/条带状）</td><td>底波略降</td></tr>
+<tr><td><strong>缩孔疏松</strong></td><td>一片林状/树枝状回波</td><td><strong>底波严重降低或消失</strong></td></tr>
+<tr><td><strong>气孔</strong></td><td>单个或密集小回波</td><td>底波略降（密集气孔底波明显降）</td></tr>
+<tr><td><strong>裂纹</strong></td><td>强尖锐回波（方向性强）</td><td>底波可能消失</td></tr>
+</table>
+</div>
+<div class="tip"><strong>经验法则</strong>：底波<strong>完全消失</strong>通常意味着有大面积缺陷（分层、白点、严重疏松）。底波<strong>降低但还在</strong>通常是分散缺陷（夹杂、气孔）。</div>
+</div>
+
+<div class="section" id="summary">
+<h2>📋 本课总结（8 条）</h2>
+<ol>
+<li><strong>钢材头号缺陷</strong>：钢板=分层（UT 直探头绝活）；锻件=白点（UT 直探头克星）。</li>
+<li><strong>分层</strong>：平行板面大反射面，纵波直探头垂直扫查，回波极强。</li>
+<li><strong>白点</strong>：氢致圆片状内部裂纹，纵波直探头反射强，检测时机要冷却后。</li>
+<li><strong>折叠/夹杂/裂纹</strong>：折叠是表面斜线状（MT/PT），夹杂方向性回波，裂纹最危险。</li>
+<li><strong>偏析 UT 查不出</strong>（不是孔洞），但伴生的疏松夹杂裂纹能查。</li>
+<li><strong>铸件五大缺陷</strong>：缩孔疏松、气孔、夹杂、裂纹、冷隔。</li>
+<li><strong>铸件 UT 难</strong>（粗晶+表面粗+形状复杂），主战场 RT+MT/PT，UT 低频辅助。</li>
+<li><strong>气孔 vs 夹渣 RT 区别</strong>：气孔圆滑清晰，夹渣不规则模糊。</li>
+</ol>
+</div>
+
+<div class="section" id="exam">
+<h2>📝 随堂测验（6 题）</h2>
+<div class="quiz-intro">考钢材和铸件的核心缺陷及检测方法。</div>
+
+<div class="quiz-question" data-correct="A">
+<div class="q-text"><span class="q-num">1</span>钢板分层缺陷，UT 波形最典型的特征？</div>
+<div class="quiz-option" data-k="A">A. 板面附近极强尖锐回波，底波可能消失</div>
+<div class="quiz-option" data-k="B">B. 无任何回波</div>
+<div class="quiz-option" data-k="C">C. 密集小回波一片</div>
+<div class="quiz-option" data-k="D">D. 底波增高</div>
+<div class="quiz-explain">✅ 选 A。分层是<strong>平行板面的大反射面</strong>，纵波直探头垂直扫查时，在板面附近得到极强尖锐回波，声波被挡住导致底波消失。这是 UT 一等一绝活的典型表现。</div>
+</div>
+
+<div class="quiz-question" data-correct="B">
+<div class="q-text"><span class="q-num">2</span>锻件白点检测，最佳时机是？</div>
+<div class="quiz-option" data-k="A">A. 锻造完立即检测（趁热）</div>
+<div class="quiz-option" data-k="B">B. 锻件完全冷却到室温，并等够时间让氢扩散完（最好热处理后）</div>
+<div class="quiz-option" data-k="C">C. 锻造前检测</div>
+<div class="quiz-option" data-k="D">D. 任何时候都行</div>
+<div class="quiz-explain">✅ 选 B。白点是<strong>氢致延迟裂纹</strong>，氢扩散聚集需要时间。热态锻件白点还没形成，立即检测会漏检。必须冷却到室温 + 等够时间（最好热处理后），让白点充分形成。</div>
+</div>
+
+<div class="quiz-question" data-correct="C">
+<div class="q-text"><span class="q-num">3</span>铸件内部缩孔疏松，首选什么方法？</div>
+<div class="quiz-option" data-k="A">A. 磁粉 MT</div>
+<div class="quiz-option" data-k="B">B. 渗透 PT</div>
+<div class="quiz-option" data-k="C">C. 射线 RT（体积型缺陷最敏感）</div>
+<div class="quiz-option" data-k="D">D. 涡流 ET</div>
+<div class="quiz-explain">✅ 选 C。缩孔疏松是<strong>体积型缺陷</strong>，RT 最敏感（底片黑色团块/海绵状）。MT/PT 只查表面。UT 能查但铸件粗晶杂波大。铸件内部缺陷首选 RT。</div>
+</div>
+
+<div class="quiz-question" data-correct="A">
+<div class="q-text"><span class="q-num">4</span>RT 底片上，气孔和夹渣怎么区分？</div>
+<div class="quiz-option" data-k="A">A. 气孔圆滑边缘清晰，夹渣不规则边缘模糊</div>
+<div class="quiz-option" data-k="B">B. 气孔大，夹渣小</div>
+<div class="quiz-option" data-k="C">C. 气孔黑色，夹渣白色</div>
+<div class="quiz-option" data-k="D">D. 没法区分</div>
+<div class="quiz-explain">✅ 选 A。<strong>气孔</strong>是气体困在金属里，RT 底片上是<strong>圆形/椭圆、边缘圆滑清晰</strong>的黑点。<strong>夹渣</strong>是不规则固体，底片上<strong>形状不规则、黑度不均、边缘模糊</strong>。这是看 RT 底片的基本功。</div>
+</div>
+
+<div class="quiz-question" data-correct="D">
+<div class="q-text"><span class="q-num">5</span>铸件 UT 为什么比锻件难？</div>
+<div class="quiz-option" data-k="A">A. 铸件太硬</div>
+<div class="quiz-option" data-k="B">B. 铸件有磁性</div>
+<div class="quiz-option" data-k="C">C. 铸件不能泡水</div>
+<div class="quiz-option" data-k="D">D. 粗大柱状晶杂波大 + 表面粗糙耦合差 + 形状复杂探头难贴合</div>
+<div class="quiz-explain">✅ 选 D。铸件 UT 三大难点：① <strong>粗晶</strong>草状回波严重 ② <strong>铸态表面粗糙</strong>耦合不好 ③ <strong>形状复杂</strong>探头贴合难。所以铸件主战场是 RT+MT/PT，UT 辅助用低频。</div>
+</div>
+
+<div class="quiz-question" data-correct="B">
+<div class="q-text"><span class="q-num">6</span>【销售场景】客户"球墨铸铁曲轴"想检测，你建议？</div>
+<div class="quiz-option" data-k="A">A. 球铁不能测</div>
+<div class="quiz-option" data-k="B">B. 能测：声速法测球化率 + A 扫查缩松夹渣，UT 比 RT 实惠</div>
+<div class="quiz-option" data-k="C">C. 只能切开看金相</div>
+<div class="quiz-option" data-k="D">D. 用 RT 查</div>
+<div class="quiz-explain">✅ 选 B。球铁声速和球化率正相关（5500–5820），可用<strong>声速法测球化率</strong>；常规 A 扫能查内部缩松、夹渣。球铁比灰铸铁好检得多。RT 也能做但成本高、批量不划算。</div>
+</div>
+
+<div id="quiz-result"><div>你的得分</div><div class="score">0</div><div id="result-text"></div><br><button class="btn ghost" onclick="resetQuiz()">重新作答</button></div>
+<div style="text-align:center;margin-top:14px"><button class="btn" onclick="submitQuiz()">交卷</button></div>
+</div>
+
+</div>
+<div style="text-align:center;margin:24px 0;padding:14px;background:#eaf2f8;border-radius:8px"><a href="index.html" style="display:inline-block;background:#1a5276;color:#fff;padding:10px 28px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px">🏠 返回总目录</a></div>
+<script>
+document.querySelectorAll('.quiz-question').forEach(function(q){var correct=q.dataset.correct;q.querySelectorAll('.quiz-option').forEach(function(opt){opt.addEventListener('click',function(){if(q.classList.contains('locked'))return;q.querySelectorAll('.quiz-option').forEach(function(o){o.classList.remove('correct','wrong');var m=o.querySelector('.mark');if(m)m.remove();});var k=opt.dataset.k;if(k===correct){opt.classList.add('correct');opt.insertAdjacentHTML('beforeend','<span class="mark">✓</span>');}else{opt.classList.add('wrong');opt.insertAdjacentHTML('beforeend','<span class="mark">✗</span>');q.querySelectorAll('.quiz-option').forEach(function(o){if(o.dataset.k===correct){o.classList.add('correct');}});}q.querySelector('.quiz-explain').classList.add('show');q.classList.add('locked');});});});
+function submitQuiz(){var qs=document.querySelectorAll('.quiz-question');var a=0,s=0;qs.forEach(function(q){if(q.classList.contains('locked')){a++;if(q.querySelector('.quiz-option.correct'))s++;}});var r=document.getElementById('quiz-result');r.style.display='block';r.querySelector('.score').textContent=s+' / '+qs.length;var p=s/qs.length,m='';if(p===1)m='满分！钢材和铸件缺陷都掌握了。';else if(p>=.75)m='不错！错题看解析。';else if(p>=.5)m='有概念了，重看分层和白点。';else m='重看一遍再测。';document.getElementById('result-text').textContent=m+'（已答'+a+'/'+qs.length+'）';r.scrollIntoView({behavior:'smooth',block:'center'});}
+function resetQuiz(){document.querySelectorAll('.quiz-question').forEach(function(q){q.classList.remove('locked');q.querySelectorAll('.quiz-option').forEach(function(o){o.classList.remove('correct','wrong');var m=o.querySelector('.mark');if(m)m.remove();});q.querySelector('.quiz-explain').classList.remove('show');});document.getElementById('quiz-result').style.display='none';}
+var ss=[].slice.call(document.querySelectorAll('.section[id]'));var sl=[].slice.call(document.querySelectorAll('.sidebar a[href^="#"]'));window.addEventListener('scroll',function(){var sc=window.scrollY+120,cur=ss[0];ss.forEach(function(s){if(s.offsetTop<=sc)cur=s;});sl.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+cur.id);});});
+</script>
+</body></html>

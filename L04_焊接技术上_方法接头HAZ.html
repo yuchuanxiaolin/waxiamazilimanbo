@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第04课 · 焊接技术（上）—— 方法·接头·热影响区</title>
+<style>
+:root{--primary:#1a5276;--primary-light:#2980b9;--accent:#e67e22;--bg:#f4f6f7;--card:#fff;--text:#2c3e50;--text-light:#7f8c8d;--border:#d5dbdb;--success:#27ae60;--danger:#e74c3c;--warning:#f39c12;--info:#3498db;--shadow:0 2px 8px rgba(0,0,0,.08)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Microsoft YaHei","Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.85;font-size:15.5px;scroll-behavior:smooth}
+.topbar{position:fixed;top:0;left:0;right:0;height:52px;background:var(--primary);color:#fff;display:flex;align-items:center;padding:0 20px;z-index:1000;box-shadow:0 4px 20px rgba(0,0,0,.12)}
+.topbar h1{font-size:16px;font-weight:600;white-space:nowrap}.topbar .crumb{font-size:12px;opacity:.75;margin-left:8px}
+.topbar nav{margin-left:auto;display:flex;gap:4px;overflow-x:auto}
+.topbar nav a{color:#cfd8dc;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:4px;white-space:nowrap}
+.topbar nav a:hover{background:rgba(255,255,255,.15);color:#fff}
+.sidebar{position:fixed;top:52px;left:0;bottom:0;width:240px;background:#fff;border-right:1px solid var(--border);overflow-y:auto;padding:14px 0;z-index:900}
+.sidebar a{display:block;padding:8px 20px;color:var(--text-light);text-decoration:none;font-size:13px;border-left:3px solid transparent;transition:.2s}
+.sidebar a:hover{background:var(--bg);color:var(--primary);border-left-color:var(--primary-light)}
+.sidebar a.active{background:#eaf2f8;color:var(--primary);border-left-color:var(--primary);font-weight:600}
+.sidebar a.sub{padding-left:34px;font-size:12px}
+.sidebar .group-label{padding:12px 20px 4px;font-size:11px;color:var(--accent);font-weight:700;letter-spacing:1px}
+.main{margin-left:240px;margin-top:52px;padding:28px 36px;max-width:1000px}
+.section{background:var(--card);border-radius:10px;padding:26px 30px;margin-bottom:22px;box-shadow:var(--shadow)}
+.section h2{color:var(--primary);font-size:22px;border-bottom:2px solid var(--primary-light);padding-bottom:10px;margin-bottom:16px}
+.section h3{color:var(--primary);font-size:17px;margin:22px 0 10px;padding-left:10px;border-left:4px solid var(--accent)}
+.section h4{color:var(--text);font-size:15.5px;margin:16px 0 6px}
+.section p{margin:9px 0}.section ul,.section ol{margin:9px 0 9px 26px}.section li{margin:5px 0}
+.section strong{color:var(--primary)}
+.tip{background:#eafaf1;border-left:4px solid var(--success);padding:12px 16px;border-radius:6px;margin:14px 0}.tip::before{content:"💡 记住";display:block;font-weight:700;color:var(--success);font-size:13px;margin-bottom:4px}
+.warn{background:#fef9e7;border-left:4px solid var(--warning);padding:12px 16px;border-radius:6px;margin:14px 0}.warn::before{content:"⚠️ 注意";display:block;font-weight:700;color:var(--warning);font-size:13px;margin-bottom:4px}
+.key{background:#eaf2f8;border-left:4px solid var(--primary-light);padding:12px 16px;border-radius:6px;margin:14px 0}.key::before{content:"🔑 核心";display:block;font-weight:700;color:var(--primary);font-size:13px;margin-bottom:4px}
+.sale{background:#fdf2e9;border-left:4px solid var(--accent);padding:12px 16px;border-radius:6px;margin:14px 0}.sale::before{content:"💬 客户对话";display:block;font-weight:700;color:var(--accent);font-size:13px;margin-bottom:4px}
+.ndt{background:#eef5fb;border-left:4px solid var(--info);padding:12px 16px;border-radius:6px;margin:14px 0}.ndt::before{content:"🔬 对检测的意义";display:block;font-weight:700;color:var(--info);font-size:13px;margin-bottom:4px}
+.analogy{background:linear-gradient(135deg,#fdf2e9,#fef9e7);border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;margin:14px 0}.analogy::before{content:"🎯 打个比方";display:block;font-weight:700;color:var(--accent);font-size:13px;margin-bottom:6px}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13.5px}
+th,td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--primary);color:#fff;font-weight:600}
+tr:nth-child(even){background:#f8f9fa}tr:hover{background:#eaf2f8}
+td strong{color:var(--primary)}
+.quick-card{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:14px 0}
+.quick-item{background:#fff;border:2px solid var(--border);border-radius:8px;padding:14px;text-align:center}
+.quick-item:hover{border-color:var(--primary-light);transform:translateY(-2px)}
+.quick-item .icon{font-size:28px;margin-bottom:4px}.quick-item .title{font-weight:700;color:var(--primary);font-size:14px}.quick-item .desc{font-size:12px;color:var(--text-light);margin-top:4px}
+details{background:#f8f9fa;border:1px solid var(--border);border-radius:6px;margin:12px 0;overflow:hidden}
+summary{cursor:pointer;padding:10px 16px;font-weight:600;color:var(--primary);background:#eaf2f8}
+details .inner{padding:12px 16px}
+.flow{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;margin:16px 0}
+.flow-step{background:var(--primary);color:#fff;padding:10px 16px;border-radius:6px;font-size:13px;font-weight:600;text-align:center;min-width:80px}
+.flow-arrow{color:var(--accent);font-size:20px;font-weight:700}
+.quiz-intro{background:#eaf2f8;border-radius:8px;padding:14px 18px;margin:16px 0;color:var(--primary)}
+.quiz-question{background:#fff;border:1px solid var(--border);border-radius:8px;padding:16px;margin:14px 0}
+.quiz-question .q-text{font-weight:600;margin-bottom:10px}
+.quiz-question .q-num{display:inline-block;background:var(--primary);color:#fff;width:26px;height:26px;border-radius:50%;text-align:center;line-height:26px;font-size:13px;margin-right:8px}
+.quiz-option{display:block;padding:10px 14px;margin:6px 0;border:2px solid var(--border);border-radius:6px;cursor:pointer;transition:.2s}
+.quiz-option:hover{border-color:var(--primary-light);background:#eaf2f8}
+.quiz-option.correct{border-color:var(--success);background:#eafaf1}
+.quiz-option.wrong{border-color:var(--danger);background:#fdedec}
+.quiz-option .mark{float:right;font-weight:700}
+.quiz-explain{margin-top:10px;padding:10px;background:#f8f9fa;border-radius:4px;font-size:13px;display:none}
+.quiz-explain.show{display:block}
+#quiz-result{display:none;text-align:center;padding:32px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin:16px 0}
+#quiz-result .score{font-size:48px;font-weight:700;margin:10px 0}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:10px 28px;border-radius:6px;border:none;cursor:pointer;font-size:15px;font-weight:600}
+.btn:hover{background:var(--accent-light);transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--primary);border:2px solid var(--primary)}
+.hero{text-align:center;padding:44px 32px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin-bottom:22px}
+.hero .course-tag{display:inline-block;background:rgba(255,255,255,.2);padding:4px 14px;border-radius:14px;font-size:12px;margin-bottom:10px}
+.hero h1{font-size:28px;margin-bottom:10px}.hero p{font-size:15px;opacity:.92;margin:6px 0}
+.hero .meta{margin-top:16px;font-size:13px;opacity:.8}.hero .meta span{margin:0 10px}
+@media(max-width:900px){.sidebar{transform:translateX(-100%)}.main{margin-left:0;padding:16px}.topbar nav{display:none}}
+</style>
+</head>
+<body>
+<div class="topbar"><h1>🔬 NDT 扫盲课</h1><span class="crumb">第 4 课 · 焊接技术（上）</span><nav><a href="#hero">封面</a><a href="#ch1">焊接本质</a><a href="#ch2">焊接方法</a><a href="#ch3">接头坡口</a><a href="#ch4">HAZ</a><a href="#exam">测验</a></nav></div>
+<div class="sidebar">
+<a href="#hero">封面</a>
+<div class="group-label">焊接基础</div>
+<a href="#ch1">一、焊接的本质与分类</a>
+<a href="#ch1-1" class="sub">1.1 焊接是什么</a>
+<a href="#ch1-2" class="sub">1.2 三大类：熔/压/钎</a>
+<a href="#ch2">二、主要焊接方法</a>
+<a href="#ch2-1" class="sub">2.1 熔焊五大方法</a>
+<a href="#ch2-2" class="sub">2.2 高能束/压焊</a>
+<a href="#ch3">三、接头与坡口</a>
+<a href="#ch3-1" class="sub">3.1 五种接头</a>
+<a href="#ch3-2" class="sub">3.2 坡口形式</a>
+<a href="#ch4">四、焊缝四区与 HAZ</a>
+<a href="#ch4-1" class="sub">4.1 焊缝四个区</a>
+<a href="#ch4-2" class="sub">4.2 HAZ 为什么危险</a>
+<a href="#summary">本课总结</a>
+<a href="#exam">📝 测验</a>
+</div>
+<div class="main">
+
+<div class="section" id="hero" style="padding:0;overflow:hidden">
+<div class="hero">
+<span class="course-tag">扫盲课 · 第一阶段 · 第 4 课（上）</span>
+<h1>焊接技术（上）：方法·接头·热影响区</h1>
+<p>焊缝是 UT 检测的第一大客户场景——80% 的客户对话围绕焊缝。这节课让你听懂客户说的"埋弧焊""V 形坡口""热影响区"都是啥。</p>
+<div class="meta"><span>⏱ 约 50 分钟</span><span>📚 对应 B3 §1-§4</span><span>⭐ 销售核心课</span></div>
+</div>
+</div>
+
+<div class="section">
+<h2>📍 为什么 NDT 工程师必须懂焊接</h2>
+<div class="key"><strong>焊缝 = UT 检测第一大场景。</strong>客户拿来的检测委托，绝大多数和焊缝有关。不懂焊接，80% 的客户对话接不住。</div>
+<div class="sale">客户最常见的几句话：<br>
+• "我们这是埋弧焊的容器焊缝"<br>
+• "这是 X 形坡口对接"<br>
+• "焊缝热影响区老出裂纹"<br>
+• "这个件焊后要不要热处理再检？"<br><br>
+这节课就是让你能听懂、能接话。</div>
+</div>
+
+<div class="section" id="ch1">
+<h2>一、焊接的本质与分类</h2>
+
+<h3 id="ch1-1">1.1 焊接到底是什么？</h3>
+<div class="analogy"><strong>焊接 = 用高温把两块金属边缘熔化，让它们"长"在一起</strong>。<br>
+就像两块冰贴在一起会冻成一块——金属边缘熔化后凝固，原子级别的结合，变成一个整体。这是工业中最常用的<strong>不可拆连接</strong>方式。</div>
+
+<h3 id="ch1-2">1.2 焊接三大类（熔焊/压焊/钎焊）</h3>
+<table>
+<tr><th>类别</th><th>原理</th><th>特点</th><th>代表方法</th></tr>
+<tr class="good-row"><td><strong>① 熔焊</strong></td><td>把接口熔化再凝固</td><td>最常用，<strong>有焊缝</strong></td><td>焊条电弧焊、埋弧焊、氩弧焊、气保焊</td></tr>
+<tr><td>② 压焊</td><td>加热/加压但不熔化</td><td>不填料、固态连接</td><td>电阻焊（点焊）、摩擦焊、搅拌摩擦焊</td></tr>
+<tr><td>③ 钎焊</td><td>只熔化钎料，母材不熔</td><td>温度低、变形小</td><td>锡焊、铜焊、<strong>真空钎焊（水冷板用！）</strong></td></tr>
+</table>
+<div class="key"><strong>你只要重点记熔焊</strong>——99% 的焊缝检测对象都是熔焊焊缝。<strong>钎焊只要记一个：真空钎焊（水冷板用的）</strong>，这个补充教材讲过。压焊了解即可。</div>
+</div>
+
+<div class="section" id="ch2">
+<h2>二、主要焊接方法（熔焊五大方法）</h2>
+<p>客户报焊接方法时，你得对得上号。下面是最常见的五种熔焊 + 几种特殊焊法。</p>
+
+<h3 id="ch2-1">2.1 熔焊五大方法（必须认识）</h3>
+<table>
+<tr><th>方法</th><th>缩写</th><th>怎么干</th><th>用在哪</th><th>客户怎么提</th></tr>
+<tr><td><strong>焊条电弧焊</strong></td><td>SMAW</td><td>手持焊条（外面裹药皮），电弧熔化焊条和母材</td><td>工地、现场、维修，最灵活</td><td>"手工焊""电弧焊"</td></tr>
+<tr><td><strong>埋弧焊</strong></td><td>SAW</td><td>焊丝+颗粒状焊剂埋住电弧，看不见弧光</td><td><strong>压力容器、长直焊缝</strong>（厚板）</td><td>"埋弧自动焊"</td></tr>
+<tr><td><strong>氩弧焊（铇极）</strong></td><td>TIG/GTAW</td><td>不熔化的铇极 + 氩气保护，可加/不加焊丝</td><td><strong>不锈钢、铝、钛</strong>（薄板、高质量）</td><td>"氩弧焊""TIG"</td></tr>
+<tr><td><strong>熔化极气保焊</strong></td><td>GMAW/MIG/MAG</td><td>连续送焊丝 + 气体保护</td><td>大批量、钢结构、汽车</td><td>"二保焊""气保焊"</td></tr>
+<tr><td><strong>药芯焊丝焊</strong></td><td>FCAW</td><td>管状焊丝（芯里有药粉）+ 可加可不加气体</td><td>野外、大风（抗风性好）</td><td>"药芯焊丝"</td></tr>
+</table>
+<div class="tip"><strong>记忆窍门</strong>：<br>
+• <strong>埋弧焊</strong> = 压力容器/厚板长直焊缝（你做容器客户的标配）<br>
+• <strong>氩弧焊</strong> = 不锈钢/铝/钛薄板（高质量焊）<br>
+• <strong>焊条电弧焊</strong> = 工地现场维修（最灵活）<br>
+• <strong>气保焊（二保焊）</strong> = 钢结构、汽车（大批量）</div>
+
+<h3 id="ch2-2">2.2 高能束焊 + 压焊（了解）</h3>
+<table>
+<tr><th>方法</th><th>特点</th><th>用在哪</th></tr>
+<tr><td><strong>激光焊</strong></td><td>激光束熔化，深宽比大、热影响区小、变形小</td><td>汽车、电池、电子</td></tr>
+<tr><td><strong>电子束焊</strong></td><td>真空里电子束轰击，深窄焊缝</td><td>航空、核电</td></tr>
+<tr><td><strong>电阻焊/点焊</strong></td><td>通电+加压，接触面电阻发热熔合</td><td>汽车车身（白车身）</td></tr>
+<tr><td><strong>摩擦焊（FW）</strong></td><td>两件高速旋转摩擦生热，顶锻连一起</td><td>轴、管、刀具</td></tr>
+<tr><td><strong>搅拌摩擦焊（FSW）</strong></td><td>不熔化，搅拌头"搅"在一起</td><td><strong>铝合金（水冷板！）</strong></td></tr>
+</table>
+<div class="key"><strong>记住这两个对水冷板/铝件重要的</strong>：<br>
+• <strong>搅拌摩擦焊 FSW</strong>：水冷板铝合金常用，固态焊不熔化，焊缝组织好<br>
+• <strong>激光焊</strong>：电池焊接、汽车件，焊缝窄热影响区小</div>
+</div>
+
+<div class="section" id="ch3">
+<h2>三、焊接接头与坡口——UT 探头扫查的依据</h2>
+
+<h3 id="ch3-1">3.1 五种基本接头形式</h3>
+<div class="analogy">接头 = 两块板怎么"摆"在一起焊。摆法不同，焊缝形状不同，<strong>UT 探头扫查位置也不同</strong>。</div>
+<table>
+<tr><th>接头</th><th>怎么摆</th><th>常见在哪</th></tr>
+<tr><td><strong>① 对接接头</strong></td><td>两块板端面对齐焊</td><td><strong>压力容器纵/环焊缝</strong>、管道、钢板拼接</td></tr>
+<tr><td><strong>② 角接接头</strong></td><td>两块板成 L 形</td><td>箱体、框架</td></tr>
+<tr><td><strong>③ 搭接接头</strong></td><td>两块板叠一块焊</td><td>薄板结构、点焊</td></tr>
+<tr><td><strong>④ T 形接头</strong></td><td>一块板垂直焊在另一块上成 T</td><td><strong>钢结构、船体</strong>、加强筋</td></tr>
+<tr><td><strong>⑤ 端接接头</strong></td><td>两块板端面叠合焊</td><td>较少见</td></tr>
+</table>
+<div class="key"><strong>最重要的两种</strong>：<br>
+• <strong>对接接头</strong>（压力容器/管道主力）→ UT 用<strong>斜探头从焊缝两侧扫查</strong><br>
+• <strong>T 形/角接接头</strong>（钢结构主力）→ UT 扫查更复杂，要考虑声束角度</div>
+
+<h3 id="ch3-2">3.2 坡口——为什么开坡口？</h3>
+<div class="analogy"><strong>坡口 = 焊前把板的边缘切成斜的（或别的形状）</strong>，目的是让焊条/焊丝能伸到根部，焊透整厚度。不开坡口，厚板根本焊不透。</div>
+<table>
+<tr><th>坡口</th><th>形状</th><th>用在哪</th></tr>
+<tr><td><strong>I 形（直边）</strong></td><td>不开坡口，直边对齐</td><td>薄板（&lt;6mm）</td></tr>
+<tr><td><strong>V 形</strong></td><td>切成 V 字（一面斜）</td><td>中厚板单面焊</td></tr>
+<tr><td><strong>X 形（双 V）</strong></td><td>两面都斜，成 X</td><td><strong>厚板双面焊</strong>（压力容器）</td></tr>
+<tr><td><strong>U 形</strong></td><td>切成 U 字（圆弧底）</td><td>很厚的板，省填充金属</td></tr>
+<tr><td><strong>单 V 带钝边</strong></td><td>V 形底部留一小段直边</td><td>防止根部焊穿</td></tr>
+</table>
+<div class="ndt"><strong>坡口对 UT 的意义</strong>：<br>
+• UT 探伤前必须知道<strong>坡口形式和尺寸</strong>（根部位置、坡口角度），才能判断回波来自缺陷还是坡口边缘<br>
+• <strong>未熔合</strong>常发生在坡口侧壁或根部 → 知道坡口位置才能定位<br>
+• 对接焊缝 UT 标准做法：从焊缝两侧用斜探头扫查，覆盖整个焊缝截面</div>
+</div>
+
+<div class="section" id="ch4">
+<h2>四、焊缝的四个区与热影响区（HAZ）——焊缝检测的核心</h2>
+
+<h3 id="ch4-1">4.1 焊缝的四个区</h3>
+<p>焊缝及其附近从内到外分四个区，<strong>每个区组织不同、缺陷也不同</strong>：</p>
+<table>
+<tr><th>区</th><th>位置</th><th>组织特点</th><th>典型缺陷</th></tr>
+<tr><td><strong>① 焊缝区 WM</strong></td><td>正中间被熔化的部分</td><td>铸造组织（柱状晶），<strong>粗晶</strong></td><td>气孔、夹渣、裂纹、未熔合</td></tr>
+<tr><td><strong>② 熔合线 FL</strong></td><td>焊缝和母材交界</td><td>组织突变处</td><td><strong>未熔合</strong>高发</td></tr>
+<tr><td><strong>③ 热影响区 HAZ</strong></td><td>紧挨熔合线，没熔化但被烤过</td><td>组织变化大，<strong>最危险</strong></td><td><strong>冷裂纹</strong>、再热裂纹、脆化</td></tr>
+<tr><td><strong>④ 母材 BM</strong></td><td>远离焊缝，没受热影响</td><td>原组织</td><td>母材本身的缺陷</td></tr>
+</table>
+
+<h3 id="ch4-2">4.2 ★ 热影响区（HAZ）为什么是最危险的区</h3>
+<div class="bad"><strong>HAZ 是焊缝里最危险的区，也是 UT 检查的重点。</strong><br><br>
+<strong>为什么危险</strong>：<br>
+① 母材没熔化，但被焊缝的高温"烤"过（峰值温度从熔点降到 A1 线以下）<br>
+② 不同位置烤的温度不同 → <strong>组织变化剧烈不均</strong>（粗晶、脆化、马氏体）<br>
+③ 冷却快时（尤其低合金高强度钢、厚件）→ <strong>产生硬脆组织（马氏体）+ 残余应力</strong> → 极易开裂<br>
+④ <strong>冷裂纹（延迟裂纹）绝大多数长在 HAZ</strong><br><br>
+<strong>HAZ 还会"组织不均"</strong>，导致声速各向异性，UT 检测时回波杂乱，定位困难。</div>
+
+<div class="ndt"><strong>★ 对 UT 检测的核心意义</strong>：<br>
+• UT 探伤焊缝时，<strong>HAZ 是必须重点扫查的区域</strong>（冷裂纹多发）<br>
+• 斜探头扫查路径要覆盖焊缝区 + 两侧 HAZ<br>
+• <strong>检测时机</strong>：焊后不能立即检测，要等冷裂纹形成完。一般等 <strong>24–48 小时</strong>（叫"延迟检测"），高强钢/厚件要等更久<br>
+• 焊缝区柱状晶粗 → 普通钢还行，但奥氏体不锈钢焊缝晶粒极粗 → UT 极难（第 2 课讲过）</div>
+
+<div class="sale"><strong>客户对话</strong>：客户："这焊缝刚焊完，能不能马上 UT？"<br>
+"<strong>不建议马上检</strong>。焊缝（尤其低合金高强度钢、厚件）有<strong>延迟裂纹</strong>风险——氢致冷裂纹常在焊后几小时到几天才出现。一般建议<strong>焊后等 24–48 小时再检</strong>，标准也有这个要求。如果做过焊后热处理（PWHT）或消氢处理，那检测时机可以提前。"</div>
+</div>
+
+<div class="section" id="summary">
+<h2>📋 本课总结（8 条）</h2>
+<ol>
+<li><strong>焊接三大类</strong>：熔焊（最常用，有焊缝）、压焊（电阻焊/摩擦焊）、钎焊（真空钎焊 = 水冷板用）。</li>
+<li><strong>熔焊五大方法</strong>：焊条电弧焊（现场）、埋弧焊（容器厚板）、氩弧焊（不锈钢/铝）、气保焊（钢结构）、药芯焊丝（野外）。</li>
+<li><strong>搅拌摩擦焊 FSW</strong> 和<strong>激光焊</strong>：水冷板铝合金/电池焊接常用。</li>
+<li><strong>五种接头</strong>：对接（容器管道）、T 形/角接（钢结构）、搭接、端接。</li>
+<li><strong>坡口</strong>：让焊条能伸到根部焊透。V/X/U 形，UT 探伤前必须知道坡口尺寸。</li>
+<li><strong>焊缝四区</strong>：焊缝区（柱状晶粗晶）→ 熔合线（未熔合高发）→ HAZ（最危险）→ 母材。</li>
+<li><strong>★ HAZ 是焊缝最危险的区</strong>：组织变化剧烈 + 残余应力 → 冷裂纹（延迟裂纹）多发。</li>
+<li><strong>检测时机</strong>：焊后等 24–48 小时（延迟检测），等冷裂纹形成完再检。PWHT 后可提前。</li>
+</ol>
+<div class="tip"><strong>下一课预告</strong>：第 5 课（焊接技术下）讲<strong>焊缝缺陷大全 + 焊缝检测流程</strong>——裂纹/未熔合/未焊透/气孔/夹渣长啥样、怎么产生、UT 怎么查，以及 VT→UT/RT→MT/PT 的标准流程。这是销售的核心弹药库。</div>
+</div>
+
+<div class="section" id="exam">
+<h2>📝 随堂测验（8 题）</h2>
+<div class="quiz-intro">这 8 题考焊接方法、接头坡口、热影响区的基础认知。做完整再看解析。</div>
+
+<div class="quiz-question" data-correct="B">
+<div class="q-text"><span class="q-num">1</span>压力容器厚板长直焊缝，最常用的焊接方法是？</div>
+<div class="quiz-option" data-k="A">A. 焊条电弧焊（手工焊）</div>
+<div class="quiz-option" data-k="B">B. 埋弧焊（SAW）</div>
+<div class="quiz-option" data-k="C">C. 氩弧焊（TIG）</div>
+<div class="quiz-option" data-k="D">D. 点焊</div>
+<div class="quiz-explain">✅ 选 B。<strong>埋弧焊</strong>是压力容器厚板长直焊缝的标配——焊剂埋住电弧、自动化、熔深大、质量稳定。焊条电弧焊适合现场维修灵活但效率低；氩弧焊适合薄板不锈钢铝；点焊是压焊。</div>
+</div>
+
+<div class="quiz-question" data-correct="C">
+<div class="q-text"><span class="q-num">2</span>水冷板铝合金常用的焊接方法是？</div>
+<div class="quiz-option" data-k="A">A. 焊条电弧焊</div>
+<div class="quiz-option" data-k="B">B. 埋弧焊</div>
+<div class="quiz-option" data-k="C">C. 搅拌摩擦焊（FSW）和真空钎焊</div>
+<div class="quiz-option" data-k="D">D. 电渣焊</div>
+<div class="quiz-explain">✅ 选 C。水冷板铝合金两大工艺：① <strong>真空钎焊</strong>（两片铝板夹钎料，真空炉熔合，查钎着率——补充教材讲过）；② <strong>搅拌摩擦焊 FSW</strong>（固态焊不熔化，组织好）。铝不适合焊条电弧焊/埋弧焊。</div>
+</div>
+
+<div class="quiz-question" data-correct="A">
+<div class="q-text"><span class="q-num">3</span>焊缝里最危险、冷裂纹（延迟裂纹）多发的区是？</div>
+<div class="quiz-option" data-k="A">A. 热影响区（HAZ）</div>
+<div class="quiz-option" data-k="B">B. 母材（BM）</div>
+<div class="quiz-option" data-k="C">C. 远离焊缝的地方</div>
+<div class="quiz-option" data-k="D">D. 都一样危险</div>
+<div class="quiz-explain">✅ 选 A。<strong>HAZ（热影响区）</strong>没熔化但被焊缝高温烤过，组织变化剧烈 + 残余应力大 → 极易产生冷裂纹（延迟裂纹）。UT 检测必须重点扫查焊缝两侧 HAZ。</div>
+</div>
+
+<div class="quiz-question" data-correct="D">
+<div class="q-text"><span class="q-num">4</span>为什么焊缝检测通常要"焊后等 24–48 小时"？</div>
+<div class="quiz-option" data-k="A">A. 等焊缝凉了不烫手</div>
+<div class="quiz-option" data-k="B">B. 等焊工休息</div>
+<div class="quiz-option" data-k="C">C. 等仪器校准</div>
+<div class="quiz-option" data-k="D">D. 等延迟裂纹（氢致冷裂纹）形成完，否则会漏检</div>
+<div class="quiz-explain">✅ 选 D。<strong>氢致冷裂纹（延迟裂纹）</strong>是氢扩散聚集形成的，需要时间，常在焊后几小时到几天才出现。如果焊后立即检测，裂纹还没形成会漏检。所以标准要求焊后等 24–48 小时（高强钢/厚件更久）。这叫"延迟检测"。</div>
+</div>
+
+<div class="quiz-question" data-correct="B">
+<div class="q-text"><span class="q-num">5</span>客户说"这是 V 形坡口对接焊缝"，V 形坡口的目的是？</div>
+<div class="quiz-option" data-k="A">A. 为了好看</div>
+<div class="quiz-option" data-k="B">B. 让焊条/焊丝能伸到根部，焊透整厚度</div>
+<div class="quiz-option" data-k="C">C. 为了省材料</div>
+<div class="quiz-option" data-k="D">D. 为了减轻重量</div>
+<div class="quiz-explain">✅ 选 B。厚板不开坡口根本焊不透。开 V/X/U 形坡口是为了让焊条能伸到根部，把整厚度焊透。UT 探伤前也必须知道坡口尺寸，才能定位缺陷。</div>
+</div>
+
+<div class="quiz-question" data-correct="C">
+<div class="q-text"><span class="q-num">6</span>焊缝区（WM）的内部组织特点是什么？这对 UT 有什么影响？</div>
+<div class="quiz-option" data-k="A">A. 细晶，UT 极清晰</div>
+<div class="quiz-option" data-k="B">B. 无组织，UT 看不见</div>
+<div class="quiz-option" data-k="C">C. 铸造柱状晶（粗晶），UT 杂波大；奥氏体焊缝尤其难</div>
+<div class="quiz-option" data-k="D">D. 和母材一样</div>
+<div class="quiz-explain">✅ 选 C。焊缝是熔化再凝固的<strong>铸造组织（柱状晶）</strong>，比母材粗。普通钢焊缝还能检，但<strong>奥氏体不锈钢焊缝</strong>柱状晶极粗，UT 草状回波严重（第 2 课讲过）。</div>
+</div>
+
+<div class="quiz-question" data-correct="A">
+<div class="q-text"><span class="q-num">7</span>不锈钢薄板（如 304 食品设备）最常用的焊接方法？</div>
+<div class="quiz-option" data-k="A">A. 氩弧焊（TIG）</div>
+<div class="quiz-option" data-k="B">B. 埋弧焊</div>
+<div class="quiz-option" data-k="C">C. 电渣焊</div>
+<div class="quiz-option" data-k="D">D. 摩擦焊</div>
+<div class="quiz-explain">✅ 选 A。<strong>氩弧焊（TIG）</strong>用氩气保护、铇极不熔化，焊缝质量高、保护效果好，是不锈钢/铝/钛薄板和高质量焊的首选。埋弧焊适合厚板碳钢；电渣焊特厚板；摩擦焊是压焊。</div>
+</div>
+
+<div class="quiz-question" data-correct="D">
+<div class="q-text"><span class="q-num">8</span>【销售场景】客户："我们 T 形接头焊缝想 UT"，你需要了解什么？</div>
+<div class="quiz-option" data-k="A">A. 焊缝长多少</div>
+<div class="quiz-option" data-k="B">B. 什么时候要结果</div>
+<div class="quiz-option" data-k="C">C. 多少钱</div>
+<div class="quiz-option" data-k="D">D. 板厚、坡口形式、焊脚尺寸、材料牌号、验收标准</div>
+<div class="quiz-explain">✅ 选 D。T 形接头 UT 比对接焊缝复杂，必须知道<strong>板厚（决定 K 值/折射角）、坡口/焊脚尺寸（定位缺陷）、材料（选频率）、验收标准（评级）</strong>。这些信息不全没法做方案。</div>
+</div>
+
+<div id="quiz-result">
+<div>你的得分</div>
+<div class="score">0</div>
+<div id="result-text"></div>
+<br>
+<button class="btn ghost" onclick="resetQuiz()">重新作答</button>
+</div>
+
+<div style="text-align:center;margin-top:18px">
+<button class="btn" onclick="submitQuiz()">交卷查看成绩</button>
+</div>
+</div>
+
+<div style="display:flex;justify-content:space-between;align-items:center;margin:24px 0;padding:18px 24px;background:#fff;border-radius:10px;box-shadow:var(--shadow)">
+<a href="#hero" style="text-decoration:none"><span style="font-size:13px;color:#7f8c8d">↑ 本课开头</span></a>
+<div style="text-align:center"><div style="font-size:13px;color:#7f8c8d">下一课</div><div style="font-weight:600;color:#1a5276;font-size:15px">第05课 · 焊接技术（下）→</div></div>
+<span></span>
+</div>
+
+</div>
+
+<div style="text-align:center;margin:24px 0;padding:14px;background:#eaf2f8;border-radius:8px"><a href="index.html" style="display:inline-block;background:#1a5276;color:#fff;padding:10px 28px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px">🏠 返回总目录</a></div>
+<script>
+document.querySelectorAll('.quiz-question').forEach(function(q){
+  var correct=q.dataset.correct;
+  q.querySelectorAll('.quiz-option').forEach(function(opt){
+    opt.addEventListener('click',function(){
+      if(q.classList.contains('locked'))return;
+      q.querySelectorAll('.quiz-option').forEach(function(o){o.classList.remove('correct','wrong');var m=o.querySelector('.mark');if(m)m.remove();});
+      var k=opt.dataset.k;
+      if(k===correct){opt.classList.add('correct');opt.insertAdjacentHTML('beforeend','<span class="mark">✓</span>');}
+      else{opt.classList.add('wrong');opt.insertAdjacentHTML('beforeend','<span class="mark">✗</span>');q.querySelectorAll('.quiz-option').forEach(function(o){if(o.dataset.k===correct){o.classList.add('correct');}});}
+      q.querySelector('.quiz-explain').classList.add('show');q.classList.add('locked');
+    });
+  });
+});
+function submitQuiz(){
+  var qs=document.querySelectorAll('.quiz-question');var answered=0,score=0;
+  qs.forEach(function(q){if(q.classList.contains('locked')){answered++;var sel=q.querySelector('.quiz-option.correct');if(sel)score++;}});
+  var res=document.getElementById('quiz-result');var txt=document.getElementById('result-text');
+  res.style.display='block';res.querySelector('.score').textContent=score+' / '+qs.length;
+  var pct=score/qs.length;var msg='';
+  if(pct===1)msg='满分！焊接方法、接头、HAZ 都掌握了。';
+  else if(pct>=0.75)msg='不错！核心概念都记住了，错题看解析。';
+  else if(pct>=0.5)msg='有概念了，建议重看"焊接方法"和"HAZ"两节。';
+  else msg='焊接内容多，重看一遍再测。';
+  txt.textContent=msg+'（已答 '+answered+'/'+qs.length+' 题）';
+  res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function resetQuiz(){
+  document.querySelectorAll('.quiz-question').forEach(function(q){
+    q.classList.remove('locked');
+    q.querySelectorAll('.quiz-option').forEach(function(o){o.classList.remove('correct','wrong');var m=o.querySelector('.mark');if(m)m.remove();});
+    q.querySelector('.quiz-explain').classList.remove('show');
+  });
+  document.getElementById('quiz-result').style.display='none';
+}
+var sections=[].slice.call(document.querySelectorAll('.section[id]'));
+var sideLinks=[].slice.call(document.querySelectorAll('.sidebar a[href^="#"]'));
+window.addEventListener('scroll',function(){var sc=window.scrollY+120;var cur=sections[0];sections.forEach(function(s){if(s.offsetTop<=sc)cur=s;});sideLinks.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+cur.id);});});
+</script>
+</body>
+</html>

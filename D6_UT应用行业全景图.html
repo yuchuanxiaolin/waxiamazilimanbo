@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D6 · UT 应用行业全景图（北极星辰定位版）</title>
+<style>
+:root{--primary:#1a5276;--primary-light:#2980b9;--accent:#e67e22;--bg:#f4f6f7;--card:#fff;--text:#2c3e50;--text-light:#7f8c8d;--border:#d5dbdb;--success:#27ae60;--danger:#e74c3c;--warning:#f39c12;--info:#3498db;--shadow:0 2px 8px rgba(0,0,0,.08)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.85;font-size:15.5px;scroll-behavior:smooth}
+.topbar{position:fixed;top:0;left:0;right:0;height:52px;background:var(--primary);color:#fff;display:flex;align-items:center;padding:0 20px;z-index:1000;box-shadow:0 4px 20px rgba(0,0,0,.12)}
+.topbar h1{font-size:16px;font-weight:600}.topbar .crumb{font-size:12px;opacity:.75;margin-left:8px}
+.topbar nav{margin-left:auto;display:flex;gap:4px;overflow-x:auto}
+.topbar nav a{color:#cfd8dc;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:4px;white-space:nowrap}
+.sidebar{position:fixed;top:52px;left:0;bottom:0;width:230px;background:#fff;border-right:1px solid var(--border);overflow-y:auto;padding:14px 0;z-index:900}
+.sidebar a{display:block;padding:8px 18px;color:var(--text-light);text-decoration:none;font-size:12.5px;border-left:3px solid transparent}
+.sidebar a:hover{background:var(--bg);color:var(--primary)}
+.sidebar a.sub{padding-left:30px;font-size:11.5px}
+.main{margin-left:230px;margin-top:52px;padding:26px 32px;max-width:1000px}
+.section{background:var(--card);border-radius:10px;padding:24px 28px;margin-bottom:20px;box-shadow:var(--shadow)}
+.section h2{color:var(--primary);font-size:21px;border-bottom:2px solid var(--primary-light);padding-bottom:8px;margin-bottom:14px}
+.section h3{color:var(--primary);font-size:16.5px;margin:18px 0 8px;padding-left:10px;border-left:4px solid var(--accent)}
+.section h4{color:var(--text);font-size:15px;margin:14px 0 5px}
+.section p{margin:8px 0}.section ul,.section ol{margin:8px 0 8px 24px}.section li{margin:4px 0}.section strong{color:var(--primary)}
+.tip{background:#eafaf1;border-left:4px solid var(--success);padding:11px 15px;border-radius:6px;margin:12px 0}.tip::before{content:"💡 记住";display:block;font-weight:700;color:var(--success);font-size:12.5px;margin-bottom:3px}
+.warn{background:#fef9e7;border-left:4px solid var(--warning);padding:11px 15px;border-radius:6px;margin:12px 0}.warn::before{content:"⚠️ 注意";display:block;font-weight:700;color:var(--warning);font-size:12.5px;margin-bottom:3px}
+.key{background:#eaf2f8;border-left:4px solid var(--primary-light);padding:11px 15px;border-radius:6px;margin:12px 0}.key::before{content:"🔑 核心";display:block;font-weight:700;color:var(--primary);font-size:12.5px;margin-bottom:3px}
+.sale{background:#fdf2e9;border-left:4px solid var(--accent);padding:11px 15px;border-radius:6px;margin:12px 0}.sale::before{content:"💬 客户对话";display:block;font-weight:700;color:var(--accent);font-size:12.5px;margin-bottom:3px}
+.ndt{background:#eef5fb;border-left:4px solid var(--info);padding:11px 15px;border-radius:6px;margin:12px 0}.ndt::before{content:"🔬 检测要点";display:block;font-weight:700;color:var(--info);font-size:12.5px;margin-bottom:3px}
+.analogy{background:linear-gradient(135deg,#fdf2e9,#fef9e7);border:1px dashed var(--accent);border-radius:8px;padding:12px 15px;margin:12px 0}.analogy::before{content:"🎯 打个比方";display:block;font-weight:700;color:var(--accent);font-size:12.5px;margin-bottom:4px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+th,td{border:1px solid var(--border);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--primary);color:#fff}tr:nth-child(even){background:#f8f9fa}
+td strong{color:var(--primary)}
+.bad-row{background:#fdedec !important}
+.gold-row{background:#fef9e7 !important}
+.case-card{background:linear-gradient(135deg,#fff,#f8f9fa);border:1px solid var(--border);border-left:5px solid var(--accent);border-radius:8px;padding:16px;margin:14px 0}
+.case-card .case-head{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.case-card .case-icon{font-size:24px}
+.case-card .case-title{font-weight:700;color:var(--primary);font-size:15.5px}
+.case-card .case-tag{display:inline-block;background:var(--success);color:#fff;font-size:11px;padding:2px 8px;border-radius:3px;margin-left:6px}
+.case-card .case-tag.boundary{background:var(--warning)}
+.case-card .case-tag.blind{background:var(--danger)}
+.case-card .case-tag.chance{background:var(--info)}
+.flow{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;margin:14px 0}
+.flow-step{background:var(--primary);color:#fff;padding:10px 14px;border-radius:6px;font-size:12.5px;font-weight:600;text-align:center;min-width:70px}
+.flow-arrow{color:var(--accent);font-size:20px;font-weight:700}
+.quiz-intro{background:#eaf2f8;border-radius:8px;padding:12px 16px;margin:14px 0;color:var(--primary)}
+.quiz-question{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;margin:12px 0}
+.quiz-question .q-text{font-weight:600;margin-bottom:8px}
+.quiz-question .q-num{display:inline-block;background:var(--primary);color:#fff;width:24px;height:24px;border-radius:50%;text-align:center;line-height:24px;font-size:12px;margin-right:6px}
+.quiz-option{display:block;padding:9px 12px;margin:5px 0;border:2px solid var(--border);border-radius:6px;cursor:pointer}
+.quiz-option:hover{border-color:var(--primary-light);background:#eaf2f8}
+.quiz-option.correct{border-color:var(--success);background:#eafaf1}
+.quiz-option.wrong{border-color:var(--danger);background:#fdedec}
+.quiz-option .mark{float:right;font-weight:700}
+.quiz-explain{margin-top:8px;padding:9px;background:#f8f9fa;border-radius:4px;font-size:12.5px;display:none}
+.quiz-explain.show{display:block}
+#quiz-result{display:none;text-align:center;padding:28px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin:14px 0}
+#quiz-result .score{font-size:44px;font-weight:700;margin:8px 0}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:9px 24px;border-radius:6px;border:none;cursor:pointer;font-size:14px;font-weight:600}
+.btn:hover{background:var(--accent-light)}
+.btn.ghost{background:transparent;color:var(--primary);border:2px solid var(--primary)}
+.hero{text-align:center;padding:38px 28px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin-bottom:20px}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);padding:3px 12px;border-radius:12px;font-size:11.5px;margin-bottom:8px}
+.hero h1{font-size:26px;margin-bottom:8px}.hero p{font-size:14px;opacity:.92}
+@media(max-width:900px){.sidebar{transform:translateX(-100%)}.main{margin-left:0;padding:14px}.topbar nav{display:none}}
+</style></head><body>
+<div class="topbar"><h1>📦 NDT · 客户与行业纵深</h1><span class="crumb">D6 · UT 应用行业全景图</span><nav><a href="#hero">封面</a><a href="#ch0">A扫C扫</a><a href="#ch1">🏆 主场</a><a href="#ch2">🤝 机会</a><a href="#ch3">⚠️ 边界</a><a href="#ch4">🚫 盲区</a><a href="#ch5">总表</a><a href="#exam">测验</a></nav></div>
+<div class="sidebar">
+<a href="#hero">封面</a>
+<a href="#ch0">〇、A扫 vs C扫</a>
+<a href="#ch1">一、🏆 第一档·主场</a>
+<a href="#ch1-1" class="sub">新能源水冷板</a>
+<a href="#ch1-2" class="sub">AI/数据中心液冷</a>
+<a href="#ch1-3" class="sub">IGBT功率模块</a>
+<a href="#ch1-4" class="sub">溅射靶材</a>
+<a href="#ch1-5" class="sub">复合板/爆炸焊</a>
+<a href="#ch1-6" class="sub">航天复材</a>
+<a href="#ch2">二、🤝 第二档·机会</a>
+<a href="#ch3">三、⚠️ 第三档·边界</a>
+<a href="#ch4">四、🚫 第四档·盲区</a>
+<a href="#ch5">五、全景总表</a>
+<a href="#ch6">六、销售怎么用</a>
+<a href="#exam">📝 测验</a>
+</div>
+<div class="main">
+
+<div class="section" id="hero" style="padding:0;overflow:hidden"><div class="hero">
+<span class="tag">客户与行业纵深 · D6 · UT 应用版图</span>
+<h1>UT 应用行业全景图（北极星辰定位版）</h1>
+<p>客户说"我是做 XX 的"，你 30 秒知道他是不是你的菜。这张图把 UT 市场分成四档：🏆 主场、🤝 机会、⚠️ 边界、🚫 盲区。</p>
+</div></div>
+
+<div class="section">
+<h2>📍 这张图为什么重要</h2>
+<div class="key">前 16 课你学的是<strong>技术链</strong>：材料→工艺→缺陷→检测方法→自家设备。但客户脑子里是另一条<strong>生意链</strong>：我的行业→我为什么必须测→谁说了算→掏多少钱。<strong>这条图就是两张链的连接点——按行业告诉你"这单做不做、是不是主场"。</strong></div>
+<div class="tip">看完这张图，你做陌生客户咨询时：先问清材料/工艺/工件/缺陷 → 在脑子里过这张图 → 属于哪一档？→ 主场积极接、机会了解后定、边界说明不是强项、盲区诚实说不做。</div>
+</div>
+
+<div class="section" id="ch0">
+<h2>〇、★ 先分清 A 扫和 C 扫的"脾气"</h2>
+<p>客户经常问"你们那个 C 扫和 A 扫到底有啥区别？我到底该用哪个？"——你必须一句话讲清。</p>
+<table>
+<tr><th></th><th>A 扫（便携探伤仪）</th><th>C 扫（水浸成像系统）</th></tr>
+<tr><td><strong>本质</strong></td><td>一维回波信号（幅度 vs 时间）</td><td>二维缺陷分布图（扫出一个面）</td></tr>
+<tr><td><strong>打个比方</strong></td><td>像"医生用听诊器听一下"——知道有没有毛病</td><td>像"给工件拍 X 光片"——看到整面毛病分布</td></tr>
+<tr><td><strong>解决的问题</strong></td><td>这<strong>一个点</strong>有没有缺陷？</td><td>这<strong>一整面</strong>有多少缺陷、分布怎样、合格率多少？</td></tr>
+<tr><td><strong>擅长</strong></td><td>焊缝探伤、单点排查、现场抽检、大工件定点</td><td>结合面质量、分层/脱粘、<strong>量产全检</strong>、定量评定</td></tr>
+<tr><td><strong>设备形态</strong></td><td>便携、灵活、接触式/手动扫查</td><td>要扫查机构+水槽，体积大，精度高</td></tr>
+<tr><td><strong>判读</strong></td><td>人工为主（看波形）</td><td>软件自动成像、出报告</td></tr>
+<tr><td><strong>北极星辰定位</strong></td><td>有产品，但<strong>红海市场</strong></td><td>⭐ <strong>护城河、主场</strong></td></tr>
+</table>
+<div class="analogy"><strong>一句话记忆</strong>：<strong>A 扫是"找点"（这有没有），C 扫是"画地图"（这整面分布怎样、合格率多少）。</strong></div>
+
+<h3>什么时候引导客户上 C 扫？</h3>
+<div class="key">满足下面<strong>任一条</strong>，就引导客户考虑 C 扫：</div>
+<ol>
+<li><strong>要的是整面合格率</strong>（如钎着率 ≥85%），不是单点有无 → 必须 C 扫</li>
+<li><strong>量产全检、出报告留档</strong> → C 扫自动化更合适</li>
+<li>缺陷是<strong>面积型</strong>（分层、脱粘、未钎合），不是体积型（气孔）→ C 扫直观</li>
+<li>客户要<strong>可追溯、给主机厂交差</strong> → C 扫出图、报告漂亮</li>
+<li>工件<strong>批量大、形状规整</strong>（板、片、复合件）→ C 扫效率高</li>
+</ol>
+<div class="warn">反过来——<strong>现场在役</strong>（容器管道）、<strong>焊缝探伤</strong>（标准做法）、<strong>大工件定点</strong>（几米的锻件/转子）、<strong>预算有限抽检</strong>——A 扫更合适。别为了卖贵的硬推 C 扫，会丢单。</div>
+</div>
+
+<div class="section" id="ch1">
+<h2>一、🏆 第一档 · 主场（水浸 C 扫量身定做）</h2>
+<div class="key">这是你的<strong>核心市场</strong>。客户拿着工件来，大概率就是这档里的。水浸 C 扫在物理尺度（频率、行程、量产能力）和应用经验上有天然优势。</div>
+
+<h3 id="ch1-1">1.1 新能源车 · 动力电池液冷板 ⭐⭐⭐</h3>
+<div class="case-card">
+<div class="case-head"><span class="case-icon">🧊</span><span class="case-title">新能源车水冷板</span><span class="case-tag">核心主场</span></div>
+<p><strong>👀 工件长这样</strong>：一块扁扁的铝板（A4 到 A2 纸大小），里面有弯弯曲曲的流道（冷却液在里面流），上面盖一块盖板，两层之间用<strong>钎焊</strong>焊死。装在电池包底部，冷却液流过把电池热量带走。</p>
+<p><strong>查什么</strong>：</p>
+<ul>
+<li><strong>钎着率（Brazing Ratio）</strong>：两层钎焊后实际焊合的面积比例。主机厂一般要求 <strong>≥85% 或 ≥90%</strong>，且单块未焊合区不能太大。</li>
+<li>虚焊、脱焊、未钎合（面积型缺陷）</li>
+<li>流道堵塞、变形</li>
+</ul>
+<p><strong>UT 用法</strong>：<strong>水浸 C 扫</strong>是钎着率检测的金标准（扫出整面结合状态图，软件算比例）。A 扫只能做单点确认，不能定量。</p>
+<div class="ndt"><strong>北极星辰定位</strong>：⭐⭐⭐ <strong>核心主场，量身定做</strong>。设备在行程、扫查效率、软件算钎着率上都有积累。<strong>客户群</strong>：水冷板制造厂、PACK 厂、电池厂（宁德/比亚迪/国轩/亿纬等的供应商）。</div>
+<div class="sale"><strong>对话要点</strong>：客户说"我们要测钎着率"——你直接接：扫查面积多大、节拍要求多少、验收标准看哪个规范。量大的客户关心<strong>节拍</strong>（每小时测多少块），要强调自动化、上料下料。</div>
+</div>
+
+<h3 id="ch1-2">1.2 AI / 数据中心 · 液冷散热 ⭐⭐⭐</h3>
+<div class="case-card">
+<div class="case-head"><span class="case-icon">🖥️</span><span class="case-title">AI/数据中心液冷</span><span class="case-tag">核心主场</span></div>
+<p><strong>👀 工件长这样</strong>：和新能源水冷板同源，但<strong>更大、更精密</strong>。GPU 冷板（一块盖在英伟达 H100/B200 上的铜板或铝板）、CDU（冷量分配单元，像个小冰箱）、Manifold（分液器，把冷却液分到每块 GPU）。</p>
+<p><strong>查什么</strong>：钎着率、结合质量、流道完整性（同水冷板逻辑，但精度要求更高，散热功率大、温升敏感）。</p>
+<p><strong>UT 用法</strong>：水浸 C 扫。</p>
+<div class="ndt"><strong>北极星辰定位</strong>：⭐⭐⭐ <strong>核心主场，且是增长最快的市场</strong>。AI 浪潮推动液冷爆发，2024-2026 是建设高峰。<strong>客户群</strong>：液冷方案商（英维克/曙光/高澜等）、服务器 ODM（浪潮/超聚变）、数据中心业主。</div>
+<div class="sale"><strong>对话要点</strong>：AI 客户很多是<strong>跨界进液冷新手</strong>，要帮他从 0 建立"为什么要测、怎么测"的认知——这正好是教育市场的好机会。铜-铜钎焊比铝-铝衰减大、信号复杂，是技术难点也是差异化机会。</div>
+</div>
+
+<h3 id="ch1-3">1.3 IGBT / 功率模块散热基板 ⭐⭐⭐</h3>
+<div class="case-card">
+<div class="case-head"><span class="case-icon">⚡</span><span class="case-title">IGBT/功率模块散热基板</span><span class="case-tag">核心主场</span></div>
+<p><strong>👀 工件长这样</strong>：一块铜底板（或铝碳化硅基板），上面焊着 IGBT 芯片，底板和芯片之间有钎焊/烧结层。用在新能源车电控、光伏逆变器、高铁牵引、柔性输电里。</p>
+<p><strong>查什么</strong>：<strong>钎着率 / 烧结层空洞率</strong>（散热层有空洞，芯片会局部过热炸机）、分层、脱粘。</p>
+<p><strong>UT 用法</strong>：水浸 C 扫（基板结合面）。功率模块尺寸够大，20MHz 内能做。</p>
+<div class="ndt"><strong>北极星辰定位</strong>：⭐⭐⭐ <strong>核心主场</strong>。工件规整、批量、要求严，正合 C 扫的胃口。<strong>客户群</strong>：功率器件厂（斯达/中车时代/比亚迪半导体）、电控厂、光伏逆变器厂。</div>
+</div>
+
+<h3 id="ch1-4">1.4 溅射靶材 · 结合面 ⭐⭐⭐</h3>
+<div class="case-card">
+<div class="case-head"><span class="case-icon">🎯</span><span class="case-title">溅射靶材结合面</span><span class="case-tag">核心主场</span></div>
+<p><strong>👀 工件长这样</strong>：一块金属圆盘或长方板（比如铜底材上贴一层钛/铝/ITO），用在半导体/PVD 镀膜机里。靶材和背板之间要<strong>钎焊结合</strong>，结合不好散热就差，镀膜时靶会烧。</p>
+<p><strong>查什么</strong>：<strong>结合面质量（钎着率/脱粘）</strong>。</p>
+<p><strong>UT 用法</strong>：水浸 C 扫。<strong>大靶（直径 300mm+、长 1m+）SAM 进不来</strong>，正是你的菜。</p>
+<div class="ndt"><strong>北极星辰定位</strong>：⭐⭐⭐ <strong>细分主场</strong>。靶材厂集中（江丰电子、有研、东方钽业等），圈子小，做进去口碑传播快。<strong>客户群</strong>：靶材厂、PVD 镀膜设备厂、半导体厂。</div>
+<div class="sale"><strong>对话要点</strong>：靶材尺寸大、又是单件贵重品，C 扫的"大行程 + 高精度"组合正是差异化。</div>
+</div>
+
+<h3 id="ch1-5">1.5 复合板 / 爆炸焊 / 轧制复合板 ⭐⭐⭐</h3>
+<div class="case-card">
+<div class="case-head"><span class="case-icon">🧱</span><span class="case-title">复合板/爆炸焊</span><span class="case-tag">核心主场</span></div>
+<p><strong>👀 工件长这样</strong>：两层不同金属贴在一起。比如不锈钢贴在碳钢上（耐腐蚀又便宜）、钛贴在钢上（化工设备用）。复合方法有爆炸复合、轧制复合、钎焊复合。</p>
+<p><strong>查什么</strong>：<strong>结合面质量</strong>（未结合区面积比例）。</p>
+<p><strong>UT 用法</strong>：水浸 C 扫（板件，扫查面积大，C 扫效率高）。</p>
+<div class="ndt"><strong>北极星辰定位</strong>：⭐⭐⭐ <strong>主场</strong>。大板件、面积型缺陷，C 扫经典应用。<strong>客户群</strong>：复合板厂、化工设备厂、压力容器厂。</div>
+</div>
+
+<h3 id="ch1-6">1.6 航空航天 · 复合材料 ⭐⭐</h3>
+<div class="case-card">
+<div class="case-head"><span class="case-icon">✈️</span><span class="case-title">航天复材</span><span class="case-tag">主场（资质门槛）</span></div>
+<p><strong>👀 工件长这样</strong>：碳纤维铺层压成的机身蒙皮、机翼壁板、雷达罩（机头那个大圆锥）、蜂窝夹芯板（两层面板中间夹蜂窝纸一样的铝/芳纶）、进气道。</p>
+<p><strong>查什么</strong>：<strong>分层（Layer delamination）、脱粘（Disbond）、孔隙率、冲击损伤（BVID，目视勉强可见的冲击损伤）</strong>。</p>
+<p><strong>UT 用法</strong>：<strong>水浸 C 扫</strong>（大件、曲面件，扫出整面分层图）—— 你的菜。A 扫/PAUT 做现场在役、外场定检。SAM 做小件实验室取样、高频精细。</p>
+<div class="ndt"><strong>北极星辰定位</strong>：⭐⭐ <strong>主场但有门槛</strong>。技术上 C 扫完全胜任，但航空客户<strong>资质要求高</strong>（NADCAP / 适航认证 / GJB）、验证周期长、订单碎片化。做进去门槛高但单价高。<strong>客户群</strong>：主机厂（商飞/成飞/西飞）、复材件供应商、MRO 维修商。</div>
+<div class="sale"><strong>对话要点</strong>：航空客户要的是<strong>过程稳定 + 报告规范 + 可追溯</strong>，不是单看精度。要打进去得先陪他们过验证。</div>
+</div>
+</div>
+
+<div class="section" id="ch2">
+<h2>二、🤝 第二档 · 机会行业（能切进去，A/C 扫都有空间）</h2>
+<div class="key">这档不是核心，但<strong>客户来了别推走</strong>。A 扫能干的活你也能干，C 扫找到细分点（复材、结合面）就能切入。</div>
+<table>
+<tr><th>行业</th><th>👀 典型工件</th><th>查什么</th><th>UT 用法</th><th>定位</th></tr>
+<tr><td><strong>轨道交通</strong></td><td>轮对/车轴（锻件）、车体焊缝、复材部件</td><td>疲劳裂纹、分层</td><td>A 扫为主，C 扫做复材新造件</td><td>⭐⭐ 机会</td></tr>
+<tr><td><strong>风电</strong></td><td>叶片（玻纤/碳纤复材）、塔筒焊缝、主轴</td><td>分层、裂纹</td><td>A 扫多（焊缝/锻件），C 扫做叶片复材</td><td>⭐⭐ 机会</td></tr>
+<tr><td><strong>光伏</strong></td><td>逆变器散热器（IGBT）、电池板层压件</td><td>空洞、脱粘</td><td>C 扫（逆变器散热同 IGBT 逻辑）</td><td>⭐⭐ 机会</td></tr>
+<tr><td><strong>3C 散热</strong></td><td>VC 均热板、热管、散热模组、5G 基站壳</td><td>结合质量、空洞</td><td>C 扫（件小要定制工装和微型探头）</td><td>⭐⭐ 机会（要工装）</td></tr>
+<tr><td><strong>军工/国防</strong></td><td>装甲复材、导弹结构件、坦克部件</td><td>分层、脱粘、裂纹</td><td>A 扫 + C 扫</td><td>⭐⭐ 机会（资质门槛）</td></tr>
+<tr><td><strong>高压电气（GIS）</strong></td><td>环氧浇铸绝缘件（盆式绝缘子）、压接接头</td><td>浇铸气孔、夹杂、裂纹</td><td>A 扫定点 + C 扫整面定量</td><td>⭐⭐ 机会</td></tr>
+</table>
+<div class="tip"><strong>机会行业的共性</strong>：不是天然主场，但有<strong>复材/结合面/分层</strong>这类 C 扫擅长的细分点。客户来了先了解工件细节，能切就切，切不进别强求。</div>
+</div>
+
+<div class="section" id="ch3">
+<h2>三、⚠️ 第三档 · 边界（能做，但红海或有限制）</h2>
+<div class="warn">这些行业 UT 用得多，但<strong>不是北极星辰的强项</strong>。能接但不主动主攻，避免陷入价格战。客户问起能做，但要<strong>诚实说明不是强项</strong>，避免被比价。</div>
+<table>
+<tr><th>行业</th><th>👀 典型工件</th><th>查什么</th><th>UT 用法</th><th>定位</th></tr>
+<tr class="gold-row"><td><strong>压力容器/石化</strong></td><td>球罐、塔器、换热器、管道焊缝</td><td>焊缝内部缺陷</td><td>A 扫 + PAUT + TOFD（标准做法）。C 扫用得少</td><td>⭐ 红海</td></tr>
+<tr><td><strong>钢结构/桥梁</strong></td><td>钢梁焊缝、箱形柱、节点</td><td>焊缝缺陷</td><td>A 扫（GB 50205）</td><td>⭐ 价格战</td></tr>
+<tr><td><strong>钢板/钢管厂</strong></td><td>中厚板分层、无缝钢管</td><td>分层、纵向/横向裂纹</td><td>自动化 C 扫（在线多通道）或 A 扫抽检</td><td>⭐⭐ 有限</td></tr>
+<tr><td><strong>铸锻件制造</strong></td><td>曲轴、连杆、阀门、汽轮机转子</td><td>缩孔、白点、夹杂、裂纹</td><td>A 扫为主（粗晶铸件衰减大，C 扫反而差）</td><td>⭐ 粗晶难</td></tr>
+</table>
+<div class="analogy"><strong>打个比方</strong>：压力容器/钢结构就像"菜市场"——人流大但价格透明、竞争激烈、比到几块钱。北极星辰是做"精品店"的，菜市场能搭售但不主攻。把 80% 精力放精品店（第一档主场）。</div>
+</div>
+
+<div class="section" id="ch4">
+<h2>四、🚫 第四档 · 盲区（要敢说"不做"，诚实是护城河）</h2>
+<div class="key"><strong>敢说"这个我们不做"</strong>是五句话哲学的最后一句。<strong>诚实标注边界，反而提升信任度</strong>——客户下次遇到主场活儿反而更信你。</div>
+<table>
+<tr><th>行业/工件</th><th>为什么不做</th><th>建议客户找谁</th></tr>
+<tr class="bad-row"><td><strong>奥氏体不锈钢焊缝</strong>（304/316 焊缝）</td><td>粗晶+各向异性，UT 杂波大，A/C 扫都难</td><td><strong>PAUT（相控阵）/ TOFD</strong></td></tr>
+<tr class="bad-row"><td><strong>精细芯片封装</strong>（倒装焊、BGA、亚μm 结合层）</td><td>要 μm 级分辨率，需 50-230 MHz</td><td><strong>SAM 超声显微镜</strong>（KSI/Sonix/PVA）</td></tr>
+<tr class="bad-row"><td><strong>长输油气管线</strong>（几十公里连续管）</td><td>便携设备无法连续扫几十公里</td><td><strong>漏磁内检测 / 导波 / 智能猪（ILI）</strong></td></tr>
+<tr class="bad-row"><td><strong>钢轨在线探伤</strong>（铁路里程）</td><td>专用化、里程长</td><td><strong>钢轨探伤车</strong>（手推 A 扫可补，非主流）</td></tr>
+<tr class="bad-row"><td><strong>核电主设备</strong>（反应堆、蒸汽发生器）</td><td>资质门槛极高（HAF601/核安全局）</td><td><strong>持核级资质的专用厂商</strong></td></tr>
+<tr class="bad-row"><td><strong>薄壁小径管焊缝</strong>（≤30mm 管子）</td><td>尺度小、规范特殊</td><td><strong>RT 射线 / PAUT 专用</strong></td></tr>
+</table>
+<div class="sale"><strong>客户问起盲区怎么回答？（话术模板）</strong><br><br>
+"您这个工件，我们说实话不是强项——奥氏体不锈钢焊缝因为晶粒粗，普通 UT 杂波大，业内标准做法是 PAUT 或 TOFD。我们这边做不了，但可以给您介绍做 PAUT 的厂家 / 或者您这个件有没有别的检测位置我们能帮上忙的？"<br><br>
+——这句话比硬接下单、交付翻车，强一万倍。</div>
+</div>
+
+<div class="section" id="ch5">
+<h2>五、★ UT 应用行业全景总表（一图速查）</h2>
+<table>
+<tr><th>档位</th><th>行业</th><th>主用 UT</th><th>北极星辰定位</th><th>优先级</th></tr>
+<tr><td rowspan="6">🏆<br>主<br>场</td><td>新能源车水冷板</td><td>C 扫</td><td>⭐⭐⭐ 核心</td><td><strong>主攻</strong></td></tr>
+<tr><td>AI/数据中心液冷</td><td>C 扫</td><td>⭐⭐⭐ 核心</td><td><strong>主攻</strong></td></tr>
+<tr><td>IGBT/功率模块散热</td><td>C 扫</td><td>⭐⭐⭐ 核心</td><td><strong>主攻</strong></td></tr>
+<tr><td>溅射靶材结合面</td><td>C 扫</td><td>⭐⭐⭐ 细分主场</td><td><strong>主攻</strong></td></tr>
+<tr><td>复合板/爆炸焊</td><td>C 扫</td><td>⭐⭐⭐ 主场</td><td><strong>主攻</strong></td></tr>
+<tr><td>航天复材</td><td>C 扫 + A 扫</td><td>⭐⭐ 主场（资质门槛）</td><td>选客户</td></tr>
+<tr><td rowspan="6">🤝<br>机<br>会</td><td>轨道交通</td><td>A 扫 + C 扫</td><td>⭐⭐ 机会</td><td>顺势接</td></tr>
+<tr><td>风电</td><td>A 扫 + C 扫</td><td>⭐⭐ 机会</td><td>顺势接</td></tr>
+<tr><td>光伏（逆变器/层压件）</td><td>C 扫</td><td>⭐⭐ 机会</td><td>顺势接</td></tr>
+<tr><td>3C 散热</td><td>C 扫</td><td>⭐⭐ 机会（要工装）</td><td>选客户</td></tr>
+<tr><td>军工</td><td>A 扫 + C 扫</td><td>⭐⭐ 机会（资质）</td><td>选客户</td></tr>
+<tr><td>高压电气（GIS）</td><td>A 扫 + C 扫</td><td>⭐⭐ 机会</td><td>顺势接</td></tr>
+<tr><td rowspan="4">⚠️<br>边<br>界</td><td class="gold-row">压力容器/石化</td><td class="gold-row">A 扫/PAUT/TOFD</td><td class="gold-row">⭐ 红海</td><td class="gold-row">不主攻</td></tr>
+<tr><td>钢结构/桥梁</td><td>A 扫</td><td>⭐ 价格战</td><td>不主攻</td></tr>
+<tr><td>钢板/钢管厂</td><td>自动化 C 扫/A 扫</td><td>⭐⭐ 有限</td><td>选客户</td></tr>
+<tr><td>铸锻件制造</td><td>A 扫</td><td>⭐ 粗晶难</td><td>不主攻</td></tr>
+<tr><td rowspan="5">🚫<br>盲<br>区</td><td class="bad-row">奥氏体焊缝</td><td class="bad-row">PAUT/TOFD</td><td class="bad-row">不做</td><td class="bad-row">转介绍</td></tr>
+<tr class="bad-row"><td>精细芯片封装</td><td>SAM</td><td>不做</td><td>转介绍</td></tr>
+<tr class="bad-row"><td>长输管线</td><td>漏磁/导波</td><td>不做</td><td>转介绍</td></tr>
+<tr class="bad-row"><td>钢轨在线</td><td>探伤车</td><td>不做</td><td>转介绍</td></tr>
+<tr class="bad-row"><td>核电主设备</td><td>持证专用</td><td>不做</td><td>转介绍</td></tr>
+</table>
+</div>
+
+<div class="section" id="ch6">
+<h2>六、★ 销售怎么用这张图</h2>
+<h3>场景 1：陌生客户来电"我们能测 XX 吗？"</h3>
+<ol>
+<li>先问清<strong>材料、工艺、工件尺寸、要查什么缺陷、验收标准</strong></li>
+<li>在脑子里过这张图：<strong>属于哪一档？</strong>
+<ul>
+<li>🏆 主场 → 积极回应，约看工件</li>
+<li>🤝 机会 → 回应能做，了解细节后判断投入</li>
+<li>⚠️ 边界 → 能做但说明不是强项，避免被比价</li>
+<li>🚫 盲区 → <strong>诚实说不做，转介绍</strong></li>
+</ul>
+</li>
+</ol>
+<h3>场景 2：做技术交流或方案</h3>
+<ul>
+<li><strong>主场行业</strong>：深挖痛点（钎着率、量产节拍、报告）</li>
+<li><strong>边界行业</strong>：突出差异化（我们 C 扫 + A 扫组合，不只卖一台）</li>
+<li><strong>盲区行业</strong>：诚实 + 专业（解释为什么不合适，推荐合适方法）</li>
+</ul>
+<h3>场景 3：规划销售精力</h3>
+<div class="key">
+<strong>80% 精力</strong>放第一档主场（水冷板 / IGBT / 靶材 / 复合板）<br>
+<strong>15% 精力</strong>放第二档机会（等客户来，不主动开发）<br>
+<strong>5% 精力</strong>搭售第三档（客户顺带问起再接）<br>
+<strong>0% 精力</strong>放第四档盲区（一句话挡掉，转介绍）
+</div>
+<div class="tip"><strong>记住</strong>：会拒绝才是好销售。什么都接的，最后什么都做不好，口碑反而差。北极星辰的护城河是<strong>"精品店"定位</strong>——把主场打透，盲区转介绍，反而显得专业。</div>
+</div>
+
+<div class="section" id="exam">
+<h2>📝 随堂测验（8 题）</h2>
+<div class="quiz-intro">UT 应用行业全景图——测验。测完你应该能：分清 A 扫 C 扫、记住四档分类、知道每个行业属于哪档。</div>
+
+<div class="quiz-question" data-correct="B">
+<div class="q-text"><span class="q-num">1</span>A 扫和 C 扫最本质的区别是？</div>
+<div class="quiz-option" data-k="A">A. A 扫精度低，C 扫精度高</div>
+<div class="quiz-option" data-k="B">B. A 扫回答"这点有没有缺陷"，C 扫回答"这整面分布怎样、合格率多少"</div>
+<div class="quiz-option" data-k="C">C. A 扫用直探头，C 扫用斜探头</div>
+<div class="quiz-option" data-k="D">D. A 扫测金属，C 扫测复材</div>
+<div class="quiz-explain">✅ 选 B。<strong>A 扫是"找点"，C 扫是"画地图"</strong>。这是本质区别——不是精度高低，不是探头类型，不是材料区别。客户要钎着率（整面合格率），A 扫做不了，必须 C 扫。</div>
+</div>
+
+<div class="quiz-question" data-correct="C">
+<div class="q-text"><span class="q-num">2</span>客户要测水冷板钎着率（要求≥85%），应该上什么设备？</div>
+<div class="quiz-option" data-k="A">A. 便携 A 扫探伤仪 + 斜探头</div>
+<div class="quiz-option" data-k="B">B. 射线 RT</div>
+<div class="quiz-option" data-k="C">C. 水浸 C 扫成像系统</div>
+<div class="quiz-option" data-k="D">D. 磁粉 MT</div>
+<div class="quiz-explain">✅ 选 C。钎着率是<strong>整面合格率</strong>指标，必须 C 扫扫出整面分布图、软件算比例。A 扫只能单点查不能定量；RT 对结合面不敏感；MT 只能铁磁材料（铝不行）。这是北极星辰的核心主场。</div>
+</div>
+
+<div class="quiz-question" data-correct="D">
+<div class="q-text"><span class="q-num">3</span>下面哪个不属于北极星辰的"🏆 主场"？</div>
+<div class="quiz-option" data-k="A">A. 新能源车液冷板</div>
+<div class="quiz-option" data-k="B">B. 溅射靶材结合面</div>
+<div class="quiz-option" data-k="C">C. 不锈钢-钢复合板结合面</div>
+<div class="quiz-option" data-k="D">D. 桥梁钢结构焊缝</div>
+<div class="quiz-explain">✅ 选 D。桥梁钢结构焊缝属于<strong>⚠️ 第三档边界</strong>——A 扫能做但红海、价格敏感、竞争激烈。主场是：水冷板、AI液冷、IGBT散热、靶材、复合板、航天复材。这些共性是"板件+结合面+分层/脱粘+C扫量身定做"。</div>
+</div>
+
+<div class="quiz-question" data-correct="A">
+<div class="q-text"><span class="q-num">4</span>客户拿来奥氏体不锈钢（304）焊缝要做 UT 探伤，正确做法？</div>
+<div class="quiz-option" data-k="A">A. 诚实说明焊缝是难点（粗晶杂波），业内主流用 PAUT/TOFD，坦诚说不做并转介绍</div>
+<div class="quiz-option" data-k="B">B. 用 10MHz 高频斜探头就行</div>
+<div class="quiz-option" data-k="C">C. 不锈钢不能测</div>
+<div class="quiz-option" data-k="D">D. 上水浸 C 扫，没问题</div>
+<div class="quiz-explain">✅ 选 A。奥氏体焊缝是 UT 公认难点（粗晶草状回波），是<strong>🚫 盲区</strong>。<strong>敢说边界是护城河</strong>。B 反了（高频衰减更大更糟）；C 太绝对（母材能做）；D 不对（C 扫也解决不了粗晶问题）。</div>
+</div>
+
+<div class="quiz-question" data-correct="B">
+<div class="q-text"><span class="q-num">5</span>溅射靶材的检测，为什么 SAM（超声显微镜）进不来，是我们的菜？</div>
+<div class="quiz-option" data-k="A">A. SAM 价格太贵</div>
+<div class="quiz-option" data-k="B">B. 大靶（直径 300mm+、长 1m+）尺寸太大，SAM 行程不够；水浸 C 扫大行程+高精度正合适</div>
+<div class="quiz-option" data-k="C">C. SAM 只能测透明材料</div>
+<div class="quiz-option" data-k="D">D. SAM 操作太复杂</div>
+<div class="quiz-explain">✅ 选 B。这正是<strong>"尺度匹配"护城河</strong>——SAM 是精密小件的高频显微镜，大靶材物理上进不来（行程不够、水槽装不下）。北极星辰水浸 C 扫的"大行程 + 高精度"组合正好填补这个缺口。不是价格问题，是物理尺度。</div>
+</div>
+
+<div class="quiz-question" data-correct="D">
+<div class="q-text"><span class="q-num">6</span>下面哪个情况，应该引导客户用 A 扫而不是 C 扫？</div>
+<div class="quiz-option" data-k="A">A. 客户要测水冷板钎着率</div>
+<div class="quiz-option" data-k="B">B. 客户要测碳纤维板分层，要整面分布图</div>
+<div class="quiz-option" data-k="C">C. 客户要量产全检、出报告给主机厂</div>
+<div class="quiz-option" data-k="D">D. 客户要做现场在役的压力容器焊缝抽检</div>
+<div class="quiz-explain">✅ 选 D。<strong>现场在役、焊缝抽检</strong>是 A 扫的典型场景——便携、灵活、人工扫查。ABC 都是 C 扫的典型场景（整面合格率、分布图、量产全检）。<strong>别为卖贵的硬推 C 扫，会丢单。</strong></div>
+</div>
+
+<div class="quiz-question" data-correct="C">
+<div class="q-text"><span class="q-num">7</span>压力容器/石化焊缝检测，为什么是"⚠️ 边界"而不是主场？</div>
+<div class="quiz-option" data-k="A">A. 我们设备做不了</div>
+<div class="quiz-option" data-k="B">B. 压力容器不需要检测</div>
+<div class="quiz-option" data-k="C">C. 能做但红海——被奥林巴斯/国产标准机占满，规范严、价格透明、不是差异化主场</div>
+<div class="quiz-option" data-k="D">D. 压力容器只能用 RT</div>
+<div div class="quiz-explain">✅ 选 C。压力容器焊缝是 <strong>A 扫最大的市场</strong>，我们设备能做，但<strong>不是差异化主场</strong>——市场被奥林巴斯、汕头/武汉中科等标准机占满，规范严（NB/T 47013）、价格透明。除非客户顺带要 C 扫，否则别主攻，避免被比价。</div>
+</div>
+
+<div class="quiz-question" data-correct="A">
+<div class="q-text"><span class="q-num">8</span>【综合题】销售精力应该怎么分配？</div>
+<div class="quiz-option" data-k="A">A. 80% 主场（水冷板/IGBT/靶材/复合板）+ 15% 机会 + 5% 边界 + 0% 盲区</div>
+<div class="quiz-option" data-k="B">B. 平均分配到所有行业</div>
+<div class="quiz-option" data-k="C">C. 80% 放压力容器钢结构（市场最大）</div>
+<div class="quiz-option" data-k="D">D. 80% 放盲区，因为没人竞争</div>
+<div class="quiz-explain">✅ 选 A。这是<strong>"精品店"战略</strong>——把主场打透，盲区转介绍。B 平均主义是错的（精力分散啥都做不好）；C 反了（最大市场≠最赚钱，红海反而利润薄）；D 完全错（盲区是技术物理上做不了，不是没竞争）。</div>
+</div>
+
+<div id="quiz-result"><div>你的得分</div><div class="score">0</div><div id="result-text"></div><br><button class="btn ghost" onclick="resetQuiz()">重新作答</button></div>
+<div style="text-align:center;margin-top:14px"><button class="btn" onclick="submitQuiz()">交卷</button></div>
+</div>
+
+<div style="display:flex;justify-content:space-between;align-items:center;margin:24px 0;padding:18px 24px;background:#fff;border-radius:10px;box-shadow:var(--shadow)">
+<a href="#hero" style="text-decoration:none"><span style="font-size:13px;color:#7f8c8d">↑ 本课开头</span></a>
+<div style="text-align:center"><div style="font-size:13px;color:#7f8c8d">D 系列 · 客户与行业纵深</div><div style="font-weight:600;color:#1a5276;font-size:15px">下一步：D0 学习框架导论 →</div></div>
+<span></span>
+</div>
+
+</div>
+<div style="text-align:center;margin:24px 0;padding:14px;background:#eaf2f8;border-radius:8px"><a href="index.html" style="display:inline-block;background:#1a5276;color:#fff;padding:10px 28px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px">🏠 返回总目录</a></div>
+<script>
+document.querySelectorAll('.quiz-question').forEach(function(q){var correct=q.dataset.correct;q.querySelectorAll('.quiz-option').forEach(function(opt){opt.addEventListener('click',function(){if(q.classList.contains('locked'))return;q.querySelectorAll('.quiz-option').forEach(function(o){o.classList.remove('correct','wrong');var m=o.querySelector('.mark');if(m)m.remove();});var k=opt.dataset.k;if(k===correct){opt.classList.add('correct');opt.insertAdjacentHTML('beforeend','<span class="mark">✓</span>');}else{opt.classList.add('wrong');opt.insertAdjacentHTML('beforeend','<span class="mark">✗</span>');q.querySelectorAll('.quiz-option').forEach(function(o){if(o.dataset.k===correct){o.classList.add('correct');}});}q.querySelector('.quiz-explain').classList.add('show');q.classList.add('locked');});});});
+function submitQuiz(){var qs=document.querySelectorAll('.quiz-question');var a=0,s=0;qs.forEach(function(q){if(q.classList.contains('locked')){a++;if(q.querySelector('.quiz-option.correct'))s++;}});var r=document.getElementById('quiz-result');r.style.display='block';r.querySelector('.score').textContent=s+' / '+qs.length;var p=s/qs.length,m='';if(p===1)m='满分！行业全景图吃透了，你现在是销售老兵视角。';else if(p>=.75)m='不错！错题看解析，重点复习四档分类。';else if(p>=.5)m='及格。重点重看第一档主场和第四档盲区。';else m='重看全景图再测。记住：主场、机会、边界、盲区四档。';document.getElementById('result-text').textContent=m+'（已答'+a+'/'+qs.length+'）';r.scrollIntoView({behavior:'smooth',block:'center'});}
+function resetQuiz(){document.querySelectorAll('.quiz-question').forEach(function(q){q.classList.remove('locked');q.querySelectorAll('.quiz-option').forEach(function(o){o.classList.remove('correct','wrong');var m=o.querySelector('.mark');if(m)m.remove();});q.querySelector('.quiz-explain').classList.remove('show');});document.getElementById('quiz-result').style.display='none';}
+</script>
+</body></html>

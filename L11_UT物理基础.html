@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第11课 · UT 超声物理基础</title>
+<style>
+:root{--primary:#1a5276;--primary-light:#2980b9;--accent:#e67e22;--bg:#f4f6f7;--card:#fff;--text:#2c3e50;--text-light:#7f8c8d;--border:#d5dbdb;--success:#27ae60;--danger:#e74c3c;--warning:#f39c12;--info:#3498db;--shadow:0 2px 8px rgba(0,0,0,.08)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.85;font-size:15.5px;scroll-behavior:smooth}
+.topbar{position:fixed;top:0;left:0;right:0;height:52px;background:var(--primary);color:#fff;display:flex;align-items:center;padding:0 20px;z-index:1000;box-shadow:0 4px 20px rgba(0,0,0,.12)}
+.topbar h1{font-size:16px;font-weight:600}.topbar .crumb{font-size:12px;opacity:.75;margin-left:8px}
+.topbar nav{margin-left:auto;display:flex;gap:4px;overflow-x:auto}
+.topbar nav a{color:#cfd8dc;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:4px;white-space:nowrap}
+.sidebar{position:fixed;top:52px;left:0;bottom:0;width:230px;background:#fff;border-right:1px solid var(--border);overflow-y:auto;padding:14px 0;z-index:900}
+.sidebar a{display:block;padding:8px 18px;color:var(--text-light);text-decoration:none;font-size:12.5px;border-left:3px solid transparent}
+.sidebar a:hover{background:var(--bg);color:var(--primary)}
+.sidebar a.sub{padding-left:30px;font-size:11.5px}
+.main{margin-left:230px;margin-top:52px;padding:26px 32px;max-width:1000px}
+.section{background:var(--card);border-radius:10px;padding:24px 28px;margin-bottom:20px;box-shadow:var(--shadow)}
+.section h2{color:var(--primary);font-size:21px;border-bottom:2px solid var(--primary-light);padding-bottom:8px;margin-bottom:14px}
+.section h3{color:var(--primary);font-size:16.5px;margin:18px 0 8px;padding-left:10px;border-left:4px solid var(--accent)}
+.section p{margin:8px 0}.section ul,.section ol{margin:8px 0 8px 24px}.section li{margin:4px 0}.section strong{color:var(--primary)}
+.tip{background:#eafaf1;border-left:4px solid var(--success);padding:11px 15px;border-radius:6px;margin:12px 0}.tip::before{content:"💡 记住";display:block;font-weight:700;color:var(--success);font-size:12.5px;margin-bottom:3px}
+.warn{background:#fef9e7;border-left:4px solid var(--warning);padding:11px 15px;border-radius:6px;margin:12px 0}.warn::before{content:"⚠️ 注意";display:block;font-weight:700;color:var(--warning);font-size:12.5px;margin-bottom:3px}
+.key{background:#eaf2f8;border-left:4px solid var(--primary-light);padding:11px 15px;border-radius:6px;margin:12px 0}.key::before{content:"🔑 核心";display:block;font-weight:700;color:var(--primary);font-size:12.5px;margin-bottom:3px}
+.sale{background:#fdf2e9;border-left:4px solid var(--accent);padding:11px 15px;border-radius:6px;margin:12px 0}.sale::before{content:"💬 客户对话";display:block;font-weight:700;color:var(--accent);font-size:12.5px;margin-bottom:3px}
+.ndt{background:#eef5fb;border-left:4px solid var(--info);padding:11px 15px;border-radius:6px;margin:12px 0}.ndt::before{content:"🔬 检测要点";display:block;font-weight:700;color:var(--info);font-size:12.5px;margin-bottom:3px}
+.analogy{background:linear-gradient(135deg,#fdf2e9,#fef9e7);border:1px dashed var(--accent);border-radius:8px;padding:12px 15px;margin:12px 0}.analogy::before{content:"🎯 打个比方";display:block;font-weight:700;color:var(--accent);font-size:12.5px;margin-bottom:4px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+th,td{border:1px solid var(--border);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--primary);color:#fff}tr:nth-child(even){background:#f8f9fa}
+td strong{color:var(--primary)}
+.quiz-intro{background:#eaf2f8;border-radius:8px;padding:12px 16px;margin:14px 0;color:var(--primary)}
+.quiz-question{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;margin:12px 0}
+.quiz-question .q-text{font-weight:600;margin-bottom:8px}
+.quiz-question .q-num{display:inline-block;background:var(--primary);color:#fff;width:24px;height:24px;border-radius:50%;text-align:center;line-height:24px;font-size:12px;margin-right:6px}
+.quiz-option{display:block;padding:9px 12px;margin:5px 0;border:2px solid var(--border);border-radius:6px;cursor:pointer}
+.quiz-option:hover{border-color:var(--primary-light);background:#eaf2f8}
+.quiz-option.correct{border-color:var(--success);background:#eafaf1}
+.quiz-option.wrong{border-color:var(--danger);background:#fdedec}
+.quiz-option .mark{float:right;font-weight:700}
+.quiz-explain{margin-top:8px;padding:9px;background:#f8f9fa;border-radius:4px;font-size:12.5px;display:none}
+.quiz-explain.show{display:block}
+#quiz-result{display:none;text-align:center;padding:28px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin:14px 0}
+#quiz-result .score{font-size:44px;font-weight:700;margin:8px 0}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:9px 24px;border-radius:6px;border:none;cursor:pointer;font-size:14px;font-weight:600}
+.btn:hover{background:var(--accent-light)}
+.btn.ghost{background:transparent;color:var(--primary);border:2px solid var(--primary)}
+.hero{text-align:center;padding:38px 28px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin-bottom:20px}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);padding:3px 12px;border-radius:12px;font-size:11.5px;margin-bottom:8px}
+.hero h1{font-size:26px;margin-bottom:8px}.hero p{font-size:14px;opacity:.92}
+@media(max-width:900px){.sidebar{transform:translateX(-100%)}.main{margin-left:0;padding:14px}.topbar nav{display:none}}
+</style></head><body>
+<div class="topbar"><h1>🔬 NDT 扫盲课</h1><span class="crumb">第 11 课 · UT 物理基础</span><nav><a href="#hero">封面</a><a href="#ch1">声波基础</a><a href="#ch2">波型</a><a href="#ch3">传播行为</a><a href="#ch4">声场</a><a href="#exam">测验</a></nav></div>
+<div class="sidebar">
+<a href="#hero">封面</a>
+<a href="#ch1">一、声波基础</a>
+<a href="#ch1-1" class="sub">1.1 频率/波长/声速</a>
+<a href="#ch1-2" class="sub">1.2 声阻抗/dB</a>
+<a href="#ch2">二、超声波波型</a>
+<a href="#ch2-1" class="sub">纵波/横波/表面波</a>
+<a href="#ch3">三、传播行为</a>
+<a href="#ch3-1" class="sub">反射/折射/临界角</a>
+<a href="#ch4">四、声场</a>
+<a href="#ch4-1" class="sub">近场/远场</a>
+<a href="#exam">📝 测验</a>
+</div>
+<div class="main">
+
+<div class="section" id="hero" style="padding:0;overflow:hidden"><div class="hero">
+<span class="tag">扫盲课 · 第三阶段 · 第 11 课（懂手段②）</span>
+<h1>UT 超声物理基础</h1>
+<p>声速、频率、声阻抗、波型、反射折射、近场远场——这些是 UT 的"语法"。懂了它们，仪器参数才不是黑箱。</p>
+</div></div>
+
+<div class="section" id="ch1">
+<h2>一、声波基础</h2>
+
+<h3 id="ch1-1">1.1 三个核心物理量：c = λf</h3>
+<div class="key"><strong>声速 c = 波长 λ × 频率 f</strong>。声速由材料决定（固定），频率由探头决定（可选），波长由两者算出。</div>
+<table>
+<tr><th>物理量</th><th>含义</th><th>典型值</th><th>对 UT 的意义</th></tr>
+<tr><td><strong>声速 c</strong></td><td>声波在材料里传播的速度</td><td>钢纵波 5920、铝 6300、水 1480 m/s</td><td>由材料定，<strong>定位的依据</strong>（时间×声速=深度）</td></tr>
+<tr><td><strong>频率 f</strong></td><td>每秒振动次数</td><td>UT 常用 0.5–25 MHz</td><td>由探头定，<strong>频率↑→分辨率↑但衰减↑穿透↓</strong></td></tr>
+<tr><td><strong>波长 λ</strong></td><td>一个完整波的长度</td><td>钢 5MHz 纵波≈1.2mm</td><td><strong>缺陷尺寸≥波长才能检出</strong>（经验：≥λ/2）</td></tr>
+</table>
+<div class="ndt"><strong>★ 频率选择的黄金法则</strong>：<br>
+• <strong>高频（5–10MHz）</strong>：细晶材料、薄工件、小缺陷 → 分辨率高<br>
+• <strong>低频（0.5–2MHz）</strong>：粗晶/铸件/大厚度/衰减大 → 穿透深<br>
+• <strong>奥氏体焊缝要用 1–2MHz</strong>（降频减散射）；<strong>细晶锻钢可用 5–10MHz</strong></div>
+
+<h3 id="ch1-2">1.2 声阻抗 Z = ρc 和分贝 dB</h3>
+<div class="analogy"><strong>声阻抗 Z = 密度 ρ × 声速 c</strong>，描述材料"传声的难度"。两种材料声阻抗差越大，界面反射越强。</div>
+<table>
+<tr><th>材料</th><th>密度 g/cm³</th><th>声速 m/s</th><th>声阻抗（×10⁶）</th></tr>
+<tr><td>钢</td><td>7.85</td><td>5920</td><td><strong>46.5</strong></td></tr>
+<tr><td>铝</td><td>2.7</td><td>6300</td><td>17.0</td></tr>
+<tr><td>水</td><td>1.0</td><td>1480</td><td>1.5</td></tr>
+<tr><td>空气</td><td>0.0012</td><td>340</td><td><strong>0.0004</strong></td></tr>
+</table>
+<div class="warn"><strong>★ 关键认知</strong>：钢和空气的声阻抗差巨大（46.5 vs 0.0004）→ <strong>声波从钢到空气 99.9% 反射</strong>。这就是为什么：<br>
+• <strong>UT 必须用耦合剂</strong>（排除探头和工件间的空气）<br>
+• <strong>分层/裂纹（内有空气）反射极强</strong>——这正是 UT 查它们的原理</div>
+<div class="ndt"><strong>分贝 dB</strong>：UT 里用 dB 表示回波幅度差。<strong>+6dB = 幅度翻倍，+20dB = 幅度×10</strong>。DAC 曲线、增益调节都用 dB。</div>
+</div>
+
+<div class="section" id="ch2">
+<h2>二、超声波的波型（决定能测什么）</h2>
+<table>
+<tr><th>波型</th><th>质点振动方向</th><th>用什么探头</th><th>能测什么</th><th>声速（钢）</th></tr>
+<tr><td><strong>纵波 L</strong></td><td>和传播方向一致（压缩波）</td><td><strong>直探头</strong></td><td>锻件、钢板、铸件、<strong>测厚</strong>、分层</td><td>5920</td></tr>
+<tr><td><strong>横波 S</strong></td><td>和传播方向垂直（剪切波）</td><td><strong>斜探头</strong></td><td><strong>焊缝、管材</strong></td><td>3230</td></tr>
+<tr><td><strong>表面波 R（瑞利波）</strong></td><td>表面椭圆运动</td><td>表面波探头</td><td>表面裂纹</td><td>~3000</td></tr>
+<tr><td>板波（兰姆波）</td><td>板的两面振动</td><td>板波探头</td><td>薄板、薄管（可传很远）</td><td>随频率变</td></tr>
+<tr><td>爬波</td><td>近表面纵波</td><td>爬波探头</td><td>近表面缺陷</td><td>~5900</td></tr>
+</table>
+<div class="key" id="ch2-1"><strong>★ 两种最常用的波型（必背）</strong>：<br>
+• <strong>纵波 + 直探头</strong>：测锻件/钢板/铸件内部 + 测厚 + 查分层<br>
+• <strong>横波 + 斜探头</strong>：测<strong>焊缝</strong>（声束斜着进，避开焊缝余高，扫查焊缝和 HAZ）</div>
+<div class="tip"><strong>为什么焊缝用横波斜探头</strong>：焊缝表面有余高（凸起），直探头放不上去；且焊缝缺陷（裂纹/未熔合）方向各异，斜探头声束从侧面进，能扫到焊缝整个截面。这是焊缝 UT 的标准做法。</div>
+</div>
+
+<div class="section" id="ch3">
+<h2>三、声波的传播行为</h2>
+
+<h3 id="ch3-1">3.1 反射和透射（声阻抗决定）</h3>
+<div class="analogy">声波遇到两种材料的界面，一部分反射回来，一部分透射过去。<strong>声阻抗差越大，反射越多</strong>。</div>
+<div class="ndt"><strong>这就是 UT 的根本原理</strong>：缺陷（含空气/杂质）和材料的声阻抗不同 → 声波反射 → 探头接收回波 → 判断缺陷。<strong>分层、裂纹（含空气）反射极强；气孔、夹渣反射中等</strong>。</div>
+
+<h3>3.2 折射和波形转换 + 三个临界角</h3>
+<div class="analogy">声波斜着穿过界面时，方向会改变（折射），还可能变成另一种波型（波形转换）。<strong>斜探头就是利用折射</strong>：在有机玻璃斜楔里产生的纵波，折射进钢变成横波。</div>
+<table>
+<tr><th>临界角</th><th>在什么角度</th><th>产生什么</th></tr>
+<tr><td><strong>第一临界角</strong></td><td>纵波刚好全反射</td><td><strong>纯横波</strong>（斜探头用这个）</td></tr>
+<tr><td>第二临界角</td><td>横波也全反射</td><td>表面波（表面波探头）</td></tr>
+<tr><td>第三临界角</td><td>从钢往空气</td><td>（理论用）</td></tr>
+</table>
+<div class="tip"><strong>有机玻璃→钢的第一临界角约 27°，第二临界角约 55°</strong>。所以斜探头的折射角（K 值）都在这之间（K1=45°到 K3=72°）。</div>
+</div>
+
+<div class="section" id="ch4">
+<h2>四、声场——近场和远场（探头选择的依据）</h2>
+<div class="key"><strong>声场 = 探头发出的声波在空间分布的区域</strong>。分两个区：</div>
+<table>
+<tr><th>区域</th><th>位置</th><th>特点</th><th>对检测的影响</th></tr>
+<tr class="bad-row"><td><strong>近场区 N</strong></td><td>靠近探头</td><td>声压起伏大，<strong>杂乱</strong></td><td><strong>不能在此区定量</strong>（盲区）</td></tr>
+<tr><td><strong>远场区</strong></td><td>远离探头（&gt;N）</td><td>声压单调下降，规则</td><td>能准确定量</td></tr>
+</table>
+<div class="ndt"><strong>★ 近场区的影响</strong>：近场区声压杂乱，<strong>缺陷在近场区时回波幅度不可靠</strong>。所以：<br>
+• <strong>薄工件要选小晶片探头</strong>（近场短，减少盲区）<br>
+• <strong>双晶探头</strong>（一发一收）能减小近场盲区，用于测厚和近表面检测<br>
+• <strong>近场长度公式</strong>：N = D²f/4c（D 晶片直径，f 频率）<br>
+• <strong>经验</strong>：声束扩散角（指向角）越小，指向性越好，能量越集中</div>
+<div class="sale"><strong>客户对话</strong>：客户："为什么用 5MHz 不用 2MHz？"<br>
+"频率选高低的权衡：<strong>高频 5MHz 分辨率高（能检小缺陷）但衰减大穿透浅</strong>；<strong>低频 2MHz 穿透深（适合厚件/粗晶）但分辨率低</strong>。您这工件多厚、什么材料、查多大的缺陷？我们据此选频率。"</div>
+</div>
+
+<div class="section" id="exam">
+<h2>📝 随堂测验（6 题）</h2>
+<div class="quiz-intro">UT 物理基础。</div>
+
+<div class="quiz-question" data-correct="B">
+<div class="q-text"><span class="q-num">1</span>声速 c、波长 λ、频率 f 的关系是？</div>
+<div class="quiz-option" data-k="A">A. c = λ/f</div>
+<div class="quiz-option" data-k="B">B. c = λ × f</div>
+<div class="quiz-option" data-k="C">C. λ = c × f</div>
+<div class="quiz-option" data-k="D">D. f = c × λ</div>
+<div class="quiz-explain">✅ 选 B。<strong>c = λ × f</strong>。声速由材料定（固定），频率由探头定（可选），波长 = 声速/频率。钢 5MHz 纵波波长 = 5920/5000000 ≈ 1.2mm。</div>
+</div>
+
+<div class="quiz-question" data-correct="D">
+<div class="q-text"><span class="q-num">2</span>为什么 UT 检测必须用耦合剂？</div>
+<div class="quiz-option" data-k="A">A. 让探头粘得牢</div>
+<div class="quiz-option" data-k="B">B. 冷却探头</div>
+<div class="quiz-option" data-k="C">C. 增加回波幅度（部分对，不是根本）</div>
+<div class="quiz-option" data-k="D">D. 排除探头和工件间的空气（空气声阻抗差极大，会 99.9% 反射，声波进不去）</div>
+<div class="quiz-explain">✅ 选 D。钢和空气声阻抗差巨大，<strong>声波从钢到空气 99.9% 反射</strong>，进不到工件里。耦合剂（油/凝胶/水）填满探头和工件间的空气隙，让声波能传入。这是 UT 的基本前提。</div>
+</div>
+
+<div class="quiz-question" data-correct="A">
+<div class="q-text"><span class="q-num">3</span>焊缝 UT 为什么用横波斜探头而不是纵波直探头？</div>
+<div class="quiz-option" data-k="A">A. 焊缝有余高直探头放不上；斜探头声束从侧面扫焊缝整个截面，避开余高</div>
+<div class="quiz-option" data-k="B">B. 斜探头更便宜</div>
+<div class="quiz-option" data-k="C">C. 横波声速更快</div>
+<div class="quiz-option" data-k="D">D. 直探头不能用于钢</div>
+<div class="quiz-explain">✅ 选 A。焊缝表面有余高（凸起），直探头放不上去且声束垂直不入焊缝；斜探头声束斜着进，从焊缝两侧扫查，能覆盖焊缝和 HAZ 整个截面。这是焊缝 UT 的标准做法。</div>
+</div>
+
+<div class="quiz-question" data-correct="C">
+<div class="q-text"><span class="q-num">4</span>奥氏体不锈钢焊缝为什么用低频（1–2MHz）？</div>
+<div class="quiz-option" data-k="A">A. 低频便宜</div>
+<div class="quiz-option" data-k="B">B. 低频分辨率高</div>
+<div class="quiz-option" data-k="C">C. 低频波长大，d/λ 减小，晶界散射减弱，减少草状回波</div>
+<div class="quiz-option" data-k="D">D. 奥氏体只能用低频</div>
+<div class="quiz-explain">✅ 选 C。奥氏体焊缝晶粒粗大，高频时晶粒和波长同量级，散射严重（草状回波）。<strong>降低频率 → 波长变大 → d/λ 减小 → 散射减弱</strong>。代价是分辨率降低，但能改善信噪比。</div>
+</div>
+
+<div class="quiz-question" data-correct="B">
+<div class="q-text"><span class="q-num">5</span>近场区（N）为什么不能准确定量缺陷？</div>
+<div class="quiz-option" data-k="A">A. 近场区声波太弱</div>
+<div class="quiz-option" data-k="B">B. 近场区声压起伏杂乱，回波幅度不可靠</div>
+<div class="quiz-option" data-k="C">C. 近场区没有声波</div>
+<div class="quiz-option" data-k="D">D. 近场区太热</div>
+<div class="quiz-explain">✅ 选 B。近场区声压<strong>起伏杂乱</strong>（干涉条纹），缺陷在近场区时回波幅度忽大忽小不可靠。<strong>所以近场区是定量盲区</strong>。薄工件要选小晶片探头减小近场长度，或用双晶探头。</div>
+</div>
+
+<div class="quiz-question" data-correct="A">
+<div class="q-text"><span class="q-num">6</span>【销售场景】客户："100mm 厚锻件，用什么频率？"</div>
+<div class="quiz-option" data-k="A">A. "厚件+锻件细晶，用 2–5MHz，兼顾穿透和分辨率"</div>
+<div class="quiz-option" data-k="B">B. "用 10MHz 最准"</div>
+<div class="quiz-option" data-k="C">C. "用 0.5MHz 最低"</div>
+<div class="quiz-option" data-k="D">D. "频率不重要"</div>
+<div class="quiz-explain">✅ 选 A。100mm 厚件要保证穿透，但锻件晶粒细可承受较高频率。<strong>2–5MHz 是锻件通用频率</strong>，兼顾穿透和分辨率。10MHz 穿透不够（厚件衰减大）；0.5MHz 分辨率太低。</div>
+</div>
+
+<div id="quiz-result"><div>你的得分</div><div class="score">0</div><div id="result-text"></div><br><button class="btn ghost" onclick="resetQuiz()">重新作答</button></div>
+<div style="text-align:center;margin-top:14px"><button class="btn" onclick="submitQuiz()">交卷</button></div>
+</div>
+
+</div>
+<div style="text-align:center;margin:24px 0;padding:14px;background:#eaf2f8;border-radius:8px"><a href="index.html" style="display:inline-block;background:#1a5276;color:#fff;padding:10px 28px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px">🏠 返回总目录</a></div>
+<script>
+document.querySelectorAll('.quiz-question').forEach(function(q){var correct=q.dataset.correct;q.querySelectorAll('.quiz-option').forEach(function(opt){opt.addEventListener('click',function(){if(q.classList.contains('locked'))return;q.querySelectorAll('.quiz-option').forEach(function(o){o.classList.remove('correct','wrong');var m=o.querySelector('.mark');if(m)m.remove();});var k=opt.dataset.k;if(k===correct){opt.classList.add('correct');opt.insertAdjacentHTML('beforeend','<span class="mark">✓</span>');}else{opt.classList.add('wrong');opt.insertAdjacentHTML('beforeend','<span class="mark">✗</span>');q.querySelectorAll('.quiz-option').forEach(function(o){if(o.dataset.k===correct){o.classList.add('correct');}});}q.querySelector('.quiz-explain').classList.add('show');q.classList.add('locked');});});});
+function submitQuiz(){var qs=document.querySelectorAll('.quiz-question');var a=0,s=0;qs.forEach(function(q){if(q.classList.contains('locked')){a++;if(q.querySelector('.quiz-option.correct'))s++;}});var r=document.getElementById('quiz-result');r.style.display='block';r.querySelector('.score').textContent=s+' / '+qs.length;var p=s/qs.length,m='';if(p===1)m='满分！UT 物理基础打通了。';else if(p>=.75)m='不错！错题看解析。';else if(p>=.5)m='重看声阻抗和近场。';else m='重看一遍再测。';document.getElementById('result-text').textContent=m+'（已答'+a+'/'+qs.length+'）';r.scrollIntoView({behavior:'smooth',block:'center'});}
+function resetQuiz(){document.querySelectorAll('.quiz-question').forEach(function(q){q.classList.remove('locked');q.querySelectorAll('.quiz-option').forEach(function(o){o.classList.remove('correct','wrong');var m=o.querySelector('.mark');if(m)m.remove();});q.querySelector('.quiz-explain').classList.remove('show');});document.getElementById('quiz-result').style.display='none';}
+</script>
+</body></html>

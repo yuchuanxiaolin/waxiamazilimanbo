@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第10课 · NDT总论与五大方法</title>
+<style>
+:root{--primary:#1a5276;--primary-light:#2980b9;--accent:#e67e22;--bg:#f4f6f7;--card:#fff;--text:#2c3e50;--text-light:#7f8c8d;--border:#d5dbdb;--success:#27ae60;--danger:#e74c3c;--warning:#f39c12;--info:#3498db;--shadow:0 2px 8px rgba(0,0,0,.08)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.85;font-size:15.5px;scroll-behavior:smooth}
+.topbar{position:fixed;top:0;left:0;right:0;height:52px;background:var(--primary);color:#fff;display:flex;align-items:center;padding:0 20px;z-index:1000;box-shadow:0 4px 20px rgba(0,0,0,.12)}
+.topbar h1{font-size:16px;font-weight:600}.topbar .crumb{font-size:12px;opacity:.75;margin-left:8px}
+.topbar nav{margin-left:auto;display:flex;gap:4px;overflow-x:auto}
+.topbar nav a{color:#cfd8dc;text-decoration:none;font-size:13px;padding:6px 10px;border-radius:4px;white-space:nowrap}
+.sidebar{position:fixed;top:52px;left:0;bottom:0;width:230px;background:#fff;border-right:1px solid var(--border);overflow-y:auto;padding:14px 0;z-index:900}
+.sidebar a{display:block;padding:8px 18px;color:var(--text-light);text-decoration:none;font-size:12.5px;border-left:3px solid transparent}
+.sidebar a:hover{background:var(--bg);color:var(--primary)}
+.sidebar a.sub{padding-left:30px;font-size:11.5px}
+.main{margin-left:230px;margin-top:52px;padding:26px 32px;max-width:1000px}
+.section{background:var(--card);border-radius:10px;padding:24px 28px;margin-bottom:20px;box-shadow:var(--shadow)}
+.section h2{color:var(--primary);font-size:21px;border-bottom:2px solid var(--primary-light);padding-bottom:8px;margin-bottom:14px}
+.section h3{color:var(--primary);font-size:16.5px;margin:18px 0 8px;padding-left:10px;border-left:4px solid var(--accent)}
+.section p{margin:8px 0}.section ul,.section ol{margin:8px 0 8px 24px}.section li{margin:4px 0}.section strong{color:var(--primary)}
+.tip{background:#eafaf1;border-left:4px solid var(--success);padding:11px 15px;border-radius:6px;margin:12px 0}.tip::before{content:"💡 记住";display:block;font-weight:700;color:var(--success);font-size:12.5px;margin-bottom:3px}
+.warn{background:#fef9e7;border-left:4px solid var(--warning);padding:11px 15px;border-radius:6px;margin:12px 0}.warn::before{content:"⚠️ 注意";display:block;font-weight:700;color:var(--warning);font-size:12.5px;margin-bottom:3px}
+.key{background:#eaf2f8;border-left:4px solid var(--primary-light);padding:11px 15px;border-radius:6px;margin:12px 0}.key::before{content:"🔑 核心";display:block;font-weight:700;color:var(--primary);font-size:12.5px;margin-bottom:3px}
+.sale{background:#fdf2e9;border-left:4px solid var(--accent);padding:11px 15px;border-radius:6px;margin:12px 0}.sale::before{content:"💬 客户对话";display:block;font-weight:700;color:var(--accent);font-size:12.5px;margin-bottom:3px}
+.ndt{background:#eef5fb;border-left:4px solid var(--info);padding:11px 15px;border-radius:6px;margin:12px 0}.ndt::before{content:"🔬 检测要点";display:block;font-weight:700;color:var(--info);font-size:12.5px;margin-bottom:3px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+th,td{border:1px solid var(--border);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--primary);color:#fff}tr:nth-child(even){background:#f8f9fa}
+td strong{color:var(--primary)}
+.quiz-intro{background:#eaf2f8;border-radius:8px;padding:12px 16px;margin:14px 0;color:var(--primary)}
+.quiz-question{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;margin:12px 0}
+.quiz-question .q-text{font-weight:600;margin-bottom:8px}
+.quiz-question .q-num{display:inline-block;background:var(--primary);color:#fff;width:24px;height:24px;border-radius:50%;text-align:center;line-height:24px;font-size:12px;margin-right:6px}
+.quiz-option{display:block;padding:9px 12px;margin:5px 0;border:2px solid var(--border);border-radius:6px;cursor:pointer}
+.quiz-option:hover{border-color:var(--primary-light);background:#eaf2f8}
+.quiz-option.correct{border-color:var(--success);background:#eafaf1}
+.quiz-option.wrong{border-color:var(--danger);background:#fdedec}
+.quiz-option .mark{float:right;font-weight:700}
+.quiz-explain{margin-top:8px;padding:9px;background:#f8f9fa;border-radius:4px;font-size:12.5px;display:none}
+.quiz-explain.show{display:block}
+#quiz-result{display:none;text-align:center;padding:28px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin:14px 0}
+#quiz-result .score{font-size:44px;font-weight:700;margin:8px 0}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:9px 24px;border-radius:6px;border:none;cursor:pointer;font-size:14px;font-weight:600}
+.btn:hover{background:var(--accent-light)}
+.btn.ghost{background:transparent;color:var(--primary);border:2px solid var(--primary)}
+.hero{text-align:center;padding:38px 28px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:10px;margin-bottom:20px}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);padding:3px 12px;border-radius:12px;font-size:11.5px;margin-bottom:8px}
+.hero h1{font-size:26px;margin-bottom:8px}.hero p{font-size:14px;opacity:.92}
+.flow{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;margin:14px 0}
+.flow-step{background:var(--primary);color:#fff;padding:10px 14px;border-radius:6px;font-size:12.5px;font-weight:600;text-align:center}
+.flow-arrow{color:var(--accent);font-size:20px;font-weight:700}
+@media(max-width:900px){.sidebar{transform:translateX(-100%)}.main{margin-left:0;padding:14px}.topbar nav{display:none}}
+</style></head><body>
+<div class="topbar"><h1>🔬 NDT 扫盲课</h1><span class="crumb">第 10 课 · NDT 总论与五大方法</span><nav><a href="#hero">封面</a><a href="#ch1">什么是NDT</a><a href="#ch2">五大方法</a><a href="#ch3">方法选型</a><a href="#ch4">UT vs RT</a><a href="#exam">测验</a></nav></div>
+<div class="sidebar">
+<a href="#hero">封面</a>
+<a href="#ch1">一、什么是 NDT</a>
+<a href="#ch2">二、五大常规方法</a>
+<a href="#ch2-1" class="sub">2.1 UT 超声</a>
+<a href="#ch2-2" class="sub">2.2 RT 射线</a>
+<a href="#ch2-3" class="sub">2.3 MT/PT/ET</a>
+<a href="#ch3">三、方法选型决策树</a>
+<a href="#ch4">四、UT vs RT 对比</a>
+<a href="#exam">📝 测验</a>
+</div>
+<div class="main">
+
+<div class="section" id="hero" style="padding:0;overflow:hidden"><div class="hero">
+<span class="tag">扫盲课 · 第三阶段 · 第 10 课（懂手段①）</span>
+<h1>NDT 总论与五大方法</h1>
+<p>无损检测有哪些方法？各自能查什么？客户拿来工件该选哪种？这节课给你方法选型的全景。</p>
+</div></div>
+
+<div class="section">
+<h2>📍 第三阶段（懂手段·检测方法）开始</h2>
+<p>前两阶段你懂了"工件和缺陷"。第三阶段让你<strong>懂检测方法</strong>——这是你的本行，从这节课开始进入 UT 深入。</p>
+</div>
+
+<div class="section" id="ch1">
+<h2>一、什么是 NDT（无损检测）</h2>
+<div class="key"><strong>NDT = Non-Destructive Testing = 不破坏工件就能查出内部缺陷的技术</strong>。</p>
+<p>核心价值：不破坏、100% 检、可在制造和在役各阶段用、成本低。</p></div>
+<p><strong>NDT 在产品全生命周期的位置</strong>：</p>
+<div class="flow">
+<div class="flow-step">原材料<br>（钢板/管/锭）</div>
+<span class="flow-arrow">→</span>
+<div class="flow-step">制造<br>（焊接/加工）</div>
+<span class="flow-arrow">→</span>
+<div class="flow-step">成品验收</div>
+<span class="flow-arrow">→</span>
+<div class="flow-step">在役定期检测</div>
+<span class="flow-arrow">→</span>
+<div class="flow-step">退役</div>
+</div>
+<p><strong>每个阶段都要 NDT</strong>——这就是为什么 NDT 是工业"刚需"，也是你卖设备/做检测的持续市场。</p>
+</div>
+
+<div class="section" id="ch2">
+<h2>二、五大常规 NDT 方法（必背）</h2>
+<table>
+<tr><th>方法</th><th>缩写</th><th>原理（一句话）</th><th>查什么强项</th><th>我们的业务</th></tr>
+<tr><td><strong>超声检测</strong></td><td><strong>UT</strong></td><td>超声波在材料里反射/透射</td><td><strong>面状缺陷</strong>（裂纹/未熔合/分层）</td><td><strong>核心（A扫+C扫）</strong></td></tr>
+<tr><td><strong>射线检测</strong></td><td><strong>RT</strong></td><td>X/γ射线穿透工件照相</td><td><strong>体积型缺陷</strong>（气孔/夹渣）</td><td>—</td></tr>
+<tr><td><strong>磁粉检测</strong></td><td><strong>MT</strong></td><td>磁化后铁粉吸附在缺陷处</td><td><strong>铁磁材料表面/近表面</strong></td><td>—</td></tr>
+<tr><td><strong>渗透检测</strong></td><td><strong>PT</strong></td><td>荧光/着色液渗入表面开口</td><td><strong>任何材料表面开口</strong></td><td>—</td></tr>
+<tr><td><strong>涡流检测</strong></td><td><strong>ET</strong></td><td>电磁感应，测涡流变化</td><td><strong>导电材料表面/管材</strong></td><td>—</td></tr>
+</table>
+
+<h3 id="ch2-1">2.1 UT 超声检测（我们的核心）</h3>
+<div class="key"><strong>UT 原理</strong>：探头发出超声波进入工件，遇到缺陷/底面反射回来，仪器接收显示。<strong>声波 + 反射 = 看见内部</strong>。</div>
+<ul>
+<li><strong>强项</strong>：面状缺陷（裂纹/未熔合/分层）、定位定量准、穿透深、便携、无辐射</li>
+<li><strong>弱点</strong>：对体积型小缺陷（单个气孔）不敏感、对表面开口缺陷不敏感、依赖人员经验、工件几何限制</li>
+<li><strong>我们的产品</strong>：便携 A 扫（焊缝/钢板/测厚）+ 水浸 C 扫（平板件/水冷板/复材分层）</li>
+</ul>
+
+<h3 id="ch2-2">2.2 RT 射线检测</h3>
+<div class="key"><strong>RT 原理</strong>：X/γ 射线穿透工件，缺陷处衰减不同，在底片上形成黑度差异。<strong>射线 + 穿透 = 拍片</strong>。</div>
+<ul>
+<li><strong>强项</strong>：体积型缺陷（气孔/夹渣）、有永久底片直观定性</li>
+<li><strong>弱点</strong>：面状缺陷（裂纹/未熔合）方向不平行时漏检、有辐射危险、厚件穿透难、成本高</li>
+<li><strong>UT vs RT 互补</strong>：UT 查面状强，RT 查体积型强，压力容器常都做</li>
+</ul>
+
+<h3 id="ch2-3">2.3 MT 磁粉 / PT 渗透 / ET 涡流</h3>
+<table>
+<tr><th>方法</th><th>原理</th><th>限制</th><th>用在哪</th></tr>
+<tr><td><strong>MT 磁粉</strong></td><td>磁化工件，缺陷漏磁吸铁粉</td><td><strong>只能铁磁材料</strong>（钢/铁）</td><td>钢焊缝表面裂纹、锻件表面</td></tr>
+<tr><td><strong>PT 渗透</strong></td><td>渗透液渗入开口，显像剂显出</td><td>只能表面开口缺陷</td><td>不锈钢/铝/非铁磁材料表面</td></tr>
+<tr><td><strong>ET 涡流</strong></td><td>电磁感应测涡流变化</td><td>只能导电材料、表面/近表面</td><td>管材在线、换热管、表面裂纹</td></tr>
+</table>
+<div class="warn"><strong>记住</strong>：MT/PT/ET 都是<strong>表面方法</strong>（查表面或近表面），查不了内部。内部缺陷必须靠 UT 或 RT。这就是为什么焊缝要"组合拳"VT→UT/RT→MT/PT。</div>
+</div>
+
+<div class="section" id="ch3">
+<h2>三、★ 方法选型决策树（销售核心）</h2>
+<div class="key">客户拿来工件，你怎么快速判断用哪种方法？按这个决策树走：</div>
+<table>
+<tr><th>问题</th><th>答案</th><th>选什么</th></tr>
+<tr><td><strong>查内部还是表面？</strong></td><td>内部</td><td>UT / RT</td></tr>
+<tr><td></td><td>表面</td><td>MT（铁磁）/ PT（非磁）/ ET（导电）</td></tr>
+<tr><td><strong>内部：查面状还是体积型？</strong></td><td>面状（裂纹/未熔合/分层）</td><td><strong>UT（首选）</strong></td></tr>
+<tr><td></td><td>体积型（气孔/夹渣）</td><td>RT（首选）/ UT</td></tr>
+<tr><td><strong>材料？</strong></td><td>奥氏体不锈钢焊缝</td><td>PAUT/TOFD（常规 UT 难）</td></tr>
+<tr><td></td><td>铸件（粗晶）</td><td>RT（首选）+ MT/PT</td></tr>
+<tr><td></td><td>复合材料</td><td><strong>UT（C 扫分层）</strong></td></tr>
+<tr><td></td><td>铝/钛（细晶）</td><td>UT（优）</td></tr>
+</table>
+<div class="sale"><strong>客户对话</strong>：客户："这工件该用 UT 还是 RT？"<br>
+按决策树反问：① 查内部还是表面？② 什么缺陷为主（面状还是体积型）？③ 什么材料？想清楚这三点，方法就定了。<strong>压力容器焊缝通常都做</strong>（UT 查面状 + RT 查体积型），互补。</div>
+</div>
+
+<div class="section" id="ch4">
+<h2>四、★ UT vs RT 经典对比（销售必背）</h2>
+<table>
+<tr><th>对比项</th><th>UT</th><th>RT</th></tr>
+<tr><td><strong>查面状缺陷</strong></td><td><strong>✅ 强（裂纹/未熔合/分层）</strong></td><td>⚠️ 方向平行才行</td></tr>
+<tr><td><strong>查体积型缺陷</strong></td><td>⚠️ 单个小气孔易漏</td><td><strong>✅ 强（气孔/夹渣）</strong></td></tr>
+<tr><td><strong>缺陷定位</strong></td><td><strong>✅ 准（深度/位置）</strong></td><td>⚠️ 只有平面位置，深度难</td></tr>
+<tr><td><strong>缺陷定量（测高）</strong></td><td><strong>✅ 较准</strong></td><td>⚠️ 测高不准</td></tr>
+<tr><td><strong>直观定性</strong></td><td>⚠️ 依赖经验（看波形）</td><td><strong>✅ 底片直观</strong></td></tr>
+<tr><td><strong>穿透厚度</strong></td><td><strong>✅ 极强（厚件也能）</strong></td><td>⚠️ 厚件难</td></tr>
+<tr><td><strong>便携/现场</strong></td><td><strong>✅ 便携</strong></td><td>⚠️ 设备重、要防护</td></tr>
+<tr><td><strong>辐射</strong></td><td><strong>✅ 无</strong></td><td>❌ 有辐射危险</td></tr>
+<tr><td><strong>成本</strong></td><td><strong>✅ 低</strong></td><td>⚠️ 高（底片+防护）</td></tr>
+<tr><td><strong>永久记录</strong></td><td>⚠️ 波形（PAUT/TOFD 有图）</td><td><strong>✅ 底片</strong></td></tr>
+</table>
+<div class="key"><strong>核心定位</strong>：<br>
+• <strong>厚件、面状缺陷、便携现场、无辐射、成本敏感 → UT</strong><br>
+• <strong>体积型缺陷、要直观底片、要定性 → RT</strong><br>
+• <strong>压力容器焊缝 → 两者都做（互补）</strong></div>
+</div>
+
+<div class="section" id="exam">
+<h2>📝 随堂测验（6 题）</h2>
+<div class="quiz-intro">NDT 总论与五大方法。</div>
+
+<div class="quiz-question" data-correct="B">
+<div class="q-text"><span class="q-num">1</span>UT（超声检测）相比其他方法的最大优势是？</div>
+<div class="quiz-option" data-k="A">A. 能拍出直观底片</div>
+<div class="quiz-option" data-k="B">B. 查面状缺陷强、穿透厚件、便携、无辐射</div>
+<div class="quiz-option" data-k="C">C. 只能查表面</div>
+<div class="quiz-option" data-k="D">D. 设备最便宜</div>
+<div class="quiz-explain">✅ 选 B。UT 核心优势：<strong>面状缺陷（裂纹/未熔合/分层）强 + 穿透厚件 + 便携 + 无辐射 + 成本低</strong>。拍底片是 RT 的优势；查表面是 MT/PT/ET 的优势。</div>
+</div>
+
+<div class="quiz-question" data-correct="C">
+<div class="q-text"><span class="q-num">2</span>客户拿来不锈钢焊缝（304）想查表面裂纹，应该用？</div>
+<div class="quiz-option" data-k="A">A. MT 磁粉（304 没磁性，不行）</div>
+<div class="quiz-option" data-k="B">B. 只能 RT</div>
+<div class="quiz-option" data-k="C">C. PT 渗透（不锈钢非磁性，PT 查表面开口）</div>
+<div class="quiz-option" data-k="D">D. 涡流 ET</div>
+<div class="quiz-explain">✅ 选 C。304 奥氏体不锈钢<strong>无磁性</strong>，<strong>MT 不行</strong>。查表面开口缺陷用 <strong>PT 渗透</strong>（任何材料都行）。ET 也能查导电表面，但 PT 更通用直接。</div>
+</div>
+
+<div class="quiz-question" data-correct="A">
+<div class="q-text"><span class="q-num">3</span>压力容器焊缝为什么常要 UT 和 RT 都做？</div>
+<div class="quiz-option" data-k="A">A. 互补：UT 查面状强（裂纹/未熔合），RT 查体积型强（气孔/夹渣），组合覆盖全</div>
+<div class="quiz-option" data-k="B">B. 两个都做显得专业</div>
+<div class="quiz-option" data-k="C">C. 标准规定必须都做（其实不是所有情况）</div>
+<div class="quiz-option" data-k="D">D. 都做更便宜</div>
+<div class="quiz-explain">✅ 选 A。<strong>UT 和 RT 互补</strong>：UT 查面状缺陷强（裂纹、未熔合、未焊透），RT 查体积型缺陷强（气孔、夹渣）。压力容器是安全件，标准（NB/T 47013）常要求都做，确保不漏检。</div>
+</div>
+
+<div class="quiz-question" data-correct="D">
+<div class="q-text"><span class="q-num">4</span>MT 磁粉检测只能用于什么材料？</div>
+<div class="quiz-option" data-k="A">A. 任何材料</div>
+<div class="quiz-option" data-k="B">B. 不锈钢</div>
+<div class="quiz-option" data-k="C">C. 铝合金</div>
+<div class="quiz-option" data-k="D">D. 铁磁性材料（钢/铁）</div>
+<div class="quiz-explain">✅ 选 D。MT 原理是<strong>磁化工件</strong>后缺陷漏磁吸附铁粉，所以<strong>只能用于铁磁材料</strong>（碳钢、低合金钢、铁）。不锈钢（奥氏体无磁）、铝、铜、复合材料都不能用 MT，要用 PT。</div>
+</div>
+
+<div class="quiz-question" data-correct="B">
+<div class="q-text"><span class="q-num">5</span>客户拿来厚 100mm 的钢板焊缝查内部裂纹，首选？</div>
+<div class="quiz-option" data-k="A">A. RT（厚件穿透难）</div>
+<div class="quiz-option" data-k="B">B. UT（穿透厚件强 + 查裂纹强）</div>
+<div class="quiz-option" data-k="C">C. MT（只能表面）</div>
+<div class="quiz-option" data-k="D">D. PT（只能表面）</div>
+<div class="quiz-explain">✅ 选 B。厚件 + 内部 + 裂纹（面状）= UT 的完美场景。UT 穿透厚件强（能穿透几米钢），查面状缺陷强。RT 厚件穿透难（100mm 钢要高能 X 射线），且裂纹方向不平行时漏检。</div>
+</div>
+
+<div class="quiz-question" data-correct="C">
+<div class="q-text"><span class="q-num">6</span>【销售场景】客户"复合材料分层检测"，方法选型？</div>
+<div class="quiz-option" data-k="A">A. RT 射线</div>
+<div class="quiz-option" data-k="B">B. MT 磁粉</div>
+<div class="quiz-option" data-k="C">C. UT 水浸 C 扫（分层是 UT 强项，复材不能用 MT）</div>
+<div class="quiz-option" data-k="D">D. PT 渗透</div>
+<div class="quiz-explain">✅ 选 C。复材分层是<strong>UT（水浸 C 扫）的杀手锏</strong>。MT 只能铁磁（复材不行）；PT 只查表面（分层在内部）；RT 对分层不敏感。这就是我们水浸 C 扫的核心市场。</div>
+</div>
+
+<div id="quiz-result"><div>你的得分</div><div class="score">0</div><div id="result-text"></div><br><button class="btn ghost" onclick="resetQuiz()">重新作答</button></div>
+<div style="text-align:center;margin-top:14px"><button class="btn" onclick="submitQuiz()">交卷</button></div>
+</div>
+
+</div>
+<div style="text-align:center;margin:24px 0;padding:14px;background:#eaf2f8;border-radius:8px"><a href="index.html" style="display:inline-block;background:#1a5276;color:#fff;padding:10px 28px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px">🏠 返回总目录</a></div>
+<script>
+document.querySelectorAll('.quiz-question').forEach(function(q){var correct=q.dataset.correct;q.querySelectorAll('.quiz-option').forEach(function(opt){opt.addEventListener('click',function(){if(q.classList.contains('locked'))return;q.querySelectorAll('.quiz-option').forEach(function(o){o.classList.remove('correct','wrong');var m=o.querySelector('.mark');if(m)m.remove();});var k=opt.dataset.k;if(k===correct){opt.classList.add('correct');opt.insertAdjacentHTML('beforeend','<span class="mark">✓</span>');}else{opt.classList.add('wrong');opt.insertAdjacentHTML('beforeend','<span class="mark">✗</span>');q.querySelectorAll('.quiz-option').forEach(function(o){if(o.dataset.k===correct){o.classList.add('correct');}});}q.querySelector('.quiz-explain').classList.add('show');q.classList.add('locked');});});});
+function submitQuiz(){var qs=document.querySelectorAll('.quiz-question');var a=0,s=0;qs.forEach(function(q){if(q.classList.contains('locked')){a++;if(q.querySelector('.quiz-option.correct'))s++;}});var r=document.getElementById('quiz-result');r.style.display='block';r.querySelector('.score').textContent=s+' / '+qs.length;var p=s/qs.length,m='';if(p===1)m='满分！方法选型都掌握了。';else if(p>=.75)m='不错！错题看解析。';else if(p>=.5)m='重看五大方法和 UT vs RT。';else m='重看一遍再测。';document.getElementById('result-text').textContent=m+'（已答'+a+'/'+qs.length+'）';r.scrollIntoView({behavior:'smooth',block:'center'});}
+function resetQuiz(){document.querySelectorAll('.quiz-question').forEach(function(q){q.classList.remove('locked');q.querySelectorAll('.quiz-option').forEach(function(o){o.classList.remove('correct','wrong');var m=o.querySelector('.mark');if(m)m.remove();});q.querySelector('.quiz-explain').classList.remove('show');});document.getElementById('quiz-result').style.display='none';}
+</script>
+</body></html>
